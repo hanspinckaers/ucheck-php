@@ -1,0 +1,92 @@
+<?
+header("Cache-Control: no-cache, must-revalidate"); // HTTP/1.1
+header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
+
+include "user_info.php";
+
+ini_set('display_errors', 0);
+
+$year = $_GET['year'];
+
+$token = $_SESSION['inschrijvingen_token'];
+
+if(isset($_SESSION['inschrijvingen_token']))
+{
+	$json = file_get_contents("http://109.72.92.55:3000/token/".$_SESSION['inschrijvingen_token']);			
+			
+	$_SESSION['inschrijvingen_token'] = "";
+
+	unset($_SESSION['inschrijvingen_token']);
+} else {
+	if($year)
+	{
+	$json = file_get_contents("http://109.72.92.55:3000/inschrijvingen/$user/$pwd/$year/");
+	} else {
+	$json = file_get_contents("http://109.72.92.55:3000/inschrijvingen/$user/$pwd/");
+	}
+}
+
+if($json == "Invalid token.")
+{
+	mail("hans.pinckaers@gmail.com", "Invalid token! ".$token, "",  "From: geneesleer@alwaysdata.net");
+
+	if($year)
+	{
+		$json = file_get_contents("http://109.72.92.55:3000/inschrijvingen/$user/$pwd/$year/");
+	} else {
+		$json = file_get_contents("http://109.72.92.55:3000/inschrijvingen/$user/$pwd/");
+	}
+}
+
+if(!$json)
+{	
+	if($year)
+	{
+		$json = file_get_contents("http://ucheck.nodester.com/inschrijvingen/$user/$pwd/$year/");
+	} else {
+		$json = file_get_contents("http://ucheck.nodester.com/inschrijvingen/$user/$pwd/");
+	}
+	
+	if(!$json)
+	{
+		mail("hans.pinckaers@gmail.com", "Amsterdam server plat? Fallback voor $user (inschrijvingen)", "",  "From: geneesleer@alwaysdata.net");
+	}
+}
+
+$raw_inschrijvingen = json_decode($json, true);
+
+$inschrijvingen = $raw_inschrijvingen['inschrijvingen'];
+$studies = $raw_inschrijvingen['studies'];
+
+if(!isset($raw_inschrijvingen['inschrijvingen']))
+{
+	//include("inschrijvingen_oud.php");
+}
+
+$newinschrijvingen = array();
+$inschrijvingen_gehaald = array();
+
+$ingeschreven = array();
+foreach($inschrijvingen as $inschrijving)
+{		
+		$exploded = explode(" ", $inschrijving['origineel_id']);
+		
+		$origineel_id =  $exploded[count($exploded)-1];
+		
+		$ingeschreven[] = $origineel_id;
+
+		$smaller_id = substr($origineel_id, 0 , -1);
+
+		if(in_array($smaller_id, $_SESSION['gehaald']) || 
+			in_array($origineel_id, $_SESSION['cijfers_ids']))
+		{		
+			$inschrijvingen_gehaald[] = $inschrijving;
+		} else {
+			$newinschrijvingen[] = $inschrijving;
+		}		
+}
+
+$inschrijvingen = $newinschrijvingen;
+
+$_SESSION['ingeschreven'] = $ingeschreven;
+?>

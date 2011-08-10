@@ -1,0 +1,2 @@
+deny from all
+allow from 83.86.207.63

@@ -1,0 +1,1 @@
+a:1:{i:0;a:6:{s:6:"studie";s:6:"FLEALG";s:10:"gidsnummer";s:10:"9000BIJVA5";s:5:"titel";s:11:"Bijvak 5000";s:8:"eenheden";s:1:"0";s:4:"type";s:16:"Onderwijseenheid";s:8:"loopbaan";s:8:"Bachelor";}}
