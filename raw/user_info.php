@@ -1,4 +1,15 @@
 <?
+## Copyright (c) 2011 by Hans Pinckaers 
+##
+## This work is licensed under the Creative Commons 
+## Attribution-NonCommercial-ShareAlike 3.0 Unported License. 
+## To view a copy of this license, visit 
+## http://creativecommons.org/licenses/by-nc-sa/3.0/ 
+##
+## ucheck-php: https://github.com/HansPinckaers/ucheck-php
+## ucheck-node: https://github.com/HansPinckaers/ucheck-node
+##
+
 function base64url_encode($data) { 
   return rtrim(strtr(base64_encode($data), '+/', '-_'), '='); 
 } 

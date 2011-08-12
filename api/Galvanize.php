@@ -1,5 +1,4 @@
-<?php
-
+<?
 /**
   * Copyright (C) 2009 Andy Leon (acleon@acleon.co.uk)
   *
