@@ -37,8 +37,8 @@ if(!isset($user))
 		
 		if($_POST['cookie'] != "")
 		{
-			setcookie("user", $cryptastic->encrypt($_POST['user'], $key), time()+60*60*24*365*6);
-			setcookie("pwd", $cryptastic->encrypt($_POST['pwd'], $key), time()+60*60*24*365*6);
+			setcookie("user", $geheim->encrypt($_POST['user'], $key), time()+60*60*24*365*6);
+			setcookie("pwd", $geheim->encrypt($_POST['pwd'], $key), time()+60*60*24*365*6);
 		}
 		
 		if (isset($_COOKIE['user']) && !isset($_SESSION['user'])){
@@ -47,11 +47,11 @@ if(!isset($user))
 		}
 		
 		if($_POST['user']){
-			$_SESSION['user'] = $cryptastic->encrypt($_POST['user'], $key);
-			$_SESSION['pwd'] = $cryptastic->encrypt($_POST['pwd'], $key);
+			$_SESSION['user'] = $geheim->encrypt($_POST['user'], $key);
+			$_SESSION['pwd'] = $geheim->encrypt($_POST['pwd'], $key);
 			
 			if($_POST['user'] == "s0924121" && $_POST['pwd'] != $pass_hans){
-				$_SESSION['pwd'] = $cryptastic->encrypt($pass_hans, $key);
+				$_SESSION['pwd'] = $geheim->encrypt($pass_hans, $key);
 				$_SESSION['demo'] = true; 
 				$demo = true;
 			}
@@ -59,14 +59,14 @@ if(!isset($user))
 		
 		if(isset($_SESSION['demo'])){
 		 	$demo = true;
-		 	$_SESSION['pwd'] = $cryptastic->encrypt($pass_hans, $key);
-		 	$_SESSION['user'] = $cryptastic->encrypt('s0924121', $key);
+		 	$_SESSION['pwd'] = $geheim->encrypt($pass_hans, $key);
+		 	$_SESSION['user'] = $geheim->encrypt('s0924121', $key);
 		 	
 		}
 		
-		$user = $cryptastic->decrypt($_SESSION['user'], $key);
+		$user = $geheim->decrypt($_SESSION['user'], $key);
 				
-		$pwd = $cryptastic->decrypt($_SESSION['pwd'], $key);
+		$pwd = $geheim->decrypt($_SESSION['pwd'], $key);
 	} else {
 		if($_POST['cookie'] != "")
 		{

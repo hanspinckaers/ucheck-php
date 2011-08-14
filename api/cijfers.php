@@ -28,7 +28,7 @@ if(file_exists("../geheim/iphone.php"))
 {
 	include("../geheim/iphone.php");
 
-	$pwd = $cryptastic->decrypt($_GET['pass'], $key, true);
+	$pwd = $geheim->decrypt($_GET['pass'], $key, true);
 } else {
 	$pwd =  base64url_decode($_GET['pass']);
 }
