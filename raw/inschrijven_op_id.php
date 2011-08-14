@@ -1,7 +1,20 @@
 <?
+## Copyright (c) 2011 by Hans Pinckaers 
+##
+## This work is licensed under the Creative Commons 
+## Attribution-NonCommercial-ShareAlike 3.0 Unported License. 
+## To view a copy of this license, visit 
+## http://creativecommons.org/licenses/by-nc-sa/3.0/ 
+##
+## ucheck-php: https://github.com/HansPinckaers/ucheck-php
+## ucheck-node: https://github.com/HansPinckaers/ucheck-node
+##
+
 $id = $_GET['nummer'];
 $gids_id = $_GET['q'];
 $aantal = $_GET['aantal_check'];
+
+$keep_cookie = true;
 
 include "details.php";
 
@@ -120,5 +133,6 @@ if(isset($matches[0]))
 	echo "<span style='color:orange;'>Het is niet bekend of het goed gegaan is, controleer onder inschrijvingen of deze eronder staat. Sorry!</span>";
 }
 
-//print_r($matches);
+unlink($cookiefile);
+
 ?>

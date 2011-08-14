@@ -1,5 +1,18 @@
 <?
+## Copyright (c) 2011 by Hans Pinckaers 
+##
+## This work is licensed under the Creative Commons 
+## Attribution-NonCommercial-ShareAlike 3.0 Unported License. 
+## To view a copy of this license, visit 
+## http://creativecommons.org/licenses/by-nc-sa/3.0/ 
+##
+## ucheck-php: https://github.com/HansPinckaers/ucheck-php
+## ucheck-node: https://github.com/HansPinckaers/ucheck-node
+##
+
 ini_set('display_errors', 0);
+
+include "raw/setup.php";
 
 function base64url_encode($data) { 
   return rtrim(strtr(base64_encode($data), '+/', '-_'), '='); 
@@ -15,13 +28,13 @@ if(file_exists("../geheim/iphone.php"))
 {
 	include("../geheim/iphone.php");
 	
-	$pwd = $cryptastic->decrypt($_GET['pass'], $key, true);
+	$pwd = $geheim->decrypt($_GET['pass'], $key, true);
 } else {
 	$pwd =  base64url_decode($_GET['pass']);
 }
 	
 	
-echo $json = file_get_contents("http://109.72.92.55:3000/inschrijvingen/$user/$pwd/");
+echo $json = file_get_contents($NODE_SERVER."inschrijvingen/$user/$pwd/");
 
 // Turn off all error reporting
 try {

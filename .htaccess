@@ -1,16 +1,13 @@
-# A .htaccess file is a hidden file which runs on Unix servers
-# and provides directives. Renaming this file to .htaccess and
-# placing in your root directory _should_ enable GZip compression,
-# reducing the weight of pages/scripts being served.
-
 RewriteEngine On
-RewriteCond %{HTTP:X-Forwarded-Proto} !https
-RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [R,L]
 
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_URI} (.+)/$
-RewriteRule ^(.+)/$ https://ucheck.nl/$1
+# Enabled on uCheck.nl
+# RewriteCond %{HTTP:X-Forwarded-Proto} !https
+# RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [R,L]
+
+# RewriteCond %{REQUEST_FILENAME} !-f
+# RewriteCond %{REQUEST_FILENAME} !-d
+# RewriteCond %{REQUEST_URI} (.+)/$
+# RewriteRule ^(.+)/$ https://ucheck.nl/$1
 
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}\.php -f
@@ -44,19 +41,6 @@ ExpiresActive On
 ExpiresDefault "access plus 2 weeks"
 ExpiresByType text/html "access plus 0 seconds"
 ExpiresByType text/javascript "access plus 2 weeks"
-
-# ExpiresByType application/javascript A900
-# ExpiresByType application/x-javascript A900
-# ExpiresByType text/javascript A900
-# ExpiresByType text/xml A90
-# ExpiresByType text/css A900
-# ExpiresByType text/plain A62
-# ExpiresByType image/gif A14400
-# ExpiresByType image/jpg A14400
-# ExpiresByType image/jpeg A14400
-# ExpiresByType image/png A14400
-# ExpiresByType image/bmp A14400
-# ExpiresByType application/x-shockwave-flash A3600
 
 <ifModule mod_headers.c>
   Header unset Last-Modified

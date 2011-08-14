@@ -10,15 +10,8 @@
 ## ucheck-node: https://github.com/HansPinckaers/ucheck-node
 ##
 
-header("Cache-Control: no-cache, must-revalidate"); // HTTP/1.1
-header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
+$DOCUMENT_ROOT = realpath($_SERVER['DOCUMENT_ROOT'])."/";
+$NODE_SERVER = "http://109.72.92.55:3000/";
+$NODE_FALLBACK = "http://ucheck.nodester.com/";
 
-include "user_info.php";
-
-$filename = $DOCUMENT_ROOT."raw/cache/".$_GET['year']."/".$_GET['q'].".txt";
-
-$handle = fopen($filename, "r");
-$contents = fread($handle, filesize($filename));
-fclose($handle);
-
-$inschrijven = unserialize($contents);		
+?>

@@ -1,4 +1,15 @@
 <?
+## Copyright (c) 2011 by Hans Pinckaers 
+##
+## This work is licensed under the Creative Commons 
+## Attribution-NonCommercial-ShareAlike 3.0 Unported License. 
+## To view a copy of this license, visit 
+## http://creativecommons.org/licenses/by-nc-sa/3.0/ 
+##
+## ucheck-php: https://github.com/HansPinckaers/ucheck-php
+## ucheck-node: https://github.com/HansPinckaers/ucheck-node
+##
+
 header("Cache-Control: no-cache, must-revalidate"); // HTTP/1.1
 header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
 
@@ -6,7 +17,7 @@ $year = $_GET['year'];
 
 include "user_info.php";
 
-$cookiefile = $_SERVER["DOCUMENT_ROOT"]."raw/cookies/".$user."_vakken".time().".txt";
+$cookiefile = $DOCUMENT_ROOT."raw/cookies/".$user."_vakken".time().".txt";
 
 $fields = array(
             'userid'=>$user,
@@ -366,6 +377,11 @@ foreach($t_onderdelen as $onderdeel)
 	}
 		
 	$counter++;
+}
+
+if(!isset($keep_cookie))
+{
+	unlink($cookiefile);
 }
 
 ?>

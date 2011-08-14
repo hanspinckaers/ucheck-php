@@ -1,4 +1,15 @@
 <?
+## Copyright (c) 2011 by Hans Pinckaers 
+##
+## This work is licensed under the Creative Commons 
+## Attribution-NonCommercial-ShareAlike 3.0 Unported License. 
+## To view a copy of this license, visit 
+## http://creativecommons.org/licenses/by-nc-sa/3.0/ 
+##
+## ucheck-php: https://github.com/HansPinckaers/ucheck-php
+## ucheck-node: https://github.com/HansPinckaers/ucheck-node
+##
+
 //ini_set('display_errors', 0);
 
 $user = $_GET['user'];
@@ -67,7 +78,7 @@ if(!$out[1])
 	if(file_exists("../geheim/iphone.php"))
 	{
 		include("../geheim/iphone.php");
-		echo $cryptastic->encrypt($pass_get, $key, true);
+		echo $geheim->encrypt($pass_get, $key, true);
 	} else {
 		echo base64url_encode($pass_get);
 	}

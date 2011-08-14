@@ -1,16 +1,27 @@
 <?
-ini_set('display_errors', 0);
+## Copyright (c) 2011 by Hans Pinckaers 
+##
+## This work is licensed under the Creative Commons 
+## Attribution-NonCommercial-ShareAlike 3.0 Unported License. 
+## To view a copy of this license, visit 
+## http://creativecommons.org/licenses/by-nc-sa/3.0/ 
+##
+## ucheck-php: https://github.com/HansPinckaers/ucheck-php
+## ucheck-node: https://github.com/HansPinckaers/ucheck-node
+##
 
-include("raw/user_info.php");
+//ini_set('display_errors', 0);
 
-$filename = $_SERVER["DOCUMENT_ROOT"]."voortgang_cache/".$user.".txt";
+include "raw/user_info.php";
+
+$filename = $DOCUMENT_ROOT."voortgang_cache/".$user.".txt";
 
 if(file_exists($filename) && ((time()-filemtime($filename))/(60*60) < 24*7))
 {	
 	$html = file_get_contents($filename);
 } else {
 	
-	$url = "http://109.72.92.55:3000/voortgang/$user/$pwd/";
+	$url = $NODE_SERVER."voortgang/$user/$pwd/";
 	
 	//open connection
 	$ch = curl_init();
@@ -151,8 +162,9 @@ if (isset($studie['gem_werkelijk']) && $studie['gem_werkelijk'] != "" && $studie
 Gemiddelde: <strong><? echo $studie['gem_werkelijk']?></strong>
 <?
 } else {
-?>
-<?
+
+
+
 }
 ?>
 </div>

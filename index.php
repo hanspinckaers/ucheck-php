@@ -1,43 +1,22 @@
 <?
+## Copyright (c) 2011 by Hans Pinckaers 
+##
+## This work is licensed under the Creative Commons 
+## Attribution-NonCommercial-ShareAlike 3.0 Unported License. 
+## To view a copy of this license, visit 
+## http://creativecommons.org/licenses/by-nc-sa/3.0/ 
+##
+## ucheck-php: https://github.com/HansPinckaers/ucheck-php
+## ucheck-node: https://github.com/HansPinckaers/ucheck-node
+##
 
 include "raw/user_info.php";
 include "header.php";
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-	if(isset($_POST["mailen"]) && $_POST["mailen"] != "")
-	{
-		include "mail.php";
-			
-	} else {
-		$filename = "raw/mail/mail_verboden.txt";
-		
-		$add = true;
-		
-		if(filesize($filename) > 0){	
-			$handle = fopen($filename, "r");
-			$contents = fread($handle, filesize($filename));
-			$users_verboden = unserialize($contents);	
-			
-			if(in_array($user, $users_verboden))
-			{
-				$add = false;
-			}
-		}
+//ini_set('display_errors', 0);
 
-		if($add){			
-			$users_verboden[] = strtolower($user);
-		
-			$handle = fopen($filename, "w");
-			fwrite($handle, serialize($users_verboden));
-			fclose($handle);			
-		}
-	}
-}
-
-ini_set('display_errors', 0);
-
-$_SESSION['cijfers_token'] = file_get_contents("http://109.72.92.55:3000/cijfers_token/$user/$pwd/", "r");
-$_SESSION['inschrijvingen_token'] = file_get_contents("http://109.72.92.55:3000/inschrijvingen_token/$user/$pwd/10/", "r");
+$_SESSION['cijfers_token'] = file_get_contents($NODE_SERVER."cijfers_token/$user/$pwd/", "r");
+$_SESSION['inschrijvingen_token'] = file_get_contents($NODE_SERVER."inschrijvingen_token/$user/$pwd/10/", "r");
 
 ?>
 
@@ -45,19 +24,17 @@ $_SESSION['inschrijvingen_token'] = file_get_contents("http://109.72.92.55:3000/
 
 <?
 
-$filename = $_SERVER["DOCUMENT_ROOT"]."voortgang_cache/".$user.".txt";
+$filename = $DOCUMENT_ROOT."voortgang_cache/".$user.".txt";
 
 if(file_exists($filename) && ((time()-filemtime($filename))/(60*60) < 24*7))
 {
 	include "voortgang.php";
 } else {
-
 ?>
 <h1 class="first">Voortgang</h1>
 <p>
 <img class="loading" src="ajax-loader.gif"/>
 </p>
-
 <?
 }
 ?>
@@ -365,7 +342,7 @@ if(file_exists($filename) && ((time()-filemtime($filename))/(60*60) < 24*7))
 				
 				<?
 				
-				$filename = $_SERVER["DOCUMENT_ROOT"]."voortgang_cache/".$user.".txt";
+				$filename = $DOCUMENT_ROOT."voortgang_cache/".$user.".txt";
 				
 				if(file_exists($filename) && ((time()-filemtime($filename))/(60*60) < 24*7))
 				{
@@ -462,6 +439,8 @@ $("mail_button").addEvent("click", function(e)
 </script>
 
 <?  
+if(file_exists("raw/mail/bezocht.txt"))
+{
 	$filename = "raw/mail/bezocht.txt";
 
 	$handle = fopen($filename, "r");
@@ -482,7 +461,7 @@ $("mail_button").addEvent("click", function(e)
 	}
 		
 	fclose($handle);
-
+}
 ?>
 
 </body>

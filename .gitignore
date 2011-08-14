@@ -1,9 +1,15 @@
+.DS_Store
 beta/*
 beta
-raw/cookies/
+raw/cookies/*
+!raw/cookies/README
 geheim/*
+!geheim/README
 raw/mail/*
 oud/*
 scrapeusis/logs/*
 voortgang_cache/*
+!voortgang_cache/README
 beta_mail/*
+visitors.php
+mail.php

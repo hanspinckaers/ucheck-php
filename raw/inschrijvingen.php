@@ -1,6 +1,14 @@
 <?
-header("Cache-Control: no-cache, must-revalidate"); // HTTP/1.1
-header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
+## Copyright (c) 2011 by Hans Pinckaers 
+##
+## This work is licensed under the Creative Commons 
+## Attribution-NonCommercial-ShareAlike 3.0 Unported License. 
+## To view a copy of this license, visit 
+## http://creativecommons.org/licenses/by-nc-sa/3.0/ 
+##
+## ucheck-php: https://github.com/HansPinckaers/ucheck-php
+## ucheck-node: https://github.com/HansPinckaers/ucheck-node
+##
 
 include "user_info.php";
 
@@ -12,7 +20,7 @@ $token = $_SESSION['inschrijvingen_token'];
 
 if(isset($_SESSION['inschrijvingen_token']))
 {
-	$json = file_get_contents("http://109.72.92.55:3000/token/".$_SESSION['inschrijvingen_token']);			
+	$json = file_get_contents($NODE_SERVER."token/".$_SESSION['inschrijvingen_token']);			
 			
 	$_SESSION['inschrijvingen_token'] = "";
 
@@ -20,9 +28,9 @@ if(isset($_SESSION['inschrijvingen_token']))
 } else {
 	if($year)
 	{
-	$json = file_get_contents("http://109.72.92.55:3000/inschrijvingen/$user/$pwd/$year/");
+	$json = file_get_contents($NODE_SERVER."inschrijvingen/$user/$pwd/$year/");
 	} else {
-	$json = file_get_contents("http://109.72.92.55:3000/inschrijvingen/$user/$pwd/");
+	$json = file_get_contents($NODE_SERVER."inschrijvingen/$user/$pwd/");
 	}
 }
 
@@ -32,9 +40,9 @@ if($json == "Invalid token.")
 
 	if($year)
 	{
-		$json = file_get_contents("http://109.72.92.55:3000/inschrijvingen/$user/$pwd/$year/");
+		$json = file_get_contents($NODE_SERVER."inschrijvingen/$user/$pwd/$year/");
 	} else {
-		$json = file_get_contents("http://109.72.92.55:3000/inschrijvingen/$user/$pwd/");
+		$json = file_get_contents($NODE_SERVER."inschrijvingen/$user/$pwd/");
 	}
 }
 
@@ -42,9 +50,9 @@ if(!$json)
 {	
 	if($year)
 	{
-		$json = file_get_contents("http://ucheck.nodester.com/inschrijvingen/$user/$pwd/$year/");
+		$json = file_get_contents($NODE_FALLBACK."inschrijvingen/$user/$pwd/$year/");
 	} else {
-		$json = file_get_contents("http://ucheck.nodester.com/inschrijvingen/$user/$pwd/");
+		$json = file_get_contents($NODE_FALLBACK."inschrijvingen/$user/$pwd/");
 	}
 	
 	if(!$json)

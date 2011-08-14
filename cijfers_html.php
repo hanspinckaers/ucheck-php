@@ -1,4 +1,15 @@
 <?
+## Copyright (c) 2011 by Hans Pinckaers 
+##
+## This work is licensed under the Creative Commons 
+## Attribution-NonCommercial-ShareAlike 3.0 Unported License. 
+## To view a copy of this license, visit 
+## http://creativecommons.org/licenses/by-nc-sa/3.0/ 
+##
+## ucheck-php: https://github.com/HansPinckaers/ucheck-php
+## ucheck-node: https://github.com/HansPinckaers/ucheck-node
+##
+
 include "raw/cijfers.php";
 
 if(isset($vakken) && count($vakken) > 0)
@@ -71,7 +82,7 @@ $last = true;
 	 <? if($cijfer["her"] == "ja") { ?> <span style="color:red;">HER </span> <? } ?><? echo $cijfer["vak"]; ?>
 </td>
 <td class="cijfer">
-	<b <? if(!$cijfer["gehaald"]) { ?> style="color:#d63636;" <? } ?>><strong><? echo $cijfer["cijfer"]; ?></b>
+	<b <? if(!$cijfer["gehaald"]) { ?> style="color:#d63636;" <? } ?>><? echo $cijfer["cijfer"]; ?></b>
 </td>
 <td class="ects">
 	<em><? echo $cijfer["ects"]; ?></em>
@@ -97,7 +108,7 @@ Jouw studievoortgang laden <img style="top:6px; position:relative;" src="ajax-lo
 
 <? } else { ?>
 
-<h3>Geen cijfers gevonden, juiste inloggegevens ingevuld? <a href="logout.php">Opnieuw inloggen.</a></h3>
+<h3>Geen cijfers gevonden, juiste inloggegevens ingevuld? <br/><br/><a href="logout.php">Opnieuw inloggen.</a></h3>
 
 <? 
 }  
