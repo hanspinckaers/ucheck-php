@@ -8,3 +8,5 @@ oud/*
 scrapeusis/logs/*
 voortgang_cache/*
 beta_mail/*
+visitors.php
+mail.php
