@@ -108,7 +108,7 @@ Jouw studievoortgang laden <img style="top:6px; position:relative;" src="ajax-lo
 
 <? } else { ?>
 
-<h3>Geen cijfers gevonden, juiste inloggegevens ingevuld? <a href="logout.php">Opnieuw inloggen.</a></h3>
+<h3>Geen cijfers gevonden, juiste inloggegevens ingevuld? <br/><br/><a href="logout.php">Opnieuw inloggen.</a></h3>
 
 <? 
 }  

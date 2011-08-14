@@ -12,7 +12,7 @@
 
 include "user_info.php";
 
-$cookiefile = $_SERVER["DOCUMENT_ROOT"]."raw/cookies/".$user."_cijfersinschrijvingen.txt";
+$cookiefile = $DOCUMENT_ROOT."raw/cookies/".$user."_cijfersinschrijvingen.txt";
 
 $fp = fopen($cookiefile, "w");
 
@@ -136,4 +136,6 @@ if(isset($matches[1]))
 		
 	preg_match_all("/<B>(.*)./", $result, $matches);
 }	
+
+unlink($cookiefile);
 ?>

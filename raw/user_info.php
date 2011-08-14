@@ -10,13 +10,7 @@
 ## ucheck-node: https://github.com/HansPinckaers/ucheck-node
 ##
 
-function base64url_encode($data) { 
-  return rtrim(strtr(base64_encode($data), '+/', '-_'), '='); 
-} 
-
-function base64url_decode($data) { 
-  return base64_decode(str_pad(strtr($data, '-_', '+/'), strlen($data) % 4, '=', STR_PAD_RIGHT)); 
-} 
+include "setup.php";
 
 if(!isset($session))
 {
@@ -29,9 +23,17 @@ if(!isset($session))
 
 if(!isset($user))
 {
-	if(file_exists($_SERVER["DOCUMENT_ROOT"]."geheim/ucheck.php"))
+	function base64url_encode($data) { 
+	  return rtrim(strtr(base64_encode($data), '+/', '-_'), '='); 
+	} 
+	
+	function base64url_decode($data) { 
+	  return base64_decode(str_pad(strtr($data, '-_', '+/'), strlen($data) % 4, '=', STR_PAD_RIGHT)); 
+	} 
+	
+	if(file_exists($DOCUMENT_ROOT."geheim/ucheck.php"))
 	{	
-		include($_SERVER["DOCUMENT_ROOT"]."geheim/ucheck.php");
+		include($DOCUMENT_ROOT."geheim/ucheck.php");
 		
 		if($_POST['cookie'] != "")
 		{
@@ -82,10 +84,11 @@ if(!isset($user))
 			$_SESSION['pwd'] = base64url_encode($_POST['pwd'], $key);
 		}
 				
-		echo "test";
-		
-		$user = base64url_decode($_SESSION['user'], $key);
-		$pwd = base64url_decode($_SESSION['pwd'], $key);
+		if($_SESSION['user'])
+		{
+			$user = base64url_decode($_SESSION['user'], $key);
+			$pwd = base64url_decode($_SESSION['pwd'], $key);
+		}		
 	}
 	
 	

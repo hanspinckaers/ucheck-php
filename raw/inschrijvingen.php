@@ -10,9 +10,6 @@
 ## ucheck-node: https://github.com/HansPinckaers/ucheck-node
 ##
 
-header("Cache-Control: no-cache, must-revalidate"); // HTTP/1.1
-header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
-
 include "user_info.php";
 
 ini_set('display_errors', 0);
@@ -23,7 +20,7 @@ $token = $_SESSION['inschrijvingen_token'];
 
 if(isset($_SESSION['inschrijvingen_token']))
 {
-	$json = file_get_contents("http://109.72.92.55:3000/token/".$_SESSION['inschrijvingen_token']);			
+	$json = file_get_contents($NODE_SERVER."token/".$_SESSION['inschrijvingen_token']);			
 			
 	$_SESSION['inschrijvingen_token'] = "";
 
@@ -31,9 +28,9 @@ if(isset($_SESSION['inschrijvingen_token']))
 } else {
 	if($year)
 	{
-	$json = file_get_contents("http://109.72.92.55:3000/inschrijvingen/$user/$pwd/$year/");
+	$json = file_get_contents($NODE_SERVER."inschrijvingen/$user/$pwd/$year/");
 	} else {
-	$json = file_get_contents("http://109.72.92.55:3000/inschrijvingen/$user/$pwd/");
+	$json = file_get_contents($NODE_SERVER."inschrijvingen/$user/$pwd/");
 	}
 }
 
@@ -43,9 +40,9 @@ if($json == "Invalid token.")
 
 	if($year)
 	{
-		$json = file_get_contents("http://109.72.92.55:3000/inschrijvingen/$user/$pwd/$year/");
+		$json = file_get_contents($NODE_SERVER."inschrijvingen/$user/$pwd/$year/");
 	} else {
-		$json = file_get_contents("http://109.72.92.55:3000/inschrijvingen/$user/$pwd/");
+		$json = file_get_contents($NODE_SERVER."inschrijvingen/$user/$pwd/");
 	}
 }
 
@@ -53,9 +50,9 @@ if(!$json)
 {	
 	if($year)
 	{
-		$json = file_get_contents("http://ucheck.nodester.com/inschrijvingen/$user/$pwd/$year/");
+		$json = file_get_contents($NODE_FALLBACK."inschrijvingen/$user/$pwd/$year/");
 	} else {
-		$json = file_get_contents("http://ucheck.nodester.com/inschrijvingen/$user/$pwd/");
+		$json = file_get_contents($NODE_FALLBACK."inschrijvingen/$user/$pwd/");
 	}
 	
 	if(!$json)

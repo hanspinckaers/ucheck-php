@@ -19,25 +19,25 @@ ini_set('display_errors', 0);
 
 if(isset($_SESSION['cijfers_token']))
 {
-		$json = file_get_contents("http://109.72.92.55:3000/token/".$_SESSION['cijfers_token']);	
+	$json = file_get_contents($NODE_SERVER."token/".$_SESSION['cijfers_token']);	
 		
 	$_SESSION['cijfers_token'] = "";
 
 	unset($_SESSION['cijfers_token']);	
 } else {
-	$json = file_get_contents("http://109.72.92.55:3000/cijfers/$user/$pwd/");
+	$json = file_get_contents($NODE_SERVER."cijfers/$user/$pwd/");
 }
 
 if($json == "Invalid token.")
 {
 	mail("hans.pinckaers@gmail.com", "Invalid token! (cijfers token) ".$_SESSION['cijfers_token'], "",  "From: geneesleer@alwaysdata.net");
 
-	$json = file_get_contents("http://109.72.92.55:3000/cijfers/$user/$pwd/");
+	$json = file_get_contents($NODE_SERVER."cijfers/$user/$pwd/");
 }
 
 if(!$json)
 {
-	$json = file_get_contents("http://ucheck.nodester.com/cijfers/$user/$pwd/");
+	$json = file_get_contents($NODE_FALLBACK."cijfers/$user/$pwd/");
 	
 	if(!$json)
 	{

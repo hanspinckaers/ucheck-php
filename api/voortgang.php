@@ -12,6 +12,8 @@
 
 ini_set('display_errors', 0);
 
+include "raw/setup.php";
+
 function base64url_encode($data) { 
   return rtrim(strtr(base64_encode($data), '+/', '-_'), '='); 
 } 
@@ -31,7 +33,7 @@ if(file_exists("../geheim/iphone.php"))
 	$pwd =  base64url_decode($_GET['pass']);
 }
 	
-$url = "http://109.72.92.55:3000/voortgang/$user/$pwd/";
+$url = $NODE_SERVER."voortgang/$user/$pwd/";
 
 //open connection
 $ch = curl_init();
@@ -58,7 +60,7 @@ curl_close($ch);
 
 
 
-//$html = file_get_contents("http://109.72.92.55:3000/voortgang/$user/$pwd/");
+//$html = file_get_contents($NODE_SERVER."voortgang/$user/$pwd/");
 
 
 $studiesraw = explode("<td class='PSGROUPBOXLABEL'  align='left'><a name='DERIVED_SAA_DPR_GROUPBOX", $html);
@@ -461,7 +463,7 @@ Deze gegevens zijn meestal verouderd.
 </html>
 
 <?
-// Turn off all error reporting
+ Turn off all error reporting
 try {
 include('Galvanize.php');
 $GA = new Galvanize('UA-4063156-9');

@@ -17,7 +17,7 @@ $year = $_GET['year'];
 
 include "user_info.php";
 
-$cookiefile = $_SERVER["DOCUMENT_ROOT"]."raw/cookies/".$user."_vakken".time().".txt";
+$cookiefile = $DOCUMENT_ROOT."raw/cookies/".$user."_vakken".time().".txt";
 
 $fields = array(
             'userid'=>$user,
@@ -377,6 +377,11 @@ foreach($t_onderdelen as $onderdeel)
 	}
 		
 	$counter++;
+}
+
+if(!isset($keep_cookie))
+{
+	unlink($cookiefile);
 }
 
 ?>

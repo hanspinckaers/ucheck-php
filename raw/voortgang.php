@@ -12,7 +12,7 @@
 
 include "user_info.php";
 
-$cookiefile = $_SERVER["DOCUMENT_ROOT"]."raw/cookies/".$user."_vakken.txt";
+$cookiefile = $DOCUMENT_ROOT."raw/cookies/".$user."_vakken.txt";
 
 $fields = array(
             'userid'=>$user,
@@ -143,4 +143,6 @@ foreach( $studiesraw as $studieonderdeel )
 		}
 	}
 }
+
+unlink($cookiefile);
 ?>

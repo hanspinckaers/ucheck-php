@@ -14,6 +14,8 @@ $id = $_GET['nummer'];
 $gids_id = $_GET['q'];
 $aantal = $_GET['aantal_check'];
 
+$keep_cookie = true;
+
 include "details.php";
 
 if(count($onderdelen) != $aantal)
@@ -131,5 +133,6 @@ if(isset($matches[0]))
 	echo "<span style='color:orange;'>Het is niet bekend of het goed gegaan is, controleer onder inschrijvingen of deze eronder staat. Sorry!</span>";
 }
 
-//print_r($matches);
+unlink($cookiefile);
+
 ?>

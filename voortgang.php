@@ -10,18 +10,18 @@
 ## ucheck-node: https://github.com/HansPinckaers/ucheck-node
 ##
 
-ini_set('display_errors', 0);
+//ini_set('display_errors', 0);
 
-include("raw/user_info.php");
+include "raw/user_info.php";
 
-$filename = $_SERVER["DOCUMENT_ROOT"]."voortgang_cache/".$user.".txt";
+$filename = $DOCUMENT_ROOT."voortgang_cache/".$user.".txt";
 
 if(file_exists($filename) && ((time()-filemtime($filename))/(60*60) < 24*7))
 {	
 	$html = file_get_contents($filename);
 } else {
 	
-	$url = "http://109.72.92.55:3000/voortgang/$user/$pwd/";
+	$url = $NODE_SERVER."voortgang/$user/$pwd/";
 	
 	//open connection
 	$ch = curl_init();

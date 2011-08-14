@@ -42,19 +42,22 @@
 
 <?
 // Check of student niet al gemaild heeft!
-$filename = "raw/mail/hebben_gemaild.txt";
-
-$hebben_gemaild[] = array();
-$gemaild = false;
-
-if(filesize($filename) > 0 && $user){
-	$handle = fopen($filename, "r");
-	$contents = fread($handle, filesize($filename));
-	$hebben_gemaild = unserialize($contents);
-	
-	if(in_array($user, $hebben_gemaild))
+if(file_exists("raw/mail/hebben_gemaild.txt"))
 	{
-		$gemaild = true;
+	$filename = "raw/mail/hebben_gemaild.txt";
+	
+	$hebben_gemaild[] = array();
+	$gemaild = false;
+	
+	if(filesize($filename) > 0 && $user){
+		$handle = fopen($filename, "r");
+		$contents = fread($handle, filesize($filename));
+		$hebben_gemaild = unserialize($contents);
+		
+		if(in_array($user, $hebben_gemaild))
+		{
+			$gemaild = true;
+		}
 	}
 }
 

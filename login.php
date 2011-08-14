@@ -10,7 +10,7 @@
 ## ucheck-node: https://github.com/HansPinckaers/ucheck-node
 ##
 
- include "header.php" ?>
+include "header.php" ?>
 
 <div id="login">
 <h3>uSis vervelend &amp; ingewikkeld? Probeer uCheck!</h3>
