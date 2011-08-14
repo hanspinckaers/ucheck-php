@@ -1,5 +1,5 @@
 .DS_Store
-.ht_access
+.htaccess
 beta/*
 beta
 raw/cookies/*
