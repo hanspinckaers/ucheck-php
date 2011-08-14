@@ -82,7 +82,7 @@ $last = true;
 	 <? if($cijfer["her"] == "ja") { ?> <span style="color:red;">HER </span> <? } ?><? echo $cijfer["vak"]; ?>
 </td>
 <td class="cijfer">
-	<b <? if(!$cijfer["gehaald"]) { ?> style="color:#d63636;" <? } ?>><strong><? echo $cijfer["cijfer"]; ?></b>
+	<b <? if(!$cijfer["gehaald"]) { ?> style="color:#d63636;" <? } ?>><? echo $cijfer["cijfer"]; ?></b>
 </td>
 <td class="ects">
 	<em><? echo $cijfer["ects"]; ?></em>

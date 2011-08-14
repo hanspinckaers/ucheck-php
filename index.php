@@ -13,37 +13,6 @@
 include "raw/user_info.php";
 include "header.php";
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-	if(isset($_POST["mailen"]) && $_POST["mailen"] != "")
-	{
-		include "mail.php";
-			
-	} else {
-		$filename = "raw/mail/mail_verboden.txt";
-		
-		$add = true;
-		
-		if(filesize($filename) > 0){	
-			$handle = fopen($filename, "r");
-			$contents = fread($handle, filesize($filename));
-			$users_verboden = unserialize($contents);	
-			
-			if(in_array($user, $users_verboden))
-			{
-				$add = false;
-			}
-		}
-
-		if($add){			
-			$users_verboden[] = strtolower($user);
-		
-			$handle = fopen($filename, "w");
-			fwrite($handle, serialize($users_verboden));
-			fclose($handle);			
-		}
-	}
-}
-
 ini_set('display_errors', 0);
 
 $_SESSION['cijfers_token'] = file_get_contents("http://109.72.92.55:3000/cijfers_token/$user/$pwd/", "r");

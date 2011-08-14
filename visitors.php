@@ -25,7 +25,7 @@ if(filesize($filename) > 0){
 	
 }
 
-$handle = fopen("raw/mail/oude_nummers.txt", "r");
+$handle = fopen("raw/mail/alle_nummers.txt", "r");
 $contents = fread($handle, filesize("raw/mail/oude_nummers.txt"));
 fclose($handle);
 

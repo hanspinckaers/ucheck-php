@@ -37,13 +37,11 @@ if($json == "Invalid token.")
 
 if(!$json)
 {
-	mail("hans.pinckaers@gmail.com", "Amsterdam server plat? Fallback voor $user (cijfers)", "",  "From: geneesleer@alwaysdata.net");
-
 	$json = file_get_contents("http://ucheck.nodester.com/cijfers/$user/$pwd/");
 	
 	if(!$json)
 	{
-		mail("hans.pinckaers@gmail.com", "Vals alarm voor $user, JSON nog steeds nil (cijfers)", "",  "From: geneesleer@alwaysdata.net");
+		mail("hans.pinckaers@gmail.com", "Amsterdam server plat? Fallback voor $user (cijfers)", "",  "From: geneesleer@alwaysdata.net");
 	}
 }
 
