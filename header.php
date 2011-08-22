@@ -18,7 +18,8 @@
   <meta name="author" content="Hans Pinckaers">
   <meta name="format-detection" content="telephone=no">
   <meta name="Description" content="uSis vervelend &amp; ingewikkeld? Probeer uCheck. uCheck automatiseert ingewikkelde stappen op uSis. Zodat jij je makkelijk inschrijft voor studieonderdelen.">
-  
+  <meta name="viewport" content="width=1024" >
+
   <link rel="stylesheet" href="min/style.css" />
   <link rel="stylesheet" href="min/grid.css" />
 
@@ -82,9 +83,19 @@ if($user)
 <?
 }
 ?>
-<!--<span style="color:red">
-In verband met de aansluiting van uSis op Studielink zal uSis gesloten zijn voor alle gebruikers tussen donderdag 31 maart 14:00 uur en donderdag 7 april.
-</span>
-<hr class="space"/>
-<hr />-->
 <hr />
+<span style="color:gray">
+uCheck is vanaf vandaag <b>open-source</b>! Help mee via GitHub: <a href="https://github.com/HansPinckaers/ucheck-php">https://github.com/HansPinckaers/ucheck-php</a></span>
+<br/><br/>
+<hr />
+<?
+if(isset($user))
+{
+?>
+<span style="color:green">
+<b>Nieuw</b>: Krijg een mail bij nieuwe cijfers! <a href="mail/">Hier aanmelden.</a> <i style="color:gray;">(plaatsen beperkt aan servercapaciteit)</i></span>
+<br/><br/>
+<hr />
+<?
+}
+?>
