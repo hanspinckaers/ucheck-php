@@ -98,7 +98,7 @@ if(!isset($user))
 	
 		session_destroy();
 	
-		header('Location: login') ;
+		header('Location: /login') ;
 	} else {
 	//	header('Location: login.php?error=true') ;
 	}
