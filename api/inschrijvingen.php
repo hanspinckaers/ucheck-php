@@ -12,7 +12,7 @@
 
 ini_set('display_errors', 0);
 
-include "raw/setup.php";
+include "../raw/setup.php";
 
 function base64url_encode($data) { 
   return rtrim(strtr(base64_encode($data), '+/', '-_'), '='); 

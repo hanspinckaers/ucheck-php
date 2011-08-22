@@ -12,7 +12,7 @@
 
 ini_set('display_errors', 0);
 
-include "raw/setup.php";
+include "../raw/setup.php";
 
 function base64url_encode($data) { 
   return rtrim(strtr(base64_encode($data), '+/', '-_'), '='); 
@@ -29,6 +29,7 @@ if(file_exists("../geheim/iphone.php"))
 	include("../geheim/iphone.php");
 
 	$pwd = $geheim->decrypt($_GET['pass'], $key, true);
+	
 } else {
 	$pwd =  base64url_decode($_GET['pass']);
 }
