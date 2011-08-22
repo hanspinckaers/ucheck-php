@@ -11,5 +11,6 @@ scrapeusis/logs/*
 voortgang_cache/*
 !voortgang_cache/README
 beta_mail/*
+mail/*
 visitors.php
 mail.php
