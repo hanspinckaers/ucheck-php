@@ -34,7 +34,7 @@ if(file_exists("../geheim/iphone.php"))
 }
 	
 	
-echo $json = file_get_contents($NODE_SERVER."inschrijvingen/$user/$pwd/");
+echo $json = file_get_contents($NODE_SERVER."inschrijvingen/$user/$pwd/11/");
 
 // Turn off all error reporting
 try {

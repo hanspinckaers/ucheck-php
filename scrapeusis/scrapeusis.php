@@ -38,7 +38,9 @@ $cookiefile = "/home/geneesleer/ucheck/raw/"."cookies/s0924121_vakken.txt";
 
 $logfile = fopen($logfilename, 'w') or die("can't open file");
 
-$years = array("10","11");
+// $years = array("10","11");
+
+$years = array("11");
 
 foreach($years as $year)
 {
