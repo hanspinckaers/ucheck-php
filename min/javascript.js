@@ -774,7 +774,7 @@ function inschrijven_detail(z, b, c, a)
         {
            	td_loading.set("html", d);
            	
-           	if(d.search("Het is niet bekend of het goed gegaan is") == -1)
+           	if(d.search("Voltooid") != -1)
            	{
 	           	$("row_detail_"+b).setStyle("background-color", "green");
 	           	
