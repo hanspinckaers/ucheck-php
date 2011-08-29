@@ -12,7 +12,7 @@
 
 ini_set('display_errors', 0);
 
-include "raw/setup.php";
+include "../raw/setup.php";
 
 function base64url_encode($data) { 
   return rtrim(strtr(base64_encode($data), '+/', '-_'), '='); 
@@ -24,6 +24,7 @@ function base64url_decode($data) {
 
 $user = $_GET['user'];
 
+
 if(file_exists("../geheim/iphone.php"))
 {
 	include("../geheim/iphone.php");
@@ -32,7 +33,7 @@ if(file_exists("../geheim/iphone.php"))
 } else {
 	$pwd =  base64url_decode($_GET['pass']);
 }
-	
+
 $url = $NODE_SERVER."voortgang/$user/$pwd/";
 
 //open connection
@@ -337,7 +338,7 @@ foreach($studies as $studie)
 	
 	<? if($studie['eenh_vereist'] - $studie['eenh_gevolgd'] != 0){ ?>
 	<div class="nog_balk">
-	nog <strong><? echo $studie['eenh_vereist'] - $studie['eenh_gevolgd']; ?></strong> ECTS <em>(<? echo 100-round(($studie['eenh_gevolgd'] / $studie['eenh_vereist'])*100) ?>%)</em>
+	<strong><? echo $studie['eenh_vereist'] - $studie['eenh_gevolgd']; ?></strong> ECTS <em>(<? echo 100-round(($studie['eenh_gevolgd'] / $studie['eenh_vereist'])*100) ?>%)</em>
 	<? } ?>
 	</div>
 	
@@ -378,7 +379,7 @@ if($onderdeel['eenh_gevolgd'] && $onderdeel['eenh_vereist'])
 	
 	<? if($onderdeel['eenh_vereist'] - $onderdeel['eenh_gevolgd'] != 0){ ?>
 	<div class="nog_balk">
-	nog <strong><? echo $onderdeel['eenh_vereist'] - $onderdeel['eenh_gevolgd']; ?></strong> ECTS<em> (<? echo 100-round(($onderdeel['eenh_gevolgd'] / $onderdeel['eenh_vereist'])*100) ?>%)</em>
+	<strong><? echo $onderdeel['eenh_vereist'] - $onderdeel['eenh_gevolgd']; ?></strong> ECTS<em> (<? echo 100-round(($onderdeel['eenh_gevolgd'] / $onderdeel['eenh_vereist'])*100) ?>%)</em>
 	</div>
 	<? } ?>
 	
@@ -431,7 +432,7 @@ foreach($onderdeel['sub'] as $sub)
 	
 	<? if($sub['eenh_vereist'] - $sub['eenh_gevolgd'] != 0){ ?>
 	<div class="nog_balk">
-	nog <strong><? echo $sub['eenh_vereist'] - $sub['eenh_gevolgd']; ?></strong> ECTS<em> (<? echo 100-round(($sub['eenh_gevolgd'] / $sub['eenh_vereist'])*100) ?>%)</em>
+	<strong><? echo $sub['eenh_vereist'] - $sub['eenh_gevolgd']; ?></strong> ECTS<em> (<? echo 100-round(($sub['eenh_gevolgd'] / $sub['eenh_vereist'])*100) ?>%)</em>
 	</div>
 	<? } ?>
 	
@@ -463,7 +464,7 @@ Deze gegevens zijn meestal verouderd.
 </html>
 
 <?
- Turn off all error reporting
+// Turn off all error reporting
 try {
 include('Galvanize.php');
 $GA = new Galvanize('UA-4063156-9');

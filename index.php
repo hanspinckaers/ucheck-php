@@ -16,7 +16,7 @@ include "header.php";
 //ini_set('display_errors', 0);
 
 $_SESSION['cijfers_token'] = file_get_contents($NODE_SERVER."cijfers_token/$user/$pwd/", "r");
-$_SESSION['inschrijvingen_token'] = file_get_contents($NODE_SERVER."inschrijvingen_token/$user/$pwd/10/", "r");
+$_SESSION['inschrijvingen_token'] = file_get_contents($NODE_SERVER."inschrijvingen_token/$user/$pwd/11/", "r");
 
 ?>
 
@@ -46,7 +46,7 @@ if(file_exists($filename) && ((time()-filemtime($filename))/(60*60) < 24*7))
 <p>
 <div class="word_line">
 </div>
-<span id="filter_year_keuze" class="word_line"><a href="#!" rel="10" onclick="load_year(10);" class="selected selectable">2010 - 2011</a> | <a href="#" onclick="load_year(11);" rel="11" class="selectable">2011 - 2012</a></span>
+<span id="filter_year_keuze" class="word_line"><a href="#!" rel="10" onclick="load_year(10);" class="selectable">2010 - 2011</a> | <a href="#" onclick="load_year(11);" rel="11" class="selectable selected">2011 - 2012</a></span>
 </p>
 </div>
 
@@ -184,7 +184,7 @@ if(file_exists($filename) && ((time()-filemtime($filename))/(60*60) < 24*7))
 <p>
 <div class="word_line">
 </div>
-<span id="filter_year_keuze_inschrijven" class="word_line"><a href="#!" rel="10" onclick="load_year_and_studie(10);" class="selected selectable">2010 - 2011</a> | <a href="#" onclick="load_year_and_studie(11);" rel="11" class="selectable">2011 - 2012</a></span>
+<span id="filter_year_keuze_inschrijven" class="word_line"><a href="#!" rel="10" onclick="load_year_and_studie(10);" class="selectable">2010 - 2011</a> | <a href="#" onclick="load_year_and_studie(11);" rel="11" class="selected selectable">2011 - 2012</a></span>
 </p>
 </div>
 
@@ -337,7 +337,7 @@ if(file_exists($filename) && ((time()-filemtime($filename))/(60*60) < 24*7))
 			  	}, 500);
 	*/
 			
-			var myRequest = new Request({url: 'full_inschrijvingen.php', evalScripts:true, method: 'get', onSuccess: function(responseText, responseXML) {
+			var myRequest = new Request({url: 'full_inschrijvingen.php?year=11', evalScripts:true, method: 'get', onSuccess: function(responseText, responseXML) {
 				$("inschrijvingen").set('html',responseText);	
 				
 				<?
@@ -420,23 +420,7 @@ $("mail_button").addEvent("click", function(e)
 </script>
 
 
-<script type="text/javascript" charset="utf-8">
-  var is_ssl = ("https:" == document.location.protocol);
-  var asset_host = is_ssl ? "https://s3.amazonaws.com/getsatisfaction.com/" : "http://s3.amazonaws.com/getsatisfaction.com/";
-  document.write(unescape("%3Cscript src='" + asset_host + "javascripts/feedback-v2.js' type='text/javascript'%3E%3C/script%3E"));
-</script>
-
-<script type="text/javascript" charset="utf-8">
-  var feedback_widget_options = {};
-
-  feedback_widget_options.display = "overlay";  
-  feedback_widget_options.company = "ucheck";
-  feedback_widget_options.placement = "right";
-  feedback_widget_options.color = "#222";
-  feedback_widget_options.style = "idea";
-
-  var feedback_widget = new GSFN.feedback_widget(feedback_widget_options);
-</script>
+<a href="https://hanspinckaers.wufoo.com/forms/z7x3k7/" onclick="window.open(this.href,  null, 'height=470, width=680, toolbar=0, location=0, status=1, scrollbars=1, resizable=1'); return false" title="uCheck Feedback" style="top:260px; height:118px; color:white; cursor:pointer; text-indent:-100000px; overflow:hidden; position:absolute; z-index:100000; right:0px; left:auto; margin-right:0px; margin-left:auto; width:35px; background-image:url(Feedback.png);">Please fill out my form.</a>
 
 <?  
 if(file_exists("raw/mail/bezocht.txt"))
