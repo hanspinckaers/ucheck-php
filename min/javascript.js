@@ -774,11 +774,19 @@ function inschrijven_detail(z, b, c, a)
         {
            	td_loading.set("html", d);
            	
-           	$("row_detail_"+b).setStyle("background-color", "green");
-           	
-           	$$("#row_detail_" + b + " td").setStyle("color", "white");
-           	$$("#row_detail_" + b + " td").setStyle("border-color", "#49b83c");
-           	
+           	if(d.search("Het is niet bekend of het goed gegaan is") == -1)
+           	{
+	           	$("row_detail_"+b).setStyle("background-color", "green");
+	           	
+	           	$$("#row_detail_" + b + " td").setStyle("color", "white");
+	           	$$("#row_detail_" + b + " td").setStyle("border-color", "#49b83c");
+           	} else {
+	           	$("row_detail_"+b).setStyle("background-color", "orange");
+	           	
+	           	$$("#row_detail_" + b + " td").setStyle("color", "white");
+	           	$$("#row_detail_" + b + " td").setStyle("border-color", "#d29545");           		
+           	}
+
            	td_loading.setStyle("padding-top", "10px");
            	load_year(year);
         }

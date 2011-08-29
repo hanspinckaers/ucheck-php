@@ -49,7 +49,7 @@ curl_setopt($ch, CURLOPT_COOKIEFILE, $cookiefile);
 curl_setopt($ch, CURLOPT_COOKIEJAR, $cookiefile);
 
 curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 1);
-curl_setopt($ch, CURLOPT_TIMEOUT, 3);
+curl_setopt($ch, CURLOPT_TIMEOUT, 5);
 
 curl_exec($ch);
 
@@ -71,7 +71,7 @@ curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($ch, CURLOPT_NOBODY, 1);
 
 curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 1);
-curl_setopt($ch, CURLOPT_TIMEOUT, 3);
+curl_setopt($ch, CURLOPT_TIMEOUT, 5);
 
 curl_setopt($ch, CURLOPT_COOKIEFILE, $cookiefile);
 curl_setopt($ch, CURLOPT_COOKIEJAR, $cookiefile);
@@ -101,7 +101,7 @@ curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 0);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
 curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 1);
-curl_setopt($ch, CURLOPT_TIMEOUT, 3);
+curl_setopt($ch, CURLOPT_TIMEOUT, 5);
 
 curl_setopt($ch, CURLOPT_COOKIEFILE, $cookiefile);
 curl_setopt($ch, CURLOPT_COOKIEJAR, $cookiefile);
@@ -142,7 +142,7 @@ curl_setopt($ch, CURLOPT_COOKIEJAR, $cookiefile);
 curl_setopt($ch, CURLOPT_NOBODY, 1);
 
 curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 1);
-curl_setopt($ch, CURLOPT_TIMEOUT, 3);
+curl_setopt($ch, CURLOPT_TIMEOUT, 5);
 
 curl_setopt($ch,CURLOPT_POST, 13);
 curl_setopt($ch,CURLOPT_POSTFIELDS,"ICType=Panel&ICElementNum=0&ICAction=SNS_DERIVED_FETCH_PUSHBUTTON&ICXPos=0&ICYPos=0&ICFocus=&ICSaveWarningFilter=0&ICChanged=0&ICResubmit=0&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$5$=0100&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$24$=0100");
@@ -174,7 +174,7 @@ curl_setopt($ch, CURLOPT_COOKIEJAR, $cookiefile);
 curl_setopt($ch, CURLOPT_NOBODY, 1);
 
 curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 1);
-curl_setopt($ch, CURLOPT_TIMEOUT, 3);
+curl_setopt($ch, CURLOPT_TIMEOUT, 5);
 
 curl_setopt($ch,CURLOPT_POST, 14);
 curl_setopt($ch,CURLOPT_POSTFIELDS,"ICType=Panel&ICElementNum=0&ICAction=SNS_CRSESRCH_WK_SEARCH_BTN&ICXPos=0&ICYPos=0&ICFocus=&ICSaveWarningFilter=0&ICChanged=0&ICResubmit=0&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$4$=0100&SNS_CRSESRCH_WK_SUBJECT$54$=&SNS_CRSESRCH_WK_CATALOG_NBR=".$_GET['q']."&SNS_CRSESRCH_WK_DESCR1=&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$59$\$chk$0=N&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$59$\$chk$1=N&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$59$\$chk$2=N&SNS_CRSESRCH_WK_SNS_SEL_OPERATOR=&SNS_CRSESRCH_WK_UNITS_MAXIMUM=0.00&SNS_CRSESRCH_WK_ACAD_ORG=&SNS_CRSESRCH_WK_SNS_CAR_SEL$69$\$chk$0=N&SNS_CRSESRCH_WK_SNS_CAR_SEL$69$\$chk$1=N&SNS_CRSESRCH_WK_SNS_CAR_SEL$69$\$chk$2=N&SNS_CRSESRCH_WK_LANGUAGE=&SNS_DERIVED_CRSE_ATTR=&SNS_DERIVED_CRSE_ATTR_VALUE=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$92$=0100");
@@ -202,7 +202,7 @@ curl_setopt($ch, CURLOPT_COOKIEFILE, $cookiefile);
 curl_setopt($ch, CURLOPT_COOKIEJAR, $cookiefile);
 
 curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 1);
-curl_setopt($ch, CURLOPT_TIMEOUT, 3);
+curl_setopt($ch, CURLOPT_TIMEOUT, 5);
 
 curl_setopt($ch,CURLOPT_POST, 14);
 curl_setopt($ch,CURLOPT_POSTFIELDS,"ICType=Panel&ICElementNum=0&ICAction=CATALOG_NBR$0&ICXPos=0&ICYPos=0&ICFocus=&ICSaveWarningFilter=0&ICChanged=0&ICResubmit=0&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$4$=0100&SNS_CRSESRCH_WK_SUBJECT$54$=&SNS_CRSESRCH_WK_CATALOG_NBR=".$_GET['q']."&SNS_CRSESRCH_WK_DESCR1=&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$59$\$chk$0=N&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$59$\$chk$1=N&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$59$\$chk$2=N&SNS_CRSESRCH_WK_SNS_SEL_OPERATOR=&SNS_CRSESRCH_WK_UNITS_MAXIMUM=0.00&SNS_CRSESRCH_WK_ACAD_ORG=&SNS_CRSESRCH_WK_SNS_CAR_SEL$69$\$chk$0=N&SNS_CRSESRCH_WK_SNS_CAR_SEL$69$\$chk$1=N&SNS_CRSESRCH_WK_SNS_CAR_SEL$69$\$chk$2=N&SNS_CRSESRCH_WK_LANGUAGE=&SNS_DERIVED_CRSE_ATTR=&SNS_DERIVED_CRSE_ATTR_VALUE=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$92$=0100");
@@ -229,7 +229,7 @@ curl_setopt($ch, CURLOPT_COOKIEFILE, $cookiefile);
 curl_setopt($ch, CURLOPT_COOKIEJAR, $cookiefile);
 
 curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 1);
-curl_setopt($ch, CURLOPT_TIMEOUT, 3);
+curl_setopt($ch, CURLOPT_TIMEOUT, 5);
 
 curl_setopt($ch,CURLOPT_POST, 14);
 if($year=="10")

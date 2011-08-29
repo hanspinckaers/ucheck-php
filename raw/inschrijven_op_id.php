@@ -114,13 +114,12 @@ curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($ch, CURLOPT_COOKIEFILE, $cookiefile);
 curl_setopt($ch, CURLOPT_COOKIEJAR, $cookiefile);
 
-curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 1);
-curl_setopt($ch, CURLOPT_TIMEOUT, 3);
+// curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 1);
+// curl_setopt($ch, CURLOPT_TIMEOUT, 3);
 
 curl_setopt($ch,CURLOPT_POST, 14);
 curl_setopt($ch,CURLOPT_POSTFIELDS,"ICType=Panel&ICElementNum=0&ICAction=DERIVED_REGFRM1_SSR_PB_SUBMIT&ICXPos=0&ICYPos=0&ICFocus=&ICSaveWarningFilter=0&ICChanged=-1&ICResubmit=0&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$4$=0100&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$60$=0100");
 
-// print_r(curl_getinfo($ch));
 $result = curl_exec($ch);
 
 preg_match("/<B>(.*)./", $result, $matches);
