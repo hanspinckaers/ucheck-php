@@ -13,10 +13,8 @@
 include "raw/user_info.php";
 include "header.php";
 
-//ini_set('display_errors', 0);
-
 $_SESSION['cijfers_token'] = file_get_contents($NODE_SERVER."cijfers_token/$user/$pwd/", "r");
-$_SESSION['inschrijvingen_token'] = file_get_contents($NODE_SERVER."inschrijvingen_token/$user/$pwd/11/", "r");
+// $_SESSION['inschrijvingen_token'] = file_get_contents($NODE_SERVER."inschrijvingen_token/$user/$pwd/11/", "r");
 
 ?>
 
