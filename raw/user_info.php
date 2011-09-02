@@ -64,8 +64,7 @@ if(!isset($user))
 		 	
 		}
 		
-		$user = $geheim->decrypt($_SESSION['user'], $key);
-				
+		$user = strtolower($geheim->decrypt($_SESSION['user'], $key));
 		$pwd = $geheim->decrypt($_SESSION['pwd'], $key);
 	} else {
 		if($_POST['cookie'] != "")
@@ -86,7 +85,7 @@ if(!isset($user))
 				
 		if($_SESSION['user'])
 		{
-			$user = base64url_decode($_SESSION['user'], $key);
+			$user = strtolower(base64url_decode($_SESSION['user'], $key));
 			$pwd = base64url_decode($_SESSION['pwd'], $key);
 		}		
 	}
