@@ -93,7 +93,30 @@ if(isset($user))
 {
 ?>
 <span style="color:green">
-<b>Nieuw</b>: Krijg een mail bij nieuwe cijfers! <a href="mail/">Hier aanmelden.</a> <i style="color:gray;">(plaatsen beperkt aan servercapaciteit)</i></span>
+<?
+$maillogfilename = "/home/geneesleer/ucheck/mail/cache/".$user;
+
+if(!file_exists($maillogfilename) || filesize($maillogfilename) == 0)
+{
+	$post = array();
+} else {
+	$logfile = fopen($maillogfilename, 'r');
+	if($logfile) $contents = fread($logfile, filesize($maillogfilename));
+	$post = unserialize($contents);
+}
+
+if ($post && base64_decode($post["pass"]) != "") 
+{
+?>
+<b>Mailservice</b>: uCheck checkt nog steeds jouw cijfers! <a href="mail/">Hier afmelden.</a>
+<?
+} else {
+?>
+<b>Nieuw</b>: Krijg een mail bij nieuwe cijfers! <a href="mail/">Hier aanmelden.</a> <i style="color:gray;">(plaatsen beperkt aan servercapaciteit) (je bent nog niet aangemeld)</i>
+<?
+}
+?>
+</span>
 <br/><br/>
 <hr />
 <?
