@@ -10,8 +10,11 @@
 ## ucheck-node: https://github.com/HansPinckaers/ucheck-node
 ##
 
-header("Cache-Control: no-cache, must-revalidate"); // HTTP/1.1
-header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
+if(!$keep_cookie)
+{
+	header("Cache-Control: no-cache, must-revalidate"); // HTTP/1.1
+	header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
+}
 
 $year = $_GET['year'];
 
@@ -209,6 +212,7 @@ curl_setopt($ch,CURLOPT_POSTFIELDS,"ICType=Panel&ICElementNum=0&ICAction=CATALOG
 
 // print_r(curl_getinfo($ch));
 $result = curl_exec($ch);
+
 
 unset($ch);
 
