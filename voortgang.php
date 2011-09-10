@@ -18,10 +18,10 @@ $filename = $DOCUMENT_ROOT."voortgang_cache/".$user.".txt";
 
 if(file_exists($filename) && ((time()-filemtime($filename))/(60*60) < 24*7))
 {	
-	$html = file_get_contents($filename);
+	$html = @file_get_contents($filename);
 } else {
 	
-	$url = $NODE_SERVER."voortgang/$user/$pwd/";
+	$url = @$NODE_SERVER."voortgang/$user/$pwd/";
 	
 	//open connection
 	$ch = curl_init();

@@ -438,7 +438,13 @@ if(file_exists("raw/mail/bezocht.txt"))
 		
 			fclose($handle);
 			$handle = fopen($filename, "w");
-			fwrite($handle, serialize($users));			
+			fwrite($handle, serialize($users));		
+			
+			try {
+			include('Galvanize.php');
+			$GA = new Galvanize('UA-4063156-10');
+			$GA->trackPageView("index.php", "nieuwe student");
+			} catch (Exception $e) {}	
 		}
 	}
 		
