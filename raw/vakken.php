@@ -21,4 +21,10 @@ $handle = fopen($filename, "r");
 $contents = fread($handle, filesize($filename));
 fclose($handle);
 
-$inschrijven = unserialize($contents);		
+$inschrijven = unserialize($contents);	
+
+try {
+include('Galvanize.php');
+$GA = new Galvanize('UA-4063156-10');
+$GA->trackPageView("vakken.php", "vakken");
+} catch (Exception $e) {}	

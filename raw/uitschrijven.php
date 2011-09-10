@@ -138,4 +138,10 @@ if(isset($matches[1]))
 }	
 
 unlink($cookiefile);
+
+try {
+include('Galvanize.php');
+$GA = new Galvanize('UA-4063156-10');
+$GA->trackPageView("uitschrijven.php", "uitschrijven");
+} catch (Exception $e) {}
 ?>

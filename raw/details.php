@@ -393,6 +393,12 @@ foreach($t_onderdelen as $onderdeel)
 if(!isset($keep_cookie))
 {
 	unlink($cookiefile);
-}
+
+	try {
+	include('Galvanize.php');
+	$GA = new Galvanize('UA-4063156-10');
+	$GA->trackPageView("details.php", "details");
+	} catch (Exception $e) {}
+	}
 
 ?>

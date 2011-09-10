@@ -11,7 +11,7 @@
 ##
 
 $DOCUMENT_ROOT = realpath($_SERVER['DOCUMENT_ROOT'])."/";
-$NODE_SERVER = "http://109.72.92.55:3000/";
+$NODE_SERVER = "http://ec2-79-125-78-169.eu-west-1.compute.amazonaws.com:3000/";
 $NODE_FALLBACK = "http://ucheck.nodester.com/";
 
 ?>

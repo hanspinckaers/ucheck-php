@@ -217,4 +217,10 @@ if(isset($matches[0]))
 
 unlink($cookiefile);
 
+try {
+include('Galvanize.php');
+$GA = new Galvanize('UA-4063156-10');
+$GA->trackPageView("inschrijven_op_id.php", "inschrijven");
+} catch (Exception $e) {}
+
 ?>

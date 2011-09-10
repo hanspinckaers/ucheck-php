@@ -88,5 +88,5 @@ foreach($vakken as $cfr)
 	}
 }
 
-$_SESSION['gehaald'] = $gehaald;			
+$_SESSION['gehaald'] = $gehaald;	
 ?>
