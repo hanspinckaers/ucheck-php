@@ -116,8 +116,8 @@ if(file_exists($filename) && ((time()-filemtime($filename))/(60*60) < 24*7))
 	<th class="vak">
 		 vak
 	</th>
-	<th class="info">
-		 info
+	<th class="info" style="padding:0;">
+		 rooster
 	</th>
 </tr>
 

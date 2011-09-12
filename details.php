@@ -78,7 +78,7 @@ $table = true;
 preg_match("/\(([0-9]+)/", $onderdeel['Nr studieactiv.'], $usis_code);
 ?>
 <tr id="row_detail_<? echo $onderdeel['id']; echo "_".$nummer_onderdeel ?>">
-  <td><? echo $onderdeel['Nr studieactiv.']; ?> (<i><a href="roosterinfo.php?id=<? echo $usis_code[1]; ?>" target="_blank" onclick="window.open(this.href,'window','width=730,height=480,resizable,scrollbars,toolbar,menubar') ;return false;">roosterinformatie</a></i>)</td>
+  <td><? echo $onderdeel['Nr studieactiv.']; ?> (<i><a href="roosterinfo.php?id=<? echo $usis_code[1]; ?>&title=<? echo $onderdeel['Omschrijving']; ?> - <? echo $onderdeel['Nr studieactiv.']; ?>" target="_blank" onclick="window.open(this.href,'window','top=100,width=730,height=480,resizable,scrollbars,toolbar,menubar') ;return false;">roosterinformatie</a></i>)</td>
   <td><? echo $onderdeel['Eenheden']; ?></td>
   <td><? echo $onderdeel['Status']; ?></td>
   <td class="inschrijving_link">

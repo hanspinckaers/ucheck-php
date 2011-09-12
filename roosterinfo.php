@@ -1,10 +1,14 @@
 <?
-	header("Cache-Control: no-cache, must-revalidate"); // HTTP/1.1
-	header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
+header("Cache-Control: no-cache, must-revalidate"); // HTTP/1.1
+header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
+ini_set(display_errors, 1);
+setlocale(LC_TIME, 'NL_nl');
+date_default_timezone_set("Europe/Amsterdam");
 
 include 'raw/user_info.php';
 
 $id = $_GET["id"];
+$title = htmlspecialchars($_GET["title"]);
 
 $cookiefile = $DOCUMENT_ROOT."raw/cookies/".$user."_rooster".time().".txt";
 
@@ -37,15 +41,47 @@ curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
 curl_setopt($ch, CURLOPT_COOKIEFILE, $cookiefile);
 curl_setopt($ch, CURLOPT_COOKIEJAR, $cookiefile);
 
+curl_setopt($ch, CURLOPT_HEADER, 'accept-language: nl');
+
 curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 1);
 curl_setopt($ch, CURLOPT_TIMEOUT, 5);
 
-echo "<link rel='stylesheet' type='text/css' href='https://usis.leidenuniv.nl/cs/S040PRD/cache/SSS_STYLESHEET_DUT_1.css'/ >";
-
-echo curl_exec($ch);
+$html = curl_exec($ch);
 
 //print_r(curl_getinfo($ch));
 
 curl_close($ch);
+
+
+$html = str_replace("<link rel='stylesheet' type='text/css' href='/cs/S040PRD/cache/SSS_STYLESHEET_DUT_1.css' />", "<link rel='stylesheet' type='text/css' href='min/usis.css' />", $html);
+
+// /cs/S040PRD/cache/PS_CS_STATUS_OPEN_ICN_DUT_1.gif
+// /cs/S040PRD/cache/PS_CS_STATUS_CLOSED_ICN_DUT_1.gif
+// /cs/S040PRD/cache/PS_CS_STATUS_WAITLIST_ICN_DUT_1.gif 
+// /cs/S040PRD/cache/PT_PROCESSING_DUT_1.gif
+// /cs/S040PRD/cache/PS_COLLAPSE_ICN_1.gif 
+
+$html = str_replace("/cs/S040PRD/cache/", "min/", $html);
+
+$html = str_replace("<img align='right' src='min/PT_PROCESSING_DUT_1.gif' class='PSPROCESSING' alt='Verwerken... even wachten a.u.b.' title='Verwerken... even wachten a.u.b.' />","",$html);
+
+preg_match_all("/[0-9]{1,}\/[0-9]{1,}\/[0-9]{4}/", $html, $dates);
+
+foreach($dates[0] as $key => $value)
+{
+	$date = strftime('%d %h %Y', strtotime($value));
+	$html = str_replace($value,$date,$html);
+}
+
+
+$html = str_replace("<span  class='PATRANSACTIONTITLE' >Rooster info</span>","<span  class='PATRANSACTIONTITLE' >$title</span>",$html);
+
+echo $html;
+
+unlink($cookiefile);
+
+// echo "<pre>";
+
+// print_r($dates);
 
 ?>

@@ -11,8 +11,6 @@
 ##
 
 include "raw/inschrijvingen.php";
-
-
  
 if(isset($inschrijvingen)){
 ?>
@@ -35,7 +33,10 @@ else echo $explodedTitle[0];
 ?>
 </td>
 <td>
-<? echo $inschrijving['id']; ?>
+<?
+preg_match("/\(([0-9]+)/", $inschrijving['code'], $usis_code);
+?>
+<a style="display:block;" href="roosterinfo.php?id=<? echo $usis_code[1]; ?>&title=<? echo $explodedTitle[0]; ?> - <? echo $inschrijving['id']; ?>" target="_blank" onclick="window.open(this.href,'window','top=100,width=730,height=480,resizable,scrollbars,toolbar,menubar') ;return false;"><? echo $inschrijving['id']; ?></a>
 </td>
 </tr>
 
@@ -70,7 +71,8 @@ else echo $explodedTitle[0];
 ?>
 </td>
 <td>
-<? echo $inschrijving['id']; ?>
+<? 
+echo $inschrijving['id']; ?>
 </td>
 </tr>
 
