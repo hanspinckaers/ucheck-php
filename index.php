@@ -40,13 +40,16 @@ if(file_exists($filename) && ((time()-filemtime($filename))/(60*60) < 24*7))
 
 <div id="cijfers_inschrijvingen" class="span-6">
 
-<div id="toon_alles">
+<div id="toon_alles" style="display:none;">
 <p>
 <div class="word_line">
 </div>
-<span id="filter_year_keuze" class="word_line"><a href="#!" rel="10" onclick="load_year(10);" class="selectable">2010 - 2011</a> | <a href="#" onclick="load_year(11);" rel="11" class="selectable selected">2011 - 2012</a></span>
+<span id="filter_year_keuze" class="word_line"><a href="#!" rel="10" onclick="load_year(10);" class="selectable"  style="display:none;">2010 - 2011</a> | <a href="#" onclick="load_year(11);" rel="11" class="selectable selected">2011 - 2012</a></span>
 </p>
 </div>
+
+<p><hr style="position:relative; top:-4px;"/></p>
+
 
 <div id="filter_studies" style="display:none;">
 
@@ -178,7 +181,7 @@ if(file_exists($filename) && ((time()-filemtime($filename))/(60*60) < 24*7))
 
 <h1>Inschrijven</h1>
 
-<div id="toon_year_inschrijven">
+<div id="toon_year_inschrijven" style="display:none;">
 <p>
 <div class="word_line">
 </div>
@@ -219,6 +222,7 @@ if(file_exists($filename) && ((time()-filemtime($filename))/(60*60) < 24*7))
 <option value="ENGELS">Engelse taal en cultuur</option>
 <option value="EUS">European Union Studies</option>
 <option value="FGWALG">FGW Algemeen</option>
+<option value="W%26N">Faculteit W&amp;N</option>
 <option value="PHOTOGS">Film and Photographic studies</option>
 <option value="FRANS">Franse taal en cultuur</option>
 <option value="GNK">Geneeskunde</option>
@@ -227,6 +231,7 @@ if(file_exists($filename) && ((time()-filemtime($filename))/(60*60) < 24*7))
 <option value="GRIEKLAT">Griekse Latijnse Taal &amp; Cult.</option>
 <option value="HJS">Hebreeuwse en Joodse Studies</option>
 <option value="HERV">Hervormde Kerk</option>
+<option value="INDECO">Industrial Ecology</option>
 <option value="INF">Informatica</option>
 <option value="ISLM">Islamic Studies</option>
 <option value="ISLT">Islamitische theologie</option>
@@ -236,10 +241,12 @@ if(file_exists($filename) && ((time()-filemtime($filename))/(60*60) < 24*7))
 <option value="FDK">Kunsten</option>
 <option value="KG">Kunstgeschiedenis</option>
 <option value="LAAS">Latin American Amerindian Stud</option>
+<option value="LEIALG">Leiden algemeen</option>
 <option value="LO">Lerarenopleiding</option>
 <option value="FLEBYVAK">Letteren Bijvak</option>
 <option value="FLEALG">Letteren algemeen</option>
-<option value="LA&amp;S">Liberal Arts &amp; Sciences</option>
+<option value="LETTERK">Letterkunde</option>
+<option value="LA%26S">Liberal Arts &amp; Sciences</option>
 <option value="LST">Life Science and technology</option>
 <option value="LITW">Literatuurwetenschap</option>
 <option value="MANAGEME">Management</option>
@@ -254,16 +261,18 @@ if(file_exists($filename) && ((time()-filemtime($filename))/(60*60) < 24*7))
 <option value="PEDA">Pedagogische wetenschappen</option>
 <option value="POWE">Politicologie</option>
 <option value="PKST">Praktijkstudies</option>
+<option value="PREUNIV">Pre-university</option>
 <option value="PSYC">Psychologie</option>
 <option value="LAW">Rechten</option>
 <option value="SEMI">Semitische talen en culturen</option>
 <option value="SLAV">Slavische talen cult/Ruslandk.</option>
 <option value="STK">Sterrenkunde</option>
 <option value="TCIA">T&amp;C van Indiaans Amerika</option>
-<option value="TCMA">T&amp;C van Mesopota &amp; AnatoliÔ</option>
+<option value="TCMA">T&amp;C van Mesopota &amp; Anatolië</option>
+<option value="TAALK">Taalkunde</option>
 <option value="TW">Taalwetenschap</option>
 <option value="INDTIBET">Talen en Cult. India en Tibet</option>
-<option value="INDONES">Talen en Culturen IndonesiÔ</option>
+<option value="INDONES">Talen en Culturen Indonesië</option>
 <option value="AFRIKA">Talen en Culturen van Afrika</option>
 <option value="TCLA">Talen en culturen Latijns Am</option>
 <option value="CHINA">Talen en culturen van China</option>
@@ -274,10 +283,10 @@ if(file_exists($filename) && ((time()-filemtime($filename))/(60*60) < 24*7))
 <option value="TURK">Turkse talen en culturen</option>
 <option value="VIET">Vergelijkende Indo-Europese TW</option>
 <option value="VTW">Vergelijkende Taalwetenschap</option>
+<option value="LAVA">Vitality and ageing</option>
 <option value="WYSB">Wijsbegeerte</option>
-<option value="W&amp;N">Wis- en Natuurwetenschappen</option>
 <option value="WSK">Wiskunde en statistiek</option>
-<option value="ZZOAZIE">Zuid en Zuid-Oost AziÔ</option>
+<option value="ZZOAZIE">Zuid en Zuid-Oost Azië</option>
 </select>
 </span>
 </p>
@@ -300,13 +309,23 @@ if(file_exists($filename) && ((time()-filemtime($filename))/(60*60) < 24*7))
 </span>
 </p>
 </div>
-
-
+<p>
+<input type="checkbox" name="troep" value="" id="troep" onchange="laadstudie()" checked>
+<label for="troep">Filter troep</label>
+</p>
 <table border="0" cellspacing="0" cellpadding="0" id="onderdelen">
 </table>
+<br/><small>Vak niet gevonden? Schakel de troep-filter uit en check voor de zekerheid uSis. Vak wel op uSis niet op uCheck? Geef dan alsjeblieft feedback.</small>
+</div>
 
 </div>
 
+<!-- footer -->
+<div style="clear:both">
+<hr/>
+<span style="color:gray">
+<a href="http://nl.linkedin.com/in/hanspinckaers">Hans Pinckaers</a> &#8212; uCheck is <b>open-source</b>! Help mee via GitHub: <a href="https://github.com/HansPinckaers/ucheck-php">https://github.com/HansPinckaers/ucheck-php</a></span>
+<br/>
 </div>
 
 </div>
@@ -314,7 +333,7 @@ if(file_exists($filename) && ((time()-filemtime($filename))/(60*60) < 24*7))
 <div id="background" style="display:none; position:fixed; top:0px; left:0; background-color:#f4f4f4; filter:alpha(opacity=75); -moz-opacity:0.75; -khtml-opacity: 0.75; opacity: 0.75;" onclick="hide()">
 </div>
 
-<div id="popup" style="display:none; border: 5px #d0d0d0 solid; position:absolute; top:200px; left:50%; margin-left:-360px; width:700px; height:auto; padding:10px; background-color:white; -moz-border-radius: 5px; border-radius: 5px; padding-bottom: 12px;" class="">
+<div id="popup" style="display:none; border: 5px #d0d0d0 solid; z-index:999; position:absolute; top:200px; left:50%; margin-left:-360px; width:700px; height:auto; padding:10px; background-color:white; -moz-border-radius: 5px; border-radius: 5px; padding-bottom: 12px;" class="">
 </div>
 
 <div id="sluiten_help" style="display:none; position:absolute;  position:absolute; top:200px; left:50%; margin-left:380px; width:100px;">
@@ -357,15 +376,15 @@ if(file_exists($filename) && ((time()-filemtime($filename))/(60*60) < 24*7))
 				
 				check_filter("inschrijvingen");
 				
-				setTimeout(function(){
-					$("facebook").src= "https://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fucheck.nl&layout=button_count&show_faces=false&width=220&action=like&colorscheme=light&height=28";		  	
-				},0 );
-				
 			}}).send();
 			
 		}}).send();
 		
+		setTimeout(function(){
+			$("facebook").src= "https://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fucheck.nl&layout=button_count&show_faces=false&width=220&action=like&colorscheme=light&height=28";		  	
+		},20 );
 	});
+
 
 </script>
 
@@ -418,7 +437,7 @@ $("mail_button").addEvent("click", function(e)
 </script>
 
 
-<a href="https://hanspinckaers.wufoo.com/forms/z7x3k7/" onclick="window.open(this.href,  null, 'height=470, width=680, toolbar=0, location=0, status=1, scrollbars=1, resizable=1'); return false" title="uCheck Feedback" style="top:260px; height:118px; color:white; cursor:pointer; text-indent:-100000px; overflow:hidden; position:absolute; z-index:100000; right:0px; left:auto; margin-right:0px; margin-left:auto; width:35px; background-image:url(Feedback.png);">Please fill out my form.</a>
+<a href="https://hanspinckaers.wufoo.com/forms/z7x3k7/" onclick="window.open(this.href,  null, 'height=470, width=680, toolbar=0, location=0, status=1, scrollbars=1, resizable=1'); return false" title="uCheck Feedback" style="top:77px; height:105px; color:white; cursor:pointer; text-indent:-100000px; overflow:hidden; position:absolute; z-index:100000; right:0px; left:auto; margin-right:0px; margin-left:auto; width:32px; background-image:url(Feedback.png); background-position:-3px center; opacity:0.9">Please fill out my form.</a>
 
 <?  
 if(file_exists("raw/mail/bezocht.txt"))

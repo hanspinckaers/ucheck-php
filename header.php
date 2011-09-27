@@ -30,69 +30,17 @@
 
 <div id="container">
 
-<div class="span-2">
-<h2>uCheck</h2> 
+<div class="span-1">
+<h2>uCheck</h2>
 </div>
 
-<div class="span-1" id="app_store" style="">
-<a href="http://itunes.apple.com/nl/app/ucheck/id449171216?l=nl&ls=1&mt=8"><img src="App_Store_Badge.png"/></a>
-</div>
-
-<div class="span-2" id="facebook_mailen">
-<iframe src="blank.html" id="facebook" scrolling="no" frameborder="0" style="border:none; display:block; position:relative; top:0px; left:27px; overflow:hidden; width:220px; height:21px;" allowTransparency="true"></iframe>
-
-<?
-// Check of student niet al gemaild heeft!
-if(file_exists("raw/mail/hebben_gemaild.txt"))
-	{
-	$filename = "raw/mail/hebben_gemaild.txt";
-	
-	$hebben_gemaild[] = array();
-	$gemaild = false;
-	
-	if(filesize($filename) > 0 && $user){
-		$handle = fopen($filename, "r");
-		$contents = fread($handle, filesize($filename));
-		$hebben_gemaild = unserialize($contents);
-		
-		if(in_array($user, $hebben_gemaild))
-		{
-			$gemaild = true;
-		}
-	}
-}
-
-if($gemaild)
-{
-?>
-<a href="#!" id="mail_button" style="position:relative; top:5px; left:27px; overflow:hidden; height:25px;" class="mail_button tooltip" title="" rel="Je hebt 5 medestudenten geholpen door ze te wijzen op uCheck. <br/><b>Namens hen: bedankt!</b>">Bedankt voor het mailen!</a>
-<?
-} else {
-?>
-<a href="#!" id="mail_button" style="position:relative; top:5px; left:27px; overflow:hidden; height:25px;" class="mail_button tooltip" title="Red uw medestudenten!" rel="Door hier te klikken verstuur jij <b>automatisch</b><br/> 5 mails naar medestudenten over uCheck, <br/> verspreid het woord!">Mail 5 medestudenten!</a>
-<? } ?>
-</div>
-
-<?
-if($user)
-{
-?>
-<div class="span-1 last" style="text-align:right;">
-<a href="logout" style="text-align:right; font-size:1.5em; font-family:Georgia;">uitloggen</a>
-</div>
-<?
-}
-?>
-<hr />
-<span style="color:gray">
-uCheck is vanaf vandaag <b>open-source</b>! Help mee via GitHub: <a href="https://github.com/HansPinckaers/ucheck-php">https://github.com/HansPinckaers/ucheck-php</a></span>
-<br/><br/>
-<hr />
+<div class="span-3" id="app_store" style="">
+<a href="http://itunes.apple.com/nl/app/ucheck/id449171216?l=nl&ls=1&mt=8"><img src="App_Store_Badge.png" style="float:left; z-index:99; position:relative; left:-50px"/></a>
 <?
 if(isset($user))
 {
 ?>
-<span style="color:green">
+<div style="color:gray; position:relative; left:20px; margin-top:0px;">
 <?
 $maillogfilename = "/home/geneesleer/ucheck/mail/cache/".$user;
 
@@ -112,13 +60,41 @@ if ($post && base64_decode($post["pass"]) != "")
 <?
 } else {
 ?>
-<b>Nieuw</b>: Krijg een mail bij nieuwe cijfers! <a href="mail/">Hier aanmelden.</a> <i style="color:gray;">(plaatsen beperkt aan servercapaciteit) (je bent nog niet aangemeld)</i>
+<b>Nieuw</b>: Krijg een mail bij nieuwe cijfers! <a href="mail/">Hier aanmelden.</a> <br/><i style="color:gray;">(je bent nog niet aangemeld)</i>
 <?
 }
 ?>
+</div>
+<?
+}
+?>
+</div>
+
+<div class="span-1" id="facebook_mailen">
+<iframe src="javascript:''" id="facebook" scrolling="no" 
+frameborder="0" 
+style="border:none; display:block; position:relative; top:12px; left:100px; overflow:hidden; width:130px; height:21px;" allowTransparency="true">
+<div></div>
+</iframe>
+</div>
+
+<?
+if($user)
+{
+?>
+<div class="span-1 last" style="text-align:right;">
+<a href="logout" style="text-align:right; font-size:1.5em; font-family:Georgia;">uitloggen</a>
+</div>
+<?
+}
+?>
+<hr />
+
+<!--
+<span style="color:red">
+In verband met onderhoudswerkzaamheden zal uSis gesloten zijn op vrijdag 16 september van 17:00 uur tot 21:00 uur.
 </span>
 <br/><br/>
 <hr />
-<?
-}
-?>
+-->
+
