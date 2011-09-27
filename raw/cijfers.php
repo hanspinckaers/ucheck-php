@@ -41,7 +41,7 @@ if(!$json)
 	
 	if(!$json)
 	{
-		mail("hans.pinckaers@gmail.com", "Amsterdam server plat? Fallback voor $user (cijfers)", "",  "From: geneesleer@alwaysdata.net");
+		mail("hans.pinckaers@gmail.com", "Fallback voor $user (cijfers)", "",  "From: geneesleer@alwaysdata.net");
 	}
 }
 

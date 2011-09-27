@@ -15,7 +15,9 @@ header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
 
 include "user_info.php";
 
-$filename = $DOCUMENT_ROOT."raw/cache/".$_GET['year']."/".$_GET['q'].".txt";
+$vak = str_replace("&", "%26", $_GET['q']);
+
+$filename = $DOCUMENT_ROOT."raw/cache/".$_GET['year']."/".$vak.".txt";
 
 $handle = fopen($filename, "r");
 $contents = fread($handle, filesize($filename));
