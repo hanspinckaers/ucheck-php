@@ -26,7 +26,9 @@ if(date("i") < 15)
 	$logfilename = "/home/geneesleer/ucheck/scrapeusis/logs/".strftime('%d-%h-%Y', time())."_2.txt";
 }
 
-$studies = array("AFRIKA","ARAB","ARCH","ASA","KG","FDK","STK","BFW","BIO","BIOM","BOEK","CHE","CLANEC","VIET","VTW","INF","FGWKERN","CANS","DUTCHST","NED","PEDA","EGYPTE","ENGELS","EUS","FGWALG","PHOTOGS","FRANS","ALG","DUITS","GRIEKLAT","HJS","HERV","GS","FLEBYVAK","FLEALG","INDTIBET","INDONES","INDECO","ISLM","ISLT","ITAL","JAPAN","JOURNIME","KOREA","TCC","CHINA","TCIA","TCMA","TURK","LAAS","TCLA","LAW","LA&amp;S","LST","TAALK","TW","LETTERK","LITW","MANAGEME","WSK","GNK","MIDOOST","MST","MUZIEK","NSC","OCMW","NP","WYSB","NTK","POWE","PKST","PREUNIV","PSYC","BSKE","GODG","W&amp;N","SEMI","SLAV","ZZOAZIE","LO","THEA");
+//$studies = array("LA&S","AFRIKA","ARAB","ARCH","ASA","KG","FDK","STK","BFW","BIO","BIOM","BOEK","CHE","CLANEC","VIET","VTW","INF","FGWKERN","CANS","DUTCHST","NED","PEDA","EGYPTE","ENGELS","EUS","FGWALG","PHOTOGS","FRANS","ALG","DUITS","GRIEKLAT","HJS","HERV","GS","FLEBYVAK","FLEALG","INDTIBET","INDONES","INDECO","ISLM","ISLT","ITAL","JAPAN","JOURNIME","KOREA","TCC","CHINA","TCIA","TCMA","TURK","LAAS","TCLA","LAW","LST","TAALK","TW","LETTERK","LITW","MANAGEME","WSK","GNK","MIDOOST","MST","MUZIEK","NSC","OCMW","NP","WYSB","NTK","POWE","PKST","PREUNIV","PSYC","BSKE","GODG","W&amp;N","SEMI","SLAV","ZZOAZIE","LO","THEA");
+
+$studies = array("W%26N","LA%26S","ALG","ARAB","ARCH","ASA","BSKE","BFW","BIO","BIOM","BOEK","CHE","CLANEC","CANS","DUITS","DUTCHST","EGYPTE","ENGELS","EUS","FGWALG","PHOTOGS","FRANS","GNK","GS","GODG","GRIEKLAT","HJS","HERV","INDECO","INF","ISLM","ISLT","ITAL","JOURNIME","FGWKERN","FDK","KG","LAAS","LEIALG","LO","FLEBYVAK","FLEALG","LETTERK","LST","LITW","MANAGEME","MIDOOST","MST","MUZIEK","NSC","NTK","NED","NP","OCMW","PEDA","POWE","PKST","PREUNIV","PSYC","LAW","SEMI","SLAV","STK","TCIA","TCMA","TAALK","TW","INDTIBET","INDONES","AFRIKA","TCLA","CHINA","JAPAN","KOREA","TCC","THEA","TURK","VIET","VTW","LAVA","WYSB","WSK","ZZOAZIE");
 
 //include "user_info.php";
 //$studies = array("GRIEKLAT");
@@ -40,7 +42,7 @@ $logfile = fopen($logfilename, 'w') or die("can't open file");
 
 // $years = array("10","11");
 
-$years = array("11");
+$years = array("f","11");
 
 foreach($years as $year)
 {
@@ -95,6 +97,7 @@ curl_setopt($ch, CURLOPT_COOKIEFILE, $cookiefile);
 curl_setopt($ch, CURLOPT_COOKIEJAR, $cookiefile);
 
 curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
+curl_setopt($ch, CURLOPT_TIMEOUT, 60);
 
 curl_exec($ch);
 
@@ -116,6 +119,7 @@ curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 0);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
 curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
+curl_setopt($ch, CURLOPT_TIMEOUT, 60);
 
 curl_setopt($ch, CURLOPT_COOKIEFILE, $cookiefile);
 curl_setopt($ch, CURLOPT_COOKIEJAR, $cookiefile);
@@ -145,6 +149,7 @@ curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 0);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
 curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
+curl_setopt($ch, CURLOPT_TIMEOUT, 60);
 
 curl_setopt($ch, CURLOPT_COOKIEFILE, $cookiefile);
 curl_setopt($ch, CURLOPT_COOKIEJAR, $cookiefile);
@@ -182,6 +187,7 @@ curl_setopt($ch, CURLOPT_COOKIEFILE, $cookiefile);
 curl_setopt($ch, CURLOPT_COOKIEJAR, $cookiefile);
 
 curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
+curl_setopt($ch, CURLOPT_TIMEOUT, 60);
 
 curl_setopt($ch,CURLOPT_POST, 13);
 curl_setopt($ch,CURLOPT_POSTFIELDS,"ICType=Panel&ICElementNum=0&ICAction=SNS_DERIVED_FETCH_PUSHBUTTON&ICXPos=0&ICYPos=0&ICFocus=&ICSaveWarningFilter=0&ICChanged=0&ICResubmit=0&ICSID=22T8J9xgNnGm&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$5$=0100&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$24$=0100");
@@ -213,12 +219,21 @@ curl_setopt($ch, CURLOPT_COOKIEFILE, $cookiefile);
 curl_setopt($ch, CURLOPT_COOKIEJAR, $cookiefile);
 
 curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
+curl_setopt($ch, CURLOPT_TIMEOUT, 60);
 
 curl_setopt($ch,CURLOPT_POST, 14);
-curl_setopt($ch,CURLOPT_POSTFIELDS,"ICType=Panel&ICElementNum=0&ICAction=SNS_CRSESRCH_WK_SEARCH_BTN&ICXPos=0&ICYPos=0&ICFocus=&ICSaveWarningFilter=0&ICChanged=0&ICResubmit=0&ICSID=M2TxhylnQWsd&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$4$=0100&SNS_CRSESRCH_WK_SUBJECT$54$=".$studie."&SNS_CRSESRCH_WK_CATALOG_NBR=&SNS_CRSESRCH_WK_DESCR1=&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$59$\$chk$0=Y&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$59$$0=Y&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$59$\$chk$1=N&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$59$\$chk$2=N&SNS_CRSESRCH_WK_SNS_SEL_OPERATOR=&SNS_CRSESRCH_WK_UNITS_MAXIMUM=0.00&SNS_CRSESRCH_WK_ACAD_ORG=&SNS_CRSESRCH_WK_SNS_CAR_SEL$69$\$chk$0=N&SNS_CRSESRCH_WK_SNS_CAR_SEL$69$$\chk$1=N&SNS_CRSESRCH_WK_SNS_CAR_SEL$69$\$chk$2=N&SNS_CRSESRCH_WK_LANGUAGE=&SNS_DERIVED_CRSE_ATTR=&SNS_DERIVED_CRSE_ATTR_VALUE=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$92$=0100");
+
+if($year == "f")
+{
+	curl_setopt($ch,CURLOPT_POSTFIELDS,"ICType=Panel&ICElementNum=0&ICAction=SNS_CRSESRCH_WK_SEARCH_BTN&ICXPos=0&ICYPos=0&ICFocus=&ICSaveWarningFilter=0&ICChanged=0&ICResubmit=0&ICSID=M2TxhylnQWsd&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$4$=0100&SNS_CRSESRCH_WK_SUBJECT$55$=".$studie."&SNS_CRSESRCH_WK_LANGUAGE=&SNS_DERIVED_CRSE_ATTR=&SNS_DERIVED_CRSE_ATTR_VALUE=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$94$=0100");
+}
+else {
+	curl_setopt($ch,CURLOPT_POSTFIELDS,"ICType=Panel&ICElementNum=0&ICAction=SNS_CRSESRCH_WK_SEARCH_BTN&ICXPos=0&ICYPos=0&ICFocus=&ICSaveWarningFilter=0&ICChanged=0&ICResubmit=0&ICSID=M2TxhylnQWsd&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$4$=0100&SNS_CRSESRCH_WK_SUBJECT$55$=".$studie."&SNS_CRSESRCH_WK_CATALOG_NBR=&SNS_CRSESRCH_WK_DESCR1=&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$\$chk$0=Y&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$$0=Y&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$\$chk$1=N&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$\$chk$2=N&SNS_CRSESRCH_WK_SNS_SEL_OPERATOR=&SNS_CRSESRCH_WK_UNITS_MAXIMUM=0.00&SNS_CRSESRCH_WK_ACAD_ORG=&SNS_CRSESRCH_WK_SNS_CAR_SEL$70$\$chk$0=N&SNS_CRSESRCH_WK_SNS_CAR_SEL$70$$\chk$1=N&SNS_CRSESRCH_WK_SNS_CAR_SEL$70$\$chk$2=N&SNS_CRSESRCH_WK_LANGUAGE=&SNS_DERIVED_CRSE_ATTR=&SNS_DERIVED_CRSE_ATTR_VALUE=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$94$=0100");
+
+}
+
 
 $result = curl_exec($ch);
-
 // print_r(curl_getinfo($ch));
 
 unset($ch);
@@ -242,35 +257,47 @@ curl_setopt($ch, CURLOPT_COOKIEFILE, $cookiefile);
 curl_setopt($ch, CURLOPT_COOKIEJAR, $cookiefile);
 
 curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
+curl_setopt($ch, CURLOPT_TIMEOUT, 60);
 
 curl_setopt($ch,CURLOPT_POST, 28);
-curl_setopt($ch,CURLOPT_POSTFIELDS,"ICType=Panel&ICElementNum=0&ICAction=RESULTS\$hviewall$0&ICXPos=0&ICYPos=0&ICFocus=&ICSaveWarningFilter=0&ICChanged=1&ICResubmit=0&ICSID=M2TxhylnQWsd&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$4$=0100&SNS_CRSESRCH_WK_SUBJECT$54$=".$studie."&SNS_CRSESRCH_WK_CATALOG_NBR=&SNS_CRSESRCH_WK_DESCR1=&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$59$\$chk$0=Y&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$59$$0=Y&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$59$\$chk$1=N&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$59$\$chk$2=N&SNS_CRSESRCH_WK_SNS_SEL_OPERATOR=&SNS_CRSESRCH_WK_UNITS_MAXIMUM=0.00&SNS_CRSESRCH_WK_ACAD_ORG=&SNS_CRSESRCH_WK_SNS_CAR_SEL$69$\$chk$0=N&SNS_CRSESRCH_WK_SNS_CAR_SEL$69$\$chk$1=N&SNS_CRSESRCH_WK_SNS_CAR_SEL$69$\$chk$2=N&SNS_CRSESRCH_WK_LANGUAGE=&SNS_DERIVED_CRSE_ATTR=&SNS_DERIVED_CRSE_ATTR_VALUE=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$92$=0100");
+
+if($year == "f")
+{
+	curl_setopt($ch,CURLOPT_POSTFIELDS,"ICType=Panel&ICElementNum=0&ICAction=RESULTS\$hviewall$0&ICXPos=0&ICYPos=0&ICFocus=&ICSaveWarningFilter=0&ICChanged=1&ICResubmit=0&ICSID=M2TxhylnQWsd&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$4$=0100&SNS_CRSESRCH_WK_SUBJECT$55$=".$studie."&SNS_CRSESRCH_WK_CATALOG_NBR=&SNS_CRSESRCH_WK_DESCR1=&SNS_CRSESRCH_WK_LANGUAGE=&SNS_DERIVED_CRSE_ATTR=&SNS_DERIVED_CRSE_ATTR_VALUE=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$94$=0100");
+}
+else {
+	curl_setopt($ch,CURLOPT_POSTFIELDS,"ICType=Panel&ICElementNum=0&ICAction=RESULTS\$hviewall$0&ICXPos=0&ICYPos=0&ICFocus=&ICSaveWarningFilter=0&ICChanged=1&ICResubmit=0&ICSID=M2TxhylnQWsd&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$4$=0100&SNS_CRSESRCH_WK_SUBJECT$55$=".$studie."&SNS_CRSESRCH_WK_CATALOG_NBR=&SNS_CRSESRCH_WK_DESCR1=&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$\$chk$0=Y&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$$0=Y&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$\$chk$1=N&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$\$chk$2=N&SNS_CRSESRCH_WK_SNS_SEL_OPERATOR=&SNS_CRSESRCH_WK_UNITS_MAXIMUM=0.00&SNS_CRSESRCH_WK_ACAD_ORG=&SNS_CRSESRCH_WK_SNS_CAR_SEL$70$\$chk$0=N&SNS_CRSESRCH_WK_SNS_CAR_SEL$70$\$chk$1=N&SNS_CRSESRCH_WK_SNS_CAR_SEL$70$\$chk$2=N&SNS_CRSESRCH_WK_LANGUAGE=&SNS_DERIVED_CRSE_ATTR=&SNS_DERIVED_CRSE_ATTR_VALUE=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$94$=0100");
+
+}
 
 $result = curl_exec($ch);
-
 // print_r(curl_getinfo($ch));
 
-
-$arr = explode("<table dir='ltr' border='0' cellpadding='2' cellspacing='0' cols='6' width='100%' class='PSLEVEL1GRID' style='border-style:none' >", $result);
+$arr = explode("class='PSLEVEL1GRID' style='border-style:none' >", $result);
 
 $onderdelen = array();
 
 $studieonderdelen = explode("<tr valign='center'>",$arr[1]);
 
 foreach($studieonderdelen as $studieonderdeel)
-{
-
+{	
 	$new_studieonderdeel = array();
-	preg_match_all("/ >(.*)<\/a><\/span>/", $studieonderdeel, $values);
+	preg_match_all("/>(.*)<\/a><\/span>/", $studieonderdeel, $values);
 	
-	if(count($values[1]) == 6)
+	if(count($values[1]) > 4)
 	{
 		$new_studieonderdeel['studie'] = $values[1][0];
 		$new_studieonderdeel['gidsnummer'] = $values[1][1];
 		$new_studieonderdeel['titel'] = $values[1][2];
 		$new_studieonderdeel['eenheden'] = $values[1][3];
-		$new_studieonderdeel['type'] = $values[1][4];
-		$new_studieonderdeel['loopbaan'] = $values[1][5];
+		
+		if(count($values[1]) == 5)
+		{
+			$new_studieonderdeel['loopbaan'] = $values[1][4];		
+		} else {
+			$new_studieonderdeel['type'] = $values[1][4];
+			$new_studieonderdeel['loopbaan'] = $values[1][5];
+		}
 	
 	
 		$vak_pos = strpos($new_studieonderdeel['titel'], "Individueel vak");
@@ -281,22 +308,24 @@ foreach($studieonderdelen as $studieonderdeel)
 		}
 	
 	} else {
-		//// print_r($values[1]);
+		if(count($values[1]) > 0) print_r($values[1]);
 	}
 }
 
 
-preg_match("/<span class='PSGRIDCOUNTER' >1-100 van (.*)<\/span>/", $result, $out);
+preg_match("/<span class='PSGRIDCOUNTER' >1-[0-9]+ van (.*)<\/span>/", $result, $out);
+
+$counter = 0;
 
 // FETCHING ONDERDELEN!!!
 
 if($out[1])
 {
 
-$run = ceil($out[1]/100) - 1;
+$run = ceil($out[1]/100)-1;
 
 while($run > 0)
-{
+{	
 	unset($ch);
 	
 	sleep(1);
@@ -316,34 +345,49 @@ while($run > 0)
 	curl_setopt($ch, CURLOPT_COOKIEJAR, $cookiefile);
 	
 	curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
+	curl_setopt($ch, CURLOPT_TIMEOUT, 60);
 	
 	curl_setopt($ch,CURLOPT_POST, 28);
-	curl_setopt($ch,CURLOPT_POSTFIELDS,"ICType=Panel&ICElementNum=0&ICAction=RESULTS\$hdown$0&ICXPos=0&ICYPos=0&ICFocus=&ICSaveWarningFilter=0&ICChanged=1&ICResubmit=0&ICSID=22T8J9xgNnGm&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$4$=0100&SNS_CRSESRCH_WK_SUBJECT$54$=".$studie."&SNS_CRSESRCH_WK_CATALOG_NBR=&SNS_CRSESRCH_WK_DESCR1=&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$59$\$chk$0=Y&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$59$$0=Y&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$59$\$chk$1=N&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$59$\$chk$2=N&SNS_CRSESRCH_WK_SNS_SEL_OPERATOR=&SNS_CRSESRCH_WK_UNITS_MAXIMUM=0.00&SNS_CRSESRCH_WK_ACAD_ORG=&SNS_CRSESRCH_WK_SNS_CAR_SEL$69$\$chk$0=N&SNS_CRSESRCH_WK_SNS_CAR_SEL$69$\$chk$1=N&SNS_CRSESRCH_WK_SNS_CAR_SEL$69$\$chk$2=N&SNS_CRSESRCH_WK_LANGUAGE=&SNS_DERIVED_CRSE_ATTR=&SNS_DERIVED_CRSE_ATTR_VALUE=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$92$=0100");
+	//curl_setopt($ch,CURLOPT_POSTFIELDS,"ICType=Panel&ICElementNum=0&ICAction=RESULTS\$hdown$0&ICXPos=0&ICYPos=0&ICFocus=&ICSaveWarningFilter=0&ICChanged=1&ICResubmit=0&ICSID=22T8J9xgNnGm&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$4$=0100&SNS_CRSESRCH_WK_SUBJECT$54$=".$studie."&SNS_CRSESRCH_WK_CATALOG_NBR=&SNS_CRSESRCH_WK_DESCR1=&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$\$chk$0=Y&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$$0=Y&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$\$chk$1=N&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$\$chk$2=N&SNS_CRSESRCH_WK_SNS_SEL_OPERATOR=&SNS_CRSESRCH_WK_UNITS_MAXIMUM=0.00&SNS_CRSESRCH_WK_ACAD_ORG=&SNS_CRSESRCH_WK_SNS_CAR_SEL$70$\$chk$0=N&SNS_CRSESRCH_WK_SNS_CAR_SEL$70$\$chk$1=N&SNS_CRSESRCH_WK_SNS_CAR_SEL$70$\$chk$2=N&SNS_CRSESRCH_WK_LANGUAGE=&SNS_DERIVED_CRSE_ATTR=&SNS_DERIVED_CRSE_ATTR_VALUE=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$94$=0100");
+	
+	if($year == "f")
+	{
+		curl_setopt($ch,CURLOPT_POSTFIELDS,"ICType=Panel&ICElementNum=0&ICAction=RESULTS\$hdown$0&ICXPos=0&ICYPos=0&ICFocus=&ICSaveWarningFilter=0&ICChanged=1&ICResubmit=0&ICSID=M2TxhylnQWsd&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$4$=0100&SNS_CRSESRCH_WK_SUBJECT$55$=".$studie."&SNS_CRSESRCH_WK_CATALOG_NBR=&SNS_CRSESRCH_WK_DESCR1=&SNS_CRSESRCH_WK_LANGUAGE=&SNS_DERIVED_CRSE_ATTR=&SNS_DERIVED_CRSE_ATTR_VALUE=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$94$=0100");
+	}
+	else {
+		curl_setopt($ch,CURLOPT_POSTFIELDS,"ICType=Panel&ICElementNum=0&ICAction=RESULTS\$hdown$0&ICXPos=0&ICYPos=0&ICFocus=&ICSaveWarningFilter=0&ICChanged=1&ICResubmit=0&ICSID=M2TxhylnQWsd&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$4$=0100&SNS_CRSESRCH_WK_SUBJECT$55$=".$studie."&SNS_CRSESRCH_WK_CATALOG_NBR=&SNS_CRSESRCH_WK_DESCR1=&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$\$chk$0=Y&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$$0=Y&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$\$chk$1=N&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$\$chk$2=N&SNS_CRSESRCH_WK_SNS_SEL_OPERATOR=&SNS_CRSESRCH_WK_UNITS_MAXIMUM=0.00&SNS_CRSESRCH_WK_ACAD_ORG=&SNS_CRSESRCH_WK_SNS_CAR_SEL$70$\$chk$0=N&SNS_CRSESRCH_WK_SNS_CAR_SEL$70$\$chk$1=N&SNS_CRSESRCH_WK_SNS_CAR_SEL$70$\$chk$2=N&SNS_CRSESRCH_WK_LANGUAGE=&SNS_DERIVED_CRSE_ATTR=&SNS_DERIVED_CRSE_ATTR_VALUE=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$94$=0100");
+	
+	}
+	
 	
 	$result = curl_exec($ch);
-	
 	// print_r(curl_getinfo($ch));
 	
-	$arr = explode("<table dir='ltr' border='0' cellpadding='2' cellspacing='0' cols='6' width='100%' class='PSLEVEL1GRID' style='border-style:none' >", $result);
+	$arr = explode("class='PSLEVEL1GRID' style='border-style:none' >", $result);
 	$viewalls = array();
 	
-	
 	$studieonderdelen = explode("<tr valign='center'>",$arr[1]);
-		
+				
 	foreach($studieonderdelen as $studieonderdeel)
 	{
 	
 		$new_studieonderdeel = array();
-		preg_match_all("/ >(.*)<\/a><\/span>/", $studieonderdeel, $values);
+		preg_match_all("/>(.*)<\/a><\/span>/", $studieonderdeel, $values);
 		
-		if(count($values[1]) == 6)
+		if(count($values[1]) > 4)
 		{
-			$new_studieonderdeel['studie'] = $values[1][0];
+			$new_studieonderdeel['studie'] = $studie;
 			$new_studieonderdeel['gidsnummer'] = $values[1][1];
 			$new_studieonderdeel['titel'] = $values[1][2];
 			$new_studieonderdeel['eenheden'] = $values[1][3];
-			$new_studieonderdeel['type'] = $values[1][4];
-			$new_studieonderdeel['loopbaan'] = $values[1][5];
+			
+			if(count($values[1]) == 5)
+			{
+				$new_studieonderdeel['loopbaan'] = $values[1][4];		
+			} else {
+				$new_studieonderdeel['type'] = $values[1][4];
+				$new_studieonderdeel['loopbaan'] = $values[1][5];
+			}
 				
 			$vak_pos = strpos($new_studieonderdeel['titel'], "Individueel vak");
 				
@@ -351,12 +395,15 @@ while($run > 0)
 			{
 				$onderdelen[] = $new_studieonderdeel;			
 			}
+			else {
+				$counter++;
+			}
 			
 		} else {
-			//// print_r($values[1]);
+			if(count($values[1]) > 0) print_r($values[1]);
 		}
 	}
-	
+		
 	$run--;
 }
 } // if $out[1]
@@ -384,6 +431,11 @@ fwrite($logfile, count($onderdelen)." vakken voor ".$studie."\n");
 
 echo (time()-$start)." seconden voor ".$studie."\n";
 echo count($onderdelen)." vakken voor ".$studie."\n";
+	
+if(count($onderdelen) != ($out[1]-$counter))
+{
+	echo "BUG! ".$studie." aantal: ".count($onderdelen)." moet zijn: ".$out[1]. " filtert: ".$counter." mist: ".(($out[1]-$counter)-count($onderdelen))."\n";
+}
 
 } // end for loop
 
