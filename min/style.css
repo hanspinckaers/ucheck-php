@@ -52,6 +52,9 @@ h5 { font-size: 1em; font-weight: bold; margin-bottom: 1.5em; }
 h6 { font-size: 1em; font-weight: bold; }
 
 tbody tr:nth-child(even) { background:#f7f7f7; }
+#onderdelen tbody tr:nth-child(even) { background:#fff; }
+
+.deelactiviteit tbody tr:nth-child(even) { background:#f7f7f7; }
 
 /*
 #voortgang h1,
@@ -68,12 +71,17 @@ p  { margin: 0 0 1.5em; }
 
 div#app_store
 {
-	text-align: right;	
+	text-align: center;	
 }
-div#app_store,
-div#facebook_mailen
+div#app_store img
 {
 	position:relative; top:-10px; opacity:0.25;
+	left: -1em;
+}
+
+div#facebook_mailen
+{
+	position:relative; top:-11px;
 	left: -1em;
 }
 
@@ -82,7 +90,7 @@ div#facebook_mailen
 	top: -12px;	
 }
 
-div#app_store:hover,
+div#app_store img:hover,
 div#facebook_mailen:hover
 {
 	opacity:1.0;

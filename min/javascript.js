@@ -48,6 +48,8 @@ var loopbaanSelected = "Alles";
 
 var studieSelected = "Alles";
 
+var details = [];
+
 function display_voortgang(id)
 {
 	var el = $("hidden_"+id);
@@ -254,6 +256,11 @@ function filter(studie)
 
 function filter_loopbanen(loopbaan)
 {
+	if(loopbaanSelected != loopbaan)
+	{
+		hide_details();
+	}
+
 	var filter = $$('#loopbaan_keuze a');
 	
 	filter.each(function(value, index){
@@ -264,6 +271,7 @@ function filter_loopbanen(loopbaan)
 			value.removeClass('selected');
 		}
 	});
+
 
 	loopbaanSelected = loopbaan;
 
@@ -294,10 +302,18 @@ function filter_loopbanen(loopbaan)
 
 function laadstudie(value, yr)
 {
+	if(value != $("studies").value)
+	{
+		hide_details();
+	}
+	else {
+		return;
+	}
+	
 	if(value){
 		$("studies").value = value;
 	}
-	
+		
 	if(!yr)
 	{
 		yr = year;
@@ -308,6 +324,12 @@ function laadstudie(value, yr)
         //$("loading").setStyle("display", "block");        
         $("studies").setAttribute("disabled", true);
         $("onderdelen").setStyle("opacity", 0.5);
+        
+        
+        if(!$("troep").checked)
+        {
+         	yr = "f";   
+        }
                 
         var a = new Request(
         {
@@ -416,6 +438,7 @@ function laadstudie(value, yr)
             
         }).send("q=" + $("studies").value + "&year="+yr)
         
+        
         //console.log(year);
     }
 }
@@ -451,7 +474,7 @@ function display_detail(el, id)
 {
 	if($("detail_"+id)) return;
 	
-		
+	details.push("detail_"+id);
 	//console.log(id);
     
     var tr = new Element("tr", {
@@ -475,7 +498,9 @@ function display_detail(el, id)
     td.inject(tr);
         
     //console.log($(el).getChildren());   
-    $(el).getChildren()[4].set("html","<span> </span>");
+    $(el).getChildren()[4].getChildren("a").each(function(value, index){
+    	$(value).setStyle("display", "none");
+    });
     
     tr.inject($(el), "after");
         
@@ -489,21 +514,48 @@ function display_detail(el, id)
         method: "get",
         onSuccess: function (d, e)
         {
-            $("detail_"+id).set("html", d);
-            
-            //td.setStyle('height','auto');
-            
-            $("background").setStyle("height", getDocHeight());
-            $("background").setStyle("width", getDocWidth());
-            
+        	if($("detail_"+id))
+        	{
+	            $("detail_"+id).set("html", d);
+	            
+	            //td.setStyle('height','auto');
+	            
+	            $("background").setStyle("height", getDocHeight());
+	            $("background").setStyle("width", getDocWidth());
+            }
         }
         
 
     }).send("q=" + id + "&year="+year);
 }
 
+function hide_details()
+{
+	details.each(function(value, index){
+		if($(value) && $(value).getParent())
+		{
+	
+	
+			var prev = $(value).getParent().getPrevious();
+		
+			$(value).getParent().destroy();
+			
+			$(prev).getChildren()[4].getChildren("a").each(function(value, index){
+				$(value).setStyle("display", "inherit");
+			});
+			
+		}
+	});
+}
+
 function load_year(yr)
 {
+
+	if(year!=yr)
+	{
+		hide_details();
+	}
+
 	var filter = $$('#filter_year_keuze a');
 	
 	filter.each(function(value, index){
@@ -862,6 +914,8 @@ var LLSearch = new Class(
                 {
                     c.setStyle("display", "block")
                 }
+                
+                hide_details();
             }
             else
             {
