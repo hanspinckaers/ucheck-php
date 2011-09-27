@@ -20,9 +20,9 @@ In het kort
 </h2>
 <ul>
 <li>Je wachtwoord wordt <strong>versleuteld</strong>, alleen op <strong>jouw computer</strong>, <strong>tijdelijk</strong> bewaard.</li>
-<li>Op de server van uCheck worden <strong>nooit</strong> wachtwoorden bewaard.</li>
+<li>Op de server van uCheck worden <strong>nooit</strong> wachtwoorden bewaard. Tenzij je je aanmeldt voor de mailservice.</li>
 <li>Als je ervoor kiest je studentnummer/wachtwoord op te slaan in een cookie, loop je geen extra risico.</li>
-<li>Als je uitlogt wordt alles verwijderd. <a href="logout.php">Uitloggen</a>.</li>
+<li>Als je uitlogt wordt je wachtwoord verwijderd. <a href="logout.php">Uitloggen</a>.</li>
 
 </ul>
 
@@ -34,7 +34,7 @@ In het kort
 <p>
 uCheck communiceert met uSis via jouw inlognaam en wachtwoord. Je studentnummer en wachtwoord worden versleuteld opgeslagen in een zogenaamde sessie. Op de achtergrond wordt beveiligd met uSis gecommuniceerd.</p>
 
-<p>Als je de website sluit dan wordt deze sessie, samen met dus je studentennummer/wachtwoord, verwijderd  en moet je dus weer opnieuw inloggen op uCheck.</p>
+<p>Als je de website sluit dan wordt deze sessie, samen met dus je wachtwoord, verwijderd en moet je dus weer opnieuw inloggen op uCheck.</p>
 
 <p>
 Als je ervoor kiest je studentennummer en wachtwoord op te slaan in een cookie, dan worden deze ook versleuteld bewaard.
