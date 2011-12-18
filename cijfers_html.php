@@ -27,12 +27,12 @@ if(isset($vakken) && count($vakken) > 0)
 <th class="vak round-top-left">
 	 vak
 </th>
-<th class="cijfer">
+<th class="cijfer center">
 </th>
-<th class="ects">
+<th class="ects center">
 	 ects
 </th>
-<th class="datum round-top-right">
+<th class="datum round-top-right center">
 	 datum
 </th>
 </tr>

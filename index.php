@@ -119,7 +119,7 @@ if(file_exists($filename) && ((time()-filemtime($filename))/(60*60) < 24*7))
 	<th class="vak">
 		 vak
 	</th>
-	<th class="info" style="padding:0;">
+	<th class="info center">
 		 rooster
 	</th>
 </tr>
@@ -324,7 +324,7 @@ if(file_exists($filename) && ((time()-filemtime($filename))/(60*60) < 24*7))
 <div style="clear:both">
 <hr/>
 <span style="color:gray">
-<a href="http://nl.linkedin.com/in/hanspinckaers">Hans Pinckaers</a> &#8212; uCheck is <b>open-source</b>! Help mee via GitHub: <a href="https://github.com/HansPinckaers/ucheck-php">https://github.com/HansPinckaers/ucheck-php</a></span>
+<a href="http://nl.linkedin.com/in/hanspinckaers">Hans Pinckaers</a> &#8212; uCheck is <b>open-source</b>; Help mee via GitHub: <a href="https://github.com/HansPinckaers/ucheck-php">PHP backend</a> en de <a href="https://github.com/HansPinckaers/ucheck-node">Node.js backend</a></span>
 <br/>
 </div>
 
@@ -345,38 +345,52 @@ if(file_exists($filename) && ((time()-filemtime($filename))/(60*60) < 24*7))
 <script type="text/javascript">
 	window.addEvent('domready', function() {
 		var myRequest = new Request({url: 'cijfers_html.php', method: 'get', onSuccess: function(responseText, responseXML) {
-				$("cijfers").set('html',responseText);		
+				$("cijfers").set('html',responseText);	
+									
+				if(responseText == "loginerror")
+				{
+					window.location = "https://ucheck.nl/logout?error=Gebruikersnaam of wachtwoord foutief.";
+					
+				}
+				else if(responseText == "usiserror" || responseText == "")
+				{
+					window.location = "https://ucheck.nl/logout?error=Oh oh, uSis of uCheck ligt plat.";
+				}
+				else {
 				
-				check_filter("cijfers");
+				
+				
+					check_filter("cijfers");
 	/*
 			  	setTimeout(function(){
 			  		$("facebook").src= "https://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fucheck.nl&layout=button_count&show_faces=false&width=220&action=like&colorscheme=light&height=28";		  	
 			  	}, 500);
 	*/
 			
-			var myRequest = new Request({url: 'full_inschrijvingen.php?year=11', evalScripts:true, method: 'get', onSuccess: function(responseText, responseXML) {
-				$("inschrijvingen").set('html',responseText);	
-				
-				<?
-				
-				$filename = $DOCUMENT_ROOT."voortgang_cache/".$user.".txt";
-				
-				if(file_exists($filename) && ((time()-filemtime($filename))/(60*60) < 24*7))
-				{
-				} else {				
-				?>
-				
-				var myRequest = new Request({url: 'voortgang.php', evalScripts:true, method: 'get', onSuccess: function(responseText, responseXML) {
-					$("voortgang").set('html',responseText);	
-				}}).send();
-				
-				<?
-				} 
-				?>
-				
-				check_filter("inschrijvingen");
-				
-			}}).send();
+					var myRequest = new Request({url: 'full_inschrijvingen.php?year=11', evalScripts:true, method: 'get', onSuccess: function(responseText, responseXML) {
+						$("inschrijvingen").set('html',responseText);	
+						
+						<?
+						
+						$filename = $DOCUMENT_ROOT."voortgang_cache/".$user.".txt";
+						
+						if(file_exists($filename) && ((time()-filemtime($filename))/(60*60) < 24*7))
+						{
+						} else {				
+						?>
+						
+						var myRequest = new Request({url: 'voortgang.php', evalScripts:true, method: 'get', onSuccess: function(responseText, responseXML) {
+							$("voortgang").set('html',responseText);	
+						}}).send();
+						
+						<?
+						} 
+						?>
+						
+						check_filter("inschrijvingen");
+						
+					}}).send();
+				}
 			
 		}}).send();
 		
@@ -388,7 +402,7 @@ if(file_exists($filename) && ((time()-filemtime($filename))/(60*60) < 24*7))
 
 </script>
 
-<script type="text/javascript">
+<!--<script type="text/javascript">
 var myTips = new Tips('.tooltip', {
 	fixed: true,
 	offset: {x: 0, y: 25}
@@ -421,21 +435,7 @@ $("mail_button").addEvent("click", function(e)
 });
 }
 <? } ?>
-</script>
-
-<script type="text/javascript">
-	var _gaq = _gaq || [];
-	_gaq.push(['_setAccount', 'UA-4063156-7']);
-	_gaq.push(['_trackPageview']);
-	_gaq.push(['_trackPageLoadTime']);
-
-	(function() {
-	var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-	})();
-</script>
-
+</script>-->
 
 <a href="https://hanspinckaers.wufoo.com/forms/z7x3k7/" onclick="window.open(this.href,  null, 'height=470, width=680, toolbar=0, location=0, status=1, scrollbars=1, resizable=1'); return false" title="uCheck Feedback" style="top:77px; height:105px; color:white; cursor:pointer; text-indent:-100000px; overflow:hidden; position:absolute; z-index:100000; right:0px; left:auto; margin-right:0px; margin-left:auto; width:32px; background-image:url(Feedback.png); background-position:-3px center; opacity:0.9">Please fill out my form.</a>
 
@@ -471,5 +471,19 @@ if(file_exists("raw/mail/bezocht.txt"))
 }
 ?>
 
+<script type="text/javascript">
+	var _gaq = _gaq || [];
+	_gaq.push(['_setAccount', 'UA-4063156-7']);
+	_gaq.push(['_trackPageview']);
+
+	(function() {
+	var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	})();
+
+</script>
+
 </body>
 </html>
+

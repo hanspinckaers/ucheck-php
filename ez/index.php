@@ -29,3 +29,11 @@
 Of sleep naar dit naar je bladwijzerbalk:
 </p>
 <a href="javascript:void(location.href=%22https://login.ezproxy.leidenuniv.nl/login?qurl=%22+location.href)">EZProxy</a>
+<br/><br/>
+<hr/>
+<p>
+Voorbeeld links:
+<ul>
+<li><a href="https://login.ezproxy.leidenuniv.nl/login?qurl=http://pro.vandale.nl/">De VanDale</a></li>
+</ul>
+</p>

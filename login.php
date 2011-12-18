@@ -10,6 +10,25 @@
 ## ucheck-node: https://github.com/HansPinckaers/ucheck-node
 ##
 
+session_start();
+$_SESSION = array();
+if (isset($_SERVER['HTTP_COOKIE'])) {
+    $cookies = explode(';', $_SERVER['HTTP_COOKIE']);
+    foreach($cookies as $cookie) {
+        $parts = explode('=', $cookie);
+        $name = trim($parts[0]);
+        setcookie($name, '', time()-1000);
+        setcookie($name, '', time()-1000, '/');
+    }
+}
+$_SESSION['user'] = "";
+$_SESSION['pwd'] = "";
+
+session_destroy();
+
+setcookie ("user", "", time() - 3600 - 3600- 3600);
+setcookie ("pwd", "", time() - 3600- 3600- 3600);
+
 include "header.php" ?>
 
 <div id="login">
@@ -20,7 +39,9 @@ include "header.php" ?>
 <? } ?>
 
 <? if($_GET['error']){ ?>
-<h4 style="color:red;"><? //echo htmlspecialchars($_GET['error']); ?></h4>
+<br/>
+<h4 style="color:red;"><? echo htmlspecialchars($_GET['error']); ?></h4>
+<p style="color:gray;">Probeer het opnieuw:</p>
 <? } ?>
 
 <p></p>
@@ -32,18 +53,26 @@ include "header.php" ?>
 </div>
 <input id="inloggen" type="submit" value="inloggen" />
 <p></p>
+<hr/>
+<b>Tip:</b> krijg een mail bij nieuwe cijfers. <a href="https://ucheck.nl/mail/">Aanmelden mailservice.</a><br/>Of klik na inloggen bovenaan op <i>"aanmelden mailservice"</i>.<br/><br/>
 
 <hr/>
 <small>
 Geen student of eerst even kijken? <br/>Probeer het <a href="demo/">demo-account</a>.
 <br/><br/>
 <strong>Je gegevens worden niet opgeslagen.</strong><br/><a href="beveiliging">Lees over de beveiliging</a>.
-<br/><br/>
-uCheck is gebouwd door <a href="http://hanspinckaers.com/contact/">Hans Pinckaers</a>
 </small>
 
 </form>
 
+</div>
+<!-- footer -->
+<br/>
+<div style="clear:both">
+<hr/>
+<span style="color:gray">
+<a href="http://nl.linkedin.com/in/hanspinckaers">Hans Pinckaers</a> &#8212; uCheck is <b>open-source</b>; Help mee via GitHub: <a href="https://github.com/HansPinckaers/ucheck-php">PHP backend</a> en de <a href="https://github.com/HansPinckaers/ucheck-node">Node.js backend</a></span>
+<br/>
 </div>
 
 <script type="text/javascript" src="min/javascript.js"></script>

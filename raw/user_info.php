@@ -46,7 +46,8 @@ if(!isset($user))
 			$_SESSION['pwd'] = $_COOKIE['pwd'];
 		}
 		
-		if($_POST['user']){
+		if($_POST['user'])
+		{	
 			$_SESSION['user'] = $geheim->encrypt($_POST['user'], $key);
 			$_SESSION['pwd'] = $geheim->encrypt($_POST['pwd'], $key);
 			
@@ -66,7 +67,8 @@ if(!isset($user))
 		
 		$user = strtolower($geheim->decrypt($_SESSION['user'], $key));
 		$pwd = $geheim->decrypt($_SESSION['pwd'], $key);
-	} else {
+	} 
+	else {
 		if($_POST['cookie'] != "")
 		{
 			setcookie("user", base64url_encode($_POST['user'], $key), time()+60*60*24*365*6);
@@ -89,15 +91,14 @@ if(!isset($user))
 			$pwd = base64url_decode($_SESSION['pwd'], $key);
 		}		
 	}
-	
-	
-	if(!isset($user) || $user == ""){
+		
+	if((!isset($user) || $user == "") && !$logout){
 		setcookie ("user", "", time() - 3600 - 3600- 3600);
 		setcookie ("pwd", "", time() - 3600- 3600- 3600);
 	
 		session_destroy();
 	
-		header('Location: /login') ;
+		 header('Location: /login') ;
 	} else {
 	//	header('Location: login.php?error=true') ;
 	}

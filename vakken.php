@@ -23,10 +23,10 @@ include "raw/vakken.php";
 
 <tr>
   <th>naam van onderdeel</th>
-  <th>loopbaan</th>
-  <th>ects</th>
-  <th>nummer</th>
-  <th>bekijk</th>
+  <th class="center">loopbaan</th>
+  <th class="center">ects</th>
+  <th class="center">nummer</th>
+  <th class="center">bekijk</th>
 </tr>
 <?
 

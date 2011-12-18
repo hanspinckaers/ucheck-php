@@ -19,10 +19,11 @@
   <meta name="format-detection" content="telephone=no">
   <meta name="Description" content="uSis vervelend &amp; ingewikkeld? Probeer uCheck. uCheck automatiseert ingewikkelde stappen op uSis. Zodat jij je makkelijk inschrijft voor studieonderdelen.">
   <meta name="viewport" content="width=1024" >
+	<meta property="fb:admins" content="1004437365" />
 
   <link rel="stylesheet" href="min/style.css" />
   <link rel="stylesheet" href="min/grid.css" />
-
+  <link rel="image_src" href="https://ucheck.nl/Logo.png" />
 <!--[if IE]><link rel="stylesheet" href="min/ie.css" type="text/css"><![endif]-->
 
 </head>
@@ -56,11 +57,11 @@ if(!file_exists($maillogfilename) || filesize($maillogfilename) == 0)
 if ($post && base64_decode($post["pass"]) != "") 
 {
 ?>
-<b>Mailservice</b>: uCheck checkt nog steeds jouw cijfers! <a href="mail/">Hier afmelden.</a>
+<b>Mailservice</b>: uCheck mailt bij nieuwe cijfers. <a href="mail/">Hier afmelden.</a>
 <?
 } else {
 ?>
-<b>Nieuw</b>: Krijg een mail bij nieuwe cijfers! <a href="mail/">Hier aanmelden.</a> <br/><i style="color:gray;">(je bent nog niet aangemeld)</i>
+<b>Krijg een mail bij nieuwe cijfers!</b> <a href="mail/">Aanmelden mailservice.</a> <br/><small><i style="color:gray;">(je bent nog niet aangemeld)</i></small>
 <?
 }
 ?>
@@ -91,10 +92,8 @@ if($user)
 <hr />
 
 <!--
-<span style="color:red">
-In verband met onderhoudswerkzaamheden zal uSis gesloten zijn op vrijdag 16 september van 17:00 uur tot 21:00 uur.
-</span>
+<span style="color:gray">
+uCheck heeft last van serverproblemen met de connectie met uSis. Mijn excuses.</span>
 <br/><br/>
 <hr />
 -->
-

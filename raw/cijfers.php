@@ -30,8 +30,6 @@ if(isset($_SESSION['cijfers_token']))
 
 if($json == "Invalid token.")
 {
-	mail("hans.pinckaers@gmail.com", "Invalid token! (cijfers token) ".$_SESSION['cijfers_token'], "",  "From: geneesleer@alwaysdata.net");
-
 	$json = file_get_contents($NODE_SERVER."cijfers/$user/$pwd/");
 }
 
@@ -41,11 +39,24 @@ if(!$json)
 	
 	if(!$json)
 	{
-		mail("hans.pinckaers@gmail.com", "Fallback voor $user (cijfers)", "",  "From: geneesleer@alwaysdata.net");
+//		mail("hans.pinckaers@gmail.com", "Fallback voor $user (cijfers)", "",  "From: geneesleer@alwaysdata.net");
 	}
 }
 
 $raw_vakken = json_decode($json, true);
+
+if($raw_vakken["error"] == "usiserror")
+{
+	echo "usiserror";
+	exit();
+} else if($raw_vakken["error"] == "loginerror")
+{
+	echo "loginerror";
+	exit();
+} else if($json == "")
+{
+	exit();
+}
 
 $vakken =  $raw_vakken['vakken'];
 $overige = $raw_vakken['overige'];

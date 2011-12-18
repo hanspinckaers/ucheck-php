@@ -15,14 +15,17 @@ include "raw/details.php";
 $nummer_onderdeel = -1;
 $first = true;
 $table = false;
+$firstFilter = true;
+$last_begin_title = "";
 
 foreach($onderdelen as $onderdeel)
 {
 $nummer_onderdeel++;
 
 if( (!$onderdeel['Nr studieactiv.'] || $onderdeel['Nr studieactiv.'] == "") &&
-	(!$onderdeel['enabled']) && count($onderdelen) != 1 && !$onderdeel['enabled'] && $first)
+	(!$onderdeel['enabled']) && count($onderdelen) != 1 && !$onderdeel['enabled'] && $first && $firstFilter)
 {
+	$firstFilter = false;
 	continue;	
 }
 
@@ -35,7 +38,7 @@ if(!$first){
 ?>
 
 </table>
-
+<br/>
 <? 
 } else {
 	$first = false;
@@ -45,7 +48,7 @@ if(!$first){
 <p></p>
 <h4>
 <? echo $onderdeel['Omschrijving']; 
-
+$last_begin_title = $onderdeel['Omschrijving'];
  if($onderdeel['Verplicht'] != "Ja"){ 
 ?>
  <span style="color: gray">niet verplicht</span>
@@ -78,7 +81,7 @@ $table = true;
 preg_match("/\(([0-9]+)/", $onderdeel['Nr studieactiv.'], $usis_code);
 ?>
 <tr id="row_detail_<? echo $onderdeel['id']; echo "_".$nummer_onderdeel ?>">
-  <td><? echo $onderdeel['Nr studieactiv.']; ?> (<i><a href="roosterinfo.php?id=<? echo $usis_code[1]; ?>&title=<? echo $onderdeel['Omschrijving']; ?> - <? echo $onderdeel['Nr studieactiv.']; ?>" target="_blank" onclick="window.open(this.href,'window','top=100,width=730,height=480,resizable,scrollbars,toolbar,menubar') ;return false;">roosterinformatie</a></i>)</td>
+  <td><? echo ($onderdeel['Nr studieactiv.']) ? $onderdeel['Nr studieactiv.'] : $onderdeel['Omschrijving'] ; ?> (<i><a href="roosterinfo.php?id=<? echo $usis_code[1]; ?>&title=<? echo $last_begin_title; ?> - <? echo $onderdeel['Nr studieactiv.']; ?>" target="_blank" onclick="window.open(this.href,'window','top=100,width=730,height=480,resizable,scrollbars,toolbar,menubar') ;return false;">roosterinformatie</a></i>)</td>
   <td><? echo $onderdeel['Eenheden']; ?></td>
   <td><? echo $onderdeel['Status']; ?></td>
   <td class="inschrijving_link">
@@ -104,4 +107,4 @@ if($deelvak)
 </table>
 
 <p></p>
-<p style="color:gray">Link inschrijven niet aanwezig? Dan sta je of al ingeschreven, of de inschrijftermijn is verlopen.</p>
+<p style="color:gray">Link inschrijven niet aanwezig? Dan sta je of al ingeschreven, of inschrijven is (nog) niet mogelijk.</p>

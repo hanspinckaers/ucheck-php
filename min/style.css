@@ -169,12 +169,16 @@ table
 
 td
 {
-	padding: 10px 14px 11px 14px;
+	padding: 11px 14px 11px 14px;
 		
 	border-bottom: 1px #ebebeb solid;
-	border-right: 1px #f2f2f2 solid;	
+	border-right: 1px #f2f2f2 solid;			
 }
 
+body:-moz-last-node td {
+	padding: 12px 14px 10px 14px;
+}
+ 
 td input
 {
 }
@@ -228,7 +232,13 @@ th
 	);
 
 	
-	text-shadow: 0px -1px rgba(255,255,255,0.25);
+	text-shadow: 0px 1px rgba(255,255,255,0.75);
+}
+
+th.center
+{
+	padding: 10px 0 11px;
+	text-align: center;
 }
 
 
@@ -275,7 +285,7 @@ table#cijfers col.vak
 table#cijfers td,
 table#inschrijvingen td
 {
-	vertical-align:middle;
+/*	vertical-align:middle;*/
 }
 
 table#cijfers col.datum
@@ -472,7 +482,7 @@ div.hoofdbalk
 	);
 
 	
-	text-shadow: 0px -1px rgba(255,255,255,0.25);
+	text-shadow: 0px 1px rgba(255,255,255,0.75);
 }
 
 div.nog_balk
@@ -622,7 +632,7 @@ div.hoofdbalk
 	    #ffffff 98%
 	);
   
-	text-shadow: 0px -1px rgba(255,255,255,0.25);
+	text-shadow: 0px 1px rgba(255,255,255,0.75);
 }
  
 div.filled_balk

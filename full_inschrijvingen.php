@@ -30,7 +30,7 @@ include "raw/user_info.php";
 	<th class="vak">
 		 vak
 	</th>
-	<th class="info" style="padding:0;">
+	<th class="info center">
 		 rooster
 	</th>
 </tr>

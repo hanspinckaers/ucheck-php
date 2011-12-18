@@ -36,7 +36,7 @@ if(isset($_SESSION['inschrijvingen_token']))
 
 if($json == "Invalid token.")
 {
-	mail("hans.pinckaers@gmail.com", "Invalid token! ".$token, "",  "From: geneesleer@alwaysdata.net");
+//	 mail("hans.pinckaers@gmail.com", "Invalid token! ".$token, "",  "From: geneesleer@alwaysdata.net");
 
 	if($year)
 	{
@@ -57,7 +57,7 @@ if(!$json)
 	
 	if(!$json)
 	{
-		mail("hans.pinckaers@gmail.com", "Fallback voor $user (inschrijvingen)", "",  "From: geneesleer@alwaysdata.net");
+//		mail("hans.pinckaers@gmail.com", "Fallback voor $user (inschrijvingen)", "",  "From: geneesleer@alwaysdata.net");
 	}
 }
 

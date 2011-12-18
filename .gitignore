@@ -14,3 +14,6 @@ beta_mail/*
 mail/*
 visitors.php
 mail.php
+stats/*
+apc.php
+usis_resource.php

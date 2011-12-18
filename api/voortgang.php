@@ -247,7 +247,7 @@ div.hoofdbalk
 	    #ffffff 100%
 	);
   
-	text-shadow: 0px -1px rgba(255,255,255,0.25);
+	text-shadow: 0px 1px rgba(255,255,255,0.5);
 }
  
 div.filled_balk
@@ -457,7 +457,7 @@ if (isset($sub['gem_werkelijk']) && $sub['gem_werkelijk'] != "" && $sub['gem_wer
 }
 ?>
 
-Deze gegevens zijn meestal verouderd.
+<small style="color:grey;">Deze gegevens zijn meestal verouderd.</small>
 
 </div>
 </body>
