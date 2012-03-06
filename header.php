@@ -91,9 +91,9 @@ if($user)
 ?>
 <hr />
 
-<!--
-<span style="color:gray">
-uCheck heeft last van serverproblemen met de connectie met uSis. Mijn excuses.</span>
-<br/><br/>
+<!--<div style="color:gray;">
+<p>
+<b>Let op:</b> het kan zijn dat uCheck een paar vakken niet heeft die wel op uSis staan. Mijn excuses voor het ongemak.<br/>Mocht je dus een vak niet vinden, kijk dan voor de zekerheid even op uSis.
+</p>
 <hr />
--->
+</div>-->

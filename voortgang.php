@@ -52,15 +52,19 @@ if(file_exists($filename) && ((time()-filemtime($filename))/(60*60) < 24*7))
 	fclose($logfile);
 }
 
-$studiesraw = explode("<td class='PSGROUPBOXLABEL'  align='left'><a name='DERIVED_SAA_DPR_GROUPBOX", $html);
+//echo $html;
+
+$studiesraw = explode("<DIV id='win0divDERIVED_SAA_DPR_GROUPBOX1$", $html);
 
 $studies = array();
 
 foreach( $studiesraw as $studieonderdeel )
 {	
 
-	$studiedeelarr = explode("<tr><td class='PAGROUPDIVIDER' align='left'>", $studieonderdeel);
-			
+	$studiedeelarr = explode("<tr><td class='PAGROUPDIVIDER'  align='left'>", $studieonderdeel);
+	
+//	print_r($studiedeelarr);
+	
 	preg_match("/border='0' \/><\/a>(.*)<\/td><\/tr>/", $studiedeelarr[0], $title);	
 	preg_match("/Eenh.: ([0-9\.]*) vereist, ([0-9\.]*) gevolgd, ([0-9\.]*) nodig/", $studiedeelarr[0], $punten);
 	preg_match("/Cijfergemiddelde: ([0-9\.]*) vereist, ([0-9\.]*) werkelijk/", $studiedeelarr[0], $gem);		
@@ -79,10 +83,14 @@ foreach( $studiesraw as $studieonderdeel )
 			
 	foreach($studiedeelarr as $studiedeel)
 	{
+//		echo $studiedeel;
+	
 		$counter++;
 		if($counter == 0) continue;
 				
-		$studiesubdelen = explode("<table cellpadding='0' cellspacing='0' cols='1'  class='PSLEVEL1SCROLLAREABODYNBOWBO'  width='603'>", $studiedeel);		
+		$studiesubdelen = explode("<table cellpadding='2' cellspacing='0' cols='1'  class='PSLEVEL1SCROLLAREABODYNBOWBO'", $studiedeel);		
+		
+//		print_r($studiesubdelen);
 		
 		preg_match("/(.*)<\/td><\/tr>/", $studiesubdelen[0], $title);
 		preg_match("/Eenh.: ([0-9\.]*) vereist, ([0-9\.]*) gevolgd, ([0-9\.]*) nodig/", $studiesubdelen[0], $punten);
@@ -128,6 +136,8 @@ foreach( $studiesraw as $studieonderdeel )
 		}
 	}
 }
+
+//print_r($studies);
 ?>
 
 <div id="voortgang_inner">
@@ -269,5 +279,3 @@ if (isset($sub['gem_werkelijk']) && $sub['gem_werkelijk'] != "" && $sub['gem_wer
 ?>
 
 <!-- Deze gegevens zijn meestal verouderd. -->
-
-</div>

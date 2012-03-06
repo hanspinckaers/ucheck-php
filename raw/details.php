@@ -51,7 +51,7 @@ curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
 curl_setopt($ch, CURLOPT_COOKIEFILE, $cookiefile);
 curl_setopt($ch, CURLOPT_COOKIEJAR, $cookiefile);
 
-// curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 1);
+ curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 1);
 curl_setopt($ch, CURLOPT_TIMEOUT, 10);
 
 $result = curl_exec($ch);
@@ -66,8 +66,9 @@ $url = 'https://usis.leidenuniv.nl/psc/S040PRD/EMPLOYEE/HRMS/c/SA_LEARNER_SERVIC
 curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_4; nl-nl) AppleWebKit/533.18.1 (KHTML, like Gecko) Version/5.0.2 Safari/533.18.5");
 curl_setopt($ch,CURLOPT_URL,$url);
 
-$post_str = "ICType=Panel&ICElementNum=0&ICAction=DERIVED_REGFRM1_SSR_PB_DELETE$113$&ICXPos=0&ICYPos=0&ICFocus=&ICSaveWarningFilter=0&ICChanged=-1&ICResubmit=0&ICSID=LmTfZHrLLXbk&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$22$=0100";
+//$post_str = "ICType=Panel&ICElementNum=0&ICAction=DERIVED_REGFRM1_SSR_PB_DELETE$113$&ICXPos=0&ICYPos=0&ICFocus=&ICSaveWarningFilter=0&ICChanged=-1&ICResubmit=0&ICSID=LmTfZHrLLXbk&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$22$=0100";
 
+$post_str = "ICAJAX=1&ICNAVTYPEDROPDOWN=0&ICType=Panel&ICElementNum=0&ICAction=DERIVED_REGFRM1_SSR_PB_DELETE%24113%24&ICXPos=0&ICYPos=0&ResponsetoDiffFrame=-1&TargetFrameName=None&ICFocus=&ICSaveWarningFilter=0&ICChanged=-1&ICResubmit=0&ICSID=A75Wej4DPgl3h%2F1VCn8JugG38dXSuGjK4VoRJ7xsMd4%3D&ICModalWidget=0&ICZoomGrid=0&ICZoomGridRt=0&ICModalLongClosed=&ICActionPrompt=false&ICFind=&ICAddCount=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$23$=0100";
 $count = 0;
 
 foreach($onderdelen[0] as $onderdeel)
@@ -88,7 +89,7 @@ curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
 curl_setopt($ch, CURLOPT_COOKIEFILE, $cookiefile);
 curl_setopt($ch, CURLOPT_COOKIEJAR, $cookiefile);
 
-// curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 1);
+curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 1);
 curl_setopt($ch, CURLOPT_TIMEOUT, 10);
 
 $result = curl_exec($ch);
@@ -146,7 +147,7 @@ curl_setopt($ch, CURLOPT_COOKIEFILE, $cookiefile);
 curl_setopt($ch, CURLOPT_COOKIEJAR, $cookiefile);
 
 curl_setopt($ch,CURLOPT_POST, 13);
-curl_setopt($ch,CURLOPT_POSTFIELDS,"ICType=Panel&ICElementNum=0&ICAction=SNS_DERIVED_DESCR20&ICXPos=0&ICYPos=0&ICFocus=&ICSaveWarningFilter=0&ICChanged=-1&ICResubmit=0&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$5$=0100&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$24$=0100");
+curl_setopt($ch,CURLOPT_POSTFIELDS,"ICType=Panel&ICElementNum=0&ICAction=SNS_DERIVED_DESCR20&ICXPos=0&ICYPos=0&ResponsetoDiffFrame=-1&TargetFrameName=None&ICFocus=&ICSaveWarningFilter=0&ICChanged=-1&ICResubmit=1&ICSID=VWJH4XuwW5DikH2UFpQZhPt5WEK5u5nlWMeLNWNWIJI%3D&ICModalWidget=0&ICZoomGrid=0&ICZoomGridRt=0&ICModalLongClosed=&ICActionPrompt=false&ICFind=&ICAddCount=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$6$=0100&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$25$=0100");
 
 curl_exec($ch);
 
@@ -177,50 +178,54 @@ curl_setopt($ch, CURLOPT_COOKIEJAR, $cookiefile);
 
 curl_setopt($ch,CURLOPT_POST, 13);
 
-if($year == "10")
-{
-curl_setopt($ch,CURLOPT_POSTFIELDS,"ICType=Panel&ICElementNum=0&ICAction=SNS_TERM_TBL_VW_DESCR$1&ICXPos=0&ICYPos=0&ICFocus=&ICSaveWarningFilter=0&ICChanged=0&ICResubmit=0&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$5$=0100&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$24$=0100
-");
-} else {
-curl_setopt($ch,CURLOPT_POSTFIELDS,"ICType=Panel&ICElementNum=0&ICAction=SNS_TERM_TBL_VW_DESCR$0&ICXPos=0&ICYPos=0&ICFocus=&ICSaveWarningFilter=0&ICChanged=0&ICResubmit=0&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$5$=0100&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$24$=0100
-");
-}
+
+curl_setopt($ch,CURLOPT_POSTFIELDS,"ICType=Panel&ICElementNum=0&ICAction=SNS_DERIVED_FETCH_PUSHBUTTON&ICXPos=0&ICYPos=0&ResponsetoDiffFrame=-1&TargetFrameName=None&ICFocus=&ICSaveWarningFilter=0&ICChanged=0&ICResubmit=1&ICSID=VWJH4XuwW5DikH2UFpQZhPt5WEK5u5nlWMeLNWNWIJI%3D&ICModalWidget=0&ICZoomGrid=0&ICZoomGridRt=0&ICModalLongClosed=&ICActionPrompt=false&ICFind=&ICAddCount=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$6$=0100&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$25$=0100");
+
+//if($year == "10")
+//{
+//curl_setopt($ch,CURLOPT_POSTFIELDS,"ICType=Panel&ICElementNum=0&ICAction=SNS_TERM_TBL_VW_DESCR$1&ICXPos=0&ICYPos=0&ICFocus=&ICSaveWarningFilter=0&ICChanged=0&ICResubmit=0&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$6$=0100&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$25$=0100
+//");
+//} else {
+//curl_setopt($ch,CURLOPT_POSTFIELDS,"ICType=Panel&ICElementNum=0&ICAction=SNS_TERM_TBL_VW_DESCR$0&ICXPos=0&ICYPos=0&ICFocus=&ICSaveWarningFilter=0&ICChanged=0&ICResubmit=0&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$6$=0100&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$25$=0100
+//");
+//}
+//ICType=Panel&ICElementNum=0&ICStateNum=17&ICAction=SNS_DERIVED_FETCH_PUSHBUTTON&ICXPos=0&ICYPos=0&ResponsetoDiffFrame=-1&TargetFrameName=None&ICFocus=&ICSaveWarningFilter=0&ICChanged=0&ICResubmit=1&ICSID=VWJH4XuwW5DikH2UFpQZhPt5WEK5u5nlWMeLNWNWIJI%3D&ICModalWidget=0&ICZoomGrid=0&ICZoomGridRt=0&ICModalLongClosed=&ICActionPrompt=false&ICFind=&ICAddCount=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$6$=0100&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$25$=0100
+
 
 curl_exec($ch);
-
 //print_r(curl_getinfo($ch));
 
 curl_close($ch);
-
-unset($ch);
-
-$ch = curl_init();
-
-$url = 'https://usis.leidenuniv.nl/psc/S040PRD/EMPLOYEE/HRMS/c/SNS_CUSTOMIZATIONS_NLD.SNS_SSENRL_CART.GBL';
-
+//
+//unset($ch);
+//
+//$ch = curl_init();
+//
+//$url = 'https://usis.leidenuniv.nl/psc/S040PRD/EMPLOYEE/HRMS/c/SNS_CUSTOMIZATIONS_NLD.SNS_SSENRL_CART.GBL';
+//
 //set the url, number of POST vars, POST data
-curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_4; nl-nl) AppleWebKit/533.18.1 (KHTML, like Gecko) Version/5.0.2 Safari/533.18.5");
-curl_setopt($ch,CURLOPT_URL,$url);
-
-curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 0); 
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
- 
-curl_setopt($ch, CURLOPT_COOKIEFILE, $cookiefile);
-curl_setopt($ch, CURLOPT_COOKIEJAR, $cookiefile);
-
-curl_setopt($ch, CURLOPT_NOBODY, 1);
-
+//curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_4; nl-nl) AppleWebKit/533.18.1 (KHTML, like Gecko) Version/5.0.2 Safari/533.18.5");
+//curl_setopt($ch,CURLOPT_URL,$url);
+//
+//curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 0); 
+//curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+// 
+//curl_setopt($ch, CURLOPT_COOKIEFILE, $cookiefile);
+//curl_setopt($ch, CURLOPT_COOKIEJAR, $cookiefile);
+//
+//curl_setopt($ch, CURLOPT_NOBODY, 1);
+//
 // curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 1);
-curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-
-curl_setopt($ch,CURLOPT_POST, 13);
-curl_setopt($ch,CURLOPT_POSTFIELDS,"ICType=Panel&ICElementNum=0&ICAction=SNS_DERIVED_FETCH_PUSHBUTTON&ICXPos=0&ICYPos=0&ICFocus=&ICSaveWarningFilter=0&ICChanged=0&ICResubmit=0&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$5$=0100&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$24$=0100");
-
-curl_exec($ch);
+//curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+//
+//curl_setopt($ch,CURLOPT_POST, 13);
+//curl_setopt($ch,CURLOPT_POSTFIELDS,"ICType=Panel&ICElementNum=0&ICAction=SNS_DERIVED_FETCH_PUSHBUTTON&ICXPos=0&ICYPos=0&ICFocus=&ICSaveWarningFilter=0&ICChanged=0&ICResubmit=0&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$5$=0100&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$24$=0100");
+//
+//echo curl_exec($ch);
 
 //print_r(curl_getinfo($ch));
 
-curl_close($ch);
+//curl_close($ch);
 
 unset($ch);
 
@@ -246,7 +251,11 @@ curl_setopt($ch, CURLOPT_NOBODY, 1);
 curl_setopt($ch, CURLOPT_TIMEOUT, 10);
 
 curl_setopt($ch,CURLOPT_POST, 14);
-curl_setopt($ch,CURLOPT_POSTFIELDS,"ICType=Panel&ICElementNum=0&ICAction=SNS_CRSESRCH_WK_SEARCH_BTN&ICXPos=0&ICYPos=0&ICFocus=&ICSaveWarningFilter=0&ICChanged=0&ICResubmit=0&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$4$=0100&SNS_CRSESRCH_WK_SUBJECT$54$=&SNS_CRSESRCH_WK_CATALOG_NBR=".$_GET['q']."&SNS_CRSESRCH_WK_DESCR1=&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$59$\$chk$0=N&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$59$\$chk$1=N&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$59$\$chk$2=N&SNS_CRSESRCH_WK_SNS_SEL_OPERATOR=&SNS_CRSESRCH_WK_UNITS_MAXIMUM=0.00&SNS_CRSESRCH_WK_ACAD_ORG=&SNS_CRSESRCH_WK_SNS_CAR_SEL$69$\$chk$0=N&SNS_CRSESRCH_WK_SNS_CAR_SEL$69$\$chk$1=N&SNS_CRSESRCH_WK_SNS_CAR_SEL$69$\$chk$2=N&SNS_CRSESRCH_WK_LANGUAGE=&SNS_DERIVED_CRSE_ATTR=&SNS_DERIVED_CRSE_ATTR_VALUE=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$92$=0100");
+curl_setopt($ch,CURLOPT_POSTFIELDS,"ICAJAX=1&ICNAVTYPEDROPDOWN=0&ICType=Panel&ICElementNum=0&ICAction=SNS_CRSESRCH_WK_SEARCH_BTN&ICXPos=0&ICYPos=0&ResponsetoDiffFrame=-1&TargetFrameName=None&ICFocus=&ICSaveWarningFilter=0&ICChanged=0&ICResubmit=0&ICSID=VWJH4XuwW5DikH2UFpQZhPt5WEK5u5nlWMeLNWNWIJI%3D&ICModalWidget=0&ICZoomGrid=0&ICZoomGridRt=0&ICModalLongClosed=&ICActionPrompt=false&ICFind=&ICAddCount=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$5$=0100&SNS_CRSESRCH_WK_SUBJECT$55$=&SNS_CRSESRCH_WK_CATALOG_NBR=".$_GET['q']."&SNS_CRSESRCH_WK_DESCR1=&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$\$chk$0=Y&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$$0=Y&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$\$chk$1=N&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$\$chk$2=N&SNS_CRSESRCH_WK_SNS_SEL_OPERATOR=&SNS_CRSESRCH_WK_UNITS_MAXIMUM=0.00&SNS_CRSESRCH_WK_ACAD_ORG=&SNS_CRSESRCH_WK_SNS_CAR_SEL\$70$\$chk$0=N&SNS_CRSESRCH_WK_SNS_CAR_SEL\$70$\$chk$1=N&SNS_CRSESRCH_WK_SNS_CAR_SEL\$70$\$chk$2=N&SNS_CRSESRCH_WK_LANGUAGE=&SNS_DERIVED_CRSE_ATTR=&SNS_DERIVED_CRSE_ATTR_VALUE=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$94$=0100");
+//
+//
+
+//curl_setopt($ch,CURLOPT_POSTFIELDS,"ICType=Panel&ICElementNum=0&ICStateNum=33&ICAction=SNS_CRSESRCH_WK_SEARCH_BTN&ICXPos=0&ICYPos=0&ResponsetoDiffFrame=-1&TargetFrameName=None&ICFocus=&ICSaveWarningFilter=0&ICChanged=0&ICResubmit=0&ICSID=VWJH4XuwW5DikH2UFpQZhPt5WEK5u5nlWMeLNWNWIJI%3D&ICModalWidget=0&ICZoomGrid=0&ICZoomGridRt=0&ICModalLongClosed=&ICActionPrompt=false&ICFind=&ICAddCount=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$5$=0100&SNS_CRSESRCH_WK_SUBJECT$55$=&SNS_CRSESRCH_WK_CATALOG_NBR=".$_GET['q']."&SNS_CRSESRCH_WK_DESCR1=&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$$chk$0=Y&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$$0=Y&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$$chk$1=N&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$$chk$2=N&SNS_CRSESRCH_WK_SNS_SEL_OPERATOR=&SNS_CRSESRCH_WK_UNITS_MAXIMUM=0.00&SNS_CRSESRCH_WK_ACAD_ORG=&SNS_CRSESRCH_WK_SNS_CAR_SEL$70$$chk$0=N&SNS_CRSESRCH_WK_SNS_CAR_SEL$70$$chk$1=N&SNS_CRSESRCH_WK_SNS_CAR_SEL$70$$chk$2=N&SNS_CRSESRCH_WK_LANGUAGE=&SNS_DERIVED_CRSE_ATTR=&SNS_DERIVED_CRSE_ATTR_VALUE=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$94$=0100");
 
 $result = curl_exec($ch);
 
@@ -274,47 +283,49 @@ curl_setopt($ch, CURLOPT_COOKIEJAR, $cookiefile);
 //curl_setopt($ch, CURLOPT_TIMEOUT, 10);
 
 curl_setopt($ch,CURLOPT_POST, 14);
-curl_setopt($ch,CURLOPT_POSTFIELDS,"ICType=Panel&ICElementNum=0&ICAction=CATALOG_NBR$0&ICXPos=0&ICYPos=0&ICFocus=&ICSaveWarningFilter=0&ICChanged=0&ICResubmit=0&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$4$=0100&SNS_CRSESRCH_WK_SUBJECT$54$=&SNS_CRSESRCH_WK_CATALOG_NBR=".$_GET['q']."&SNS_CRSESRCH_WK_DESCR1=&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$59$\$chk$0=N&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$59$\$chk$1=N&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$59$\$chk$2=N&SNS_CRSESRCH_WK_SNS_SEL_OPERATOR=&SNS_CRSESRCH_WK_UNITS_MAXIMUM=0.00&SNS_CRSESRCH_WK_ACAD_ORG=&SNS_CRSESRCH_WK_SNS_CAR_SEL$69$\$chk$0=N&SNS_CRSESRCH_WK_SNS_CAR_SEL$69$\$chk$1=N&SNS_CRSESRCH_WK_SNS_CAR_SEL$69$\$chk$2=N&SNS_CRSESRCH_WK_LANGUAGE=&SNS_DERIVED_CRSE_ATTR=&SNS_DERIVED_CRSE_ATTR_VALUE=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$92$=0100");
+curl_setopt($ch,CURLOPT_POSTFIELDS,"ICType=Panel&ICElementNum=0&ICAction=DESCR50$0&ICXPos=0&ICYPos=0&ResponsetoDiffFrame=-1&TargetFrameName=None&ICFocus=&ICSaveWarningFilter=0&ICChanged=0&ICResubmit=1&ICSID=VWJH4XuwW5DikH2UFpQZhPt5WEK5u5nlWMeLNWNWIJI%3D&ICModalWidget=0&ICZoomGrid=0&ICZoomGridRt=0&ICModalLongClosed=&ICActionPrompt=false&ICFind=&ICAddCount=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$5$=0100&SNS_CRSESRCH_WK_SUBJECT$55$=&SNS_CRSESRCH_WK_CATALOG_NBR=3883881V2Y&SNS_CRSESRCH_WK_DESCR1=&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$\$chk$0=N&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$\$chk$1=N&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$\$chk$2=N&SNS_CRSESRCH_WK_SNS_SEL_OPERATOR=&SNS_CRSESRCH_WK_UNITS_MAXIMUM=0.00&SNS_CRSESRCH_WK_ACAD_ORG=&SNS_CRSESRCH_WK_SNS_CAR_SEL\$70$\$chk$0=N&SNS_CRSESRCH_WK_SNS_CAR_SEL\$70$\$chk$1=N&SNS_CRSESRCH_WK_SNS_CAR_SEL\$70$\$chk$2=N&SNS_CRSESRCH_WK_LANGUAGE=&SNS_DERIVED_CRSE_ATTR=&SNS_DERIVED_CRSE_ATTR_VALUE=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$94$=0100");
 
-// print_r(curl_getinfo($ch));
+
 $result = curl_exec($ch);
 
 unset($ch);
 
-$ch = curl_init();
-
+//$ch = curl_init();
+//
 /// was hier
-
-$url = 'https://usis.leidenuniv.nl/psc/S040PRD/EMPLOYEE/HRMS/c/SNS_CUSTOMIZATIONS_NLD.SNS_SSENRL_CART.GBL';
-
+//
+//$url = 'https://usis.leidenuniv.nl/psc/S040PRD/EMPLOYEE/HRMS/c/SNS_CUSTOMIZATIONS_NLD.SNS_SSENRL_CART.GBL';
+//
 //set the url, number of POST vars, POST data
-curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_4; nl-nl) AppleWebKit/533.18.1 (KHTML, like Gecko) Version/5.0.2 Safari/533.18.5");
-curl_setopt($ch,CURLOPT_URL,$url);
-
-curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 0); 
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
- 
-curl_setopt($ch, CURLOPT_COOKIEFILE, $cookiefile);
-curl_setopt($ch, CURLOPT_COOKIEJAR, $cookiefile);
-
+//curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_4; nl-nl) AppleWebKit/533.18.1 (KHTML, like Gecko) Version/5.0.2 Safari/533.18.5");
+//curl_setopt($ch,CURLOPT_URL,$url);
+//
+//curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 0); 
+//curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+// 
+//curl_setopt($ch, CURLOPT_COOKIEFILE, $cookiefile);
+//curl_setopt($ch, CURLOPT_COOKIEJAR, $cookiefile);
+//
 // curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 1);
 // curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-
-curl_setopt($ch,CURLOPT_POST, 14);
-if($year=="10")
-{
-curl_setopt($ch,CURLOPT_POSTFIELDS,"ICType=Panel&ICElementNum=0&ICAction=DERIVED_SSS_SCT_SSR_PB_GO&ICXPos=0&ICYPos=0&ICFocus=&ICSaveWarningFilter=0&ICChanged=-1&ICResubmit=0&ICSID=jWTycNhQZ2gJ&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$22$=0100&SSR_DUMMY_RECV1\$sels$0=1&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$66$=0100");
-} else {
-curl_setopt($ch,CURLOPT_POSTFIELDS,"ICType=Panel&ICElementNum=0&ICAction=DERIVED_SSS_SCT_SSR_PB_GO&ICXPos=0&ICYPos=0&ICFocus=&ICSaveWarningFilter=0&ICChanged=-1&ICResubmit=0&ICSID=jWTycNhQZ2gJ&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$22$=0100&SSR_DUMMY_RECV1\$sels$0=0&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$66$=0100");
-}
+//
+//curl_setopt($ch,CURLOPT_POST, 14);
+//if($year=="10")
+//{
+//curl_setopt($ch,CURLOPT_POSTFIELDS,"ICType=Panel&ICElementNum=0&ICAction=SNS_DERIVED_CLASS_SELECT_PB&ICXPos=0&ICYPos=0&ResponsetoDiffFrame=-1&TargetFrameName=None&ICFocus=&ICSaveWarningFilter=0&ICChanged=-1&ICResubmit=0&ICSID=VWJH4XuwW5DikH2UFpQZhPt5WEK5u5nlWMeLNWNWIJI%3D&ICModalWidget=0&ICZoomGrid=0&ICZoomGridRt=0&ICModalLongClosed=&ICActionPrompt=false&ICFind=&ICAddCount=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$24$=0100&SNS_SS_DERIVED_SELECTED$chk$1=Y&SNS_SS_DERIVED_SELECTED$1=Y&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$173$=0100");
+//} else {
+//curl_setopt($ch,CURLOPT_POSTFIELDS,"ICType=Panel&ICElementNum=0&ICAction=DERIVED_SSS_SCT_SSR_PB_GO&ICXPos=0&ICYPos=0&ICFocus=&ICSaveWarningFilter=0&ICChanged=-1&ICResubmit=0&ICSID=jWTycNhQZ2gJ&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$22$=0100&SSR_DUMMY_RECV1\$sels$0=0&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$66$=0100");
+//}
 // print_r(curl_getinfo($ch));
-$result = curl_exec($ch);
+//
+//
+//$result = curl_exec($ch);
+//echo $result;
+//exit();
 
-unset($ch);
+$arr = explode("Samenstelling", $result);
+$t_onderdelen = explode("<tr id='trSNS_CLASS_TR_VW$0_row", $arr[1]);
 
-$arr = explode("<tr><td class='PSLEVEL1GRIDLABEL'  align='left'>Samenstelling</td></tr>", $result);
-
-$t_onderdelen = explode("<tr valign='center'>", $arr[1]);
 $onderdelen = array();
 
 /*
@@ -336,7 +347,7 @@ $headers = array();
 
 foreach($t_onderdelen as $onderdeel)
 {
-	if($counter == 1)
+	if($counter == 0)
 	{
 		//TABLE HEADERS!!
 		preg_match_all("/<th scope='col'.* >(.*)<\/th>/", $onderdeel, $out);
@@ -352,8 +363,7 @@ foreach($t_onderdelen as $onderdeel)
 				preg_match("/>(.*)<\/a>/", $th, $a_parsed);
 				$headers[] = $a_parsed[1];
 			}
-		}	
-			
+		}				
 	} else {
 	
 		$tds = explode("<td ", $onderdeel);
@@ -397,9 +407,16 @@ foreach($t_onderdelen as $onderdeel)
 				if($td_counter <= count($headers))
 				{	
 					//left or center
-					preg_match("/' >(.*)<\/span>/", $td, $td_out);
-					
-					if($td_out[1])
+					preg_match("/<span.*'>(.*)<\/span>/", $td, $td_out);
+																	
+					$link_pos = strpos($td, "</a>");
+										
+					if($link_pos !== false)
+					{
+						preg_match("/<a.*>(.*)<\/a>/", $td, $td_out);
+						$new_onderdeel[$headers[$td_counter-1]] = $td_out[1];	
+					} 
+					else if($td_out[1])
 					{
 						$new_onderdeel[$headers[$td_counter-1]] = $td_out[1];
 					} else {
@@ -413,7 +430,7 @@ foreach($t_onderdelen as $onderdeel)
 						
 						if($link_pos !== false)
 						{
-							preg_match("/>(.*)<\/a>/", $td, $td_out);
+							preg_match("/>(.*)<\/a>/", $td_out[1], $td_out);
 							$new_onderdeel[$headers[$td_counter-1]] = $td_out[1];
 						} 
 						else if($status_pos !== false)
@@ -454,6 +471,8 @@ foreach($t_onderdelen as $onderdeel)
 		
 	$counter++;
 }
+
+//print_r($onderdelen);
 
 if(!isset($keep_cookie))
 {

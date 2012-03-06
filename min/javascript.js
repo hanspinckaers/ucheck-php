@@ -762,7 +762,8 @@ function uitschrijven()
         method: "get",
         onSuccess: function (responseText)
         {
-            var myObject = eval("(" + responseText + ")");
+	        console.log(responseText);
+            var myObject = eval("("+responseText+")");
             var arr = $A(myObject.respons);
             $$("#popup tr").each(function (ele, index)
             {
