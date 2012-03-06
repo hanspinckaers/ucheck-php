@@ -16,44 +16,47 @@ date_default_timezone_set("Europe/Berlin");
 
 if(date("i") < 10)
 {
-	$studies = array("ALG","ARAB","ARCH","ASA","BFW","BIO","BIOM","BOEK","CHE","CLANEC","DUITS","DUTCHST","EGYPTE","ENGELS","EUS","FGWALG","PHOTOGS","FRANS","GS","GODG","HJS","HERV","INF","ISLM","ISLT","ITAL","JOURNIME","FGWKERN","FDK","KG","LAAS","LO","FLEBYVAK","FLEALG","LA&amp;S","LST","LITW","MANAGEME","MIDOOST","MST","MUZIEK","NSC","NTK","NED","NP","OCMW","POWE","PKST","PSYC");
-
 	$logfilename = "/home/geneesleer/ucheck/scrapeusis/logs/".strftime('%d-%h-%Y', time())."_1.txt";
  	
+ 	// 2011 - 2012
  	$years = array("11");
-} else {
-	$studies = array("LAW","SEMI","SLAV","STK","TCIA","TCMA","TW","INDTIBET","INDONES","AFRIKA","TCLA","CHINA","JAPAN","KOREA","TCC","THEA","TURK","VIET","VTW","W&amp;N","WSK","ZZOAZIE","GNK","BSKE","CANS","PEDA","GRIEKLAT");
-	
+} 
+else {	
 	$logfilename = "/home/geneesleer/ucheck/scrapeusis/logs/".strftime('%d-%h-%Y', time())."_2.txt";
 	
+	// year f = 2011 - 2012, maar niet geselecteerd op onderwijseenheid, maar alle resultaten van een studie
 	$years = array("f");
 }
 
-//$studies = array("LA&S","AFRIKA","ARAB","ARCH","ASA","KG","FDK","STK","BFW","BIO","BIOM","BOEK","CHE","CLANEC","VIET","VTW","INF","FGWKERN","CANS","DUTCHST","NED","PEDA","EGYPTE","ENGELS","EUS","FGWALG","PHOTOGS","FRANS","ALG","DUITS","GRIEKLAT","HJS","HERV","GS","FLEBYVAK","FLEALG","INDTIBET","INDONES","INDECO","ISLM","ISLT","ITAL","JAPAN","JOURNIME","KOREA","TCC","CHINA","TCIA","TCMA","TURK","LAAS","TCLA","LAW","LST","TAALK","TW","LETTERK","LITW","MANAGEME","WSK","GNK","MIDOOST","MST","MUZIEK","NSC","OCMW","NP","WYSB","NTK","POWE","PKST","PREUNIV","PSYC","BSKE","GODG","W&amp;N","SEMI","SLAV","ZZOAZIE","LO","THEA");
-
 $studies = array("ARCH", "W%26N","LA%26S","ALG","ARAB","ARCH","ASA","BSKE","BFW","BIO","BIOM","BOEK","CHE","CLANEC","CANS","DUITS","DUTCHST","EGYPTE","ENGELS","EUS","FGWALG","PHOTOGS","FRANS","GNK","GS","GODG","GRIEKLAT","HJS","HERV","INDECO","INF","ISLM","ISLT","ITAL","JOURNIME","FGWKERN","FDK","KG","LAAS","LEIALG","LO","FLEBYVAK","FLEALG","LETTERK","LST","LITW","MANAGEME","MIDOOST","MST","MUZIEK","NSC","NTK","NED","NP","OCMW","PEDA","POWE","PKST","PREUNIV","PSYC","LAW","SEMI","SLAV","STK","TCIA","TCMA","TAALK","TW","INDTIBET","INDONES","AFRIKA","TCLA","CHINA","JAPAN","KOREA","TCC","THEA","TURK","VIET","VTW","LAVA","WYSB","WSK","ZZOAZIE");
-
-//include "user_info.php";
-//$studies = array("GRIEKLAT");
-
-// $studies = array("GNK");
-//$logfilename = "/home/geneesleer/ucheck/scrapeusis/logs/".strftime('%d-%h-%Y', time())."_3.txt";
 
 $cookiefile = "/home/geneesleer/ucheck/raw/"."cookies/s0924121_vakken.txt";
 
 $logfile = fopen($logfilename, 'w') or die("can't open file");
 
-// $years = array("10","11");
+if(file_exists("../geheim/ucheck.php"))
+{	
+	include("../geheim/ucheck.php");
+	
+	$fields = array(
+	            'userid'=>'s0924121',
+	            'pwd'=>$pass_hans,
+	            'timezoneOffset'=>'-60',
+	        );	
+}
+else {
+	$fields = array(
+	            'userid'=>'<s0924121>',
+	            'pwd'=>'<wachtwoord>',
+	            'timezoneOffset'=>'-60',
+	        );
+}
 
-// $years = array("f","11");
-
-// $years = array("f");
 
 foreach($years as $year)
 {
 
 $error = false;
-
 
 $start_total = time();
 
@@ -70,12 +73,6 @@ echo $studie."\n\n";
 
 $start = time();
 
-$fields = array(
-            'userid'=>'s0924121',
-            'pwd'=>'VoorLief1',
-            'timezoneOffset'=>'-60',
-        );
-
 $fp = fopen($cookiefile, "w");
 if($fp) fclose($fp);
 
@@ -85,7 +82,6 @@ rtrim($fields_string,'&');
 sleep(1);
 
 $ch = curl_init();
-
 $url = 'https://usis.leidenuniv.nl/psc/S040PRD/EMPLOYEE/HRMS/c/SNS_CUSTOMIZATIONS_NLD.SNS_SSENRL_CART.GBL';
 
 //set the url, number of POST vars, POST data
@@ -101,16 +97,15 @@ curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
 curl_setopt($ch, CURLOPT_COOKIEFILE, $cookiefile);
 curl_setopt($ch, CURLOPT_COOKIEJAR, $cookiefile);
 
-curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 60);
-curl_setopt($ch, CURLOPT_TIMEOUT, 120);
+// curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 1);
+curl_setopt($ch, CURLOPT_TIMEOUT, 10);
 
 curl_exec($ch);
 
-// print_r(curl_getinfo($ch));
+//print_r(curl_getinfo($ch));
 
 curl_close($ch);
 
-sleep(1);
 
 $ch = curl_init();
 
@@ -123,24 +118,24 @@ curl_setopt($ch,CURLOPT_URL,$url);
 curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 0); 
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
-curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 60);
-curl_setopt($ch, CURLOPT_TIMEOUT, 120);
+curl_setopt($ch, CURLOPT_NOBODY, 1);
+
+// curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 1);
+curl_setopt($ch, CURLOPT_TIMEOUT, 10);
 
 curl_setopt($ch, CURLOPT_COOKIEFILE, $cookiefile);
 curl_setopt($ch, CURLOPT_COOKIEJAR, $cookiefile);
 
 curl_setopt($ch,CURLOPT_POST, 13);
-curl_setopt($ch,CURLOPT_POSTFIELDS,"ICType=Panel&ICElementNum=0&ICAction=SNS_DERIVED_DESCR20&ICXPos=0&ICYPos=0&ICFocus=&ICSaveWarningFilter=0&ICChanged=-1&ICResubmit=0&ICSID=22T8J9xgNnGm&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$5$=0100&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$24$=0100");
+curl_setopt($ch,CURLOPT_POSTFIELDS,"ICType=Panel&ICElementNum=0&ICAction=SNS_DERIVED_DESCR20&ICXPos=0&ICYPos=0&ResponsetoDiffFrame=-1&TargetFrameName=None&ICFocus=&ICSaveWarningFilter=0&ICChanged=-1&ICResubmit=1&ICSID=VWJH4XuwW5DikH2UFpQZhPt5WEK5u5nlWMeLNWNWIJI%3D&ICModalWidget=0&ICZoomGrid=0&ICZoomGridRt=0&ICModalLongClosed=&ICActionPrompt=false&ICFind=&ICAddCount=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$6$=0100&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$25$=0100");
 
 curl_exec($ch);
 
-// print_r(curl_getinfo($ch));
+//print_r(curl_getinfo($ch));
 
 curl_close($ch);
 
 unset($ch);
-
-sleep(1);
 
 $ch = curl_init();
 
@@ -150,26 +145,24 @@ $url = 'https://usis.leidenuniv.nl/psc/S040PRD/EMPLOYEE/HRMS/c/SNS_CUSTOMIZATION
 curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_4; nl-nl) AppleWebKit/533.18.1 (KHTML, like Gecko) Version/5.0.2 Safari/533.18.5");
 curl_setopt($ch,CURLOPT_URL,$url);
 
+curl_setopt($ch, CURLOPT_NOBODY, 1);
+
 curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 0); 
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
-curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 60);
-curl_setopt($ch, CURLOPT_TIMEOUT, 120);
+// curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 1);
+curl_setopt($ch, CURLOPT_TIMEOUT, 10);
 
 curl_setopt($ch, CURLOPT_COOKIEFILE, $cookiefile);
 curl_setopt($ch, CURLOPT_COOKIEJAR, $cookiefile);
 
 curl_setopt($ch,CURLOPT_POST, 13);
-if($year == "10")
-{
-	curl_setopt($ch,CURLOPT_POSTFIELDS,"ICType=Panel&ICElementNum=0&ICAction=SNS_TERM_TBL_VW_DESCR$1&ICXPos=0&ICYPos=0&ICFocus=&ICSaveWarningFilter=0&ICChanged=0&ICResubmit=0&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$5$=0100&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$24$=0100");
-} else {
-	curl_setopt($ch,CURLOPT_POSTFIELDS,"ICType=Panel&ICElementNum=0&ICAction=SNS_TERM_TBL_VW_DESCR$0&ICXPos=0&ICYPos=0&ICFocus=&ICSaveWarningFilter=0&ICChanged=0&ICResubmit=0&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$5$=0100&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$24$=0100");
-}
+
+
+curl_setopt($ch,CURLOPT_POSTFIELDS,"ICType=Panel&ICElementNum=0&ICAction=SNS_DERIVED_FETCH_PUSHBUTTON&ICXPos=0&ICYPos=0&ResponsetoDiffFrame=-1&TargetFrameName=None&ICFocus=&ICSaveWarningFilter=0&ICChanged=0&ICResubmit=1&ICSID=VWJH4XuwW5DikH2UFpQZhPt5WEK5u5nlWMeLNWNWIJI%3D&ICModalWidget=0&ICZoomGrid=0&ICZoomGridRt=0&ICModalLongClosed=&ICActionPrompt=false&ICFind=&ICAddCount=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$6$=0100&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$25$=0100");
 
 curl_exec($ch);
-
-// print_r(curl_getinfo($ch));
+//print_r(curl_getinfo($ch));
 
 curl_close($ch);
 
@@ -178,70 +171,6 @@ unset($ch);
 sleep(1);
 
 $ch = curl_init();
-
-$url = 'https://usis.leidenuniv.nl/psc/S040PRD/EMPLOYEE/HRMS/c/SNS_CUSTOMIZATIONS_NLD.SNS_SSENRL_CART.GBL';
-
-//set the url, number of POST vars, POST data
-curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_4; nl-nl) AppleWebKit/533.18.1 (KHTML, like Gecko) Version/5.0.2 Safari/533.18.5");
-curl_setopt($ch,CURLOPT_URL,$url);
-
-curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 0); 
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
- 
-curl_setopt($ch, CURLOPT_COOKIEFILE, $cookiefile);
-curl_setopt($ch, CURLOPT_COOKIEJAR, $cookiefile);
-
-curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 60);
-curl_setopt($ch, CURLOPT_TIMEOUT, 120);
-
-curl_setopt($ch,CURLOPT_POST, 13);
-curl_setopt($ch,CURLOPT_POSTFIELDS,"ICType=Panel&ICElementNum=0&ICAction=SNS_DERIVED_FETCH_PUSHBUTTON&ICXPos=0&ICYPos=0&ICFocus=&ICSaveWarningFilter=0&ICChanged=0&ICResubmit=0&ICSID=22T8J9xgNnGm&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$5$=0100&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$24$=0100");
-
-curl_exec($ch);
-
-// print_r(curl_getinfo($ch));
-
-curl_close($ch);
-
-unset($ch);
-
-sleep(1);
-
-$ch = curl_init();
-
-/// was hier
-
-$url = 'https://usis.leidenuniv.nl/psc/S040PRD/EMPLOYEE/HRMS/c/SNS_CUSTOMIZATIONS_NLD.SNS_SSENRL_CART.GBL';
-
-//set the url, number of POST vars, POST data
-curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_4; nl-nl) AppleWebKit/533.18.1 (KHTML, like Gecko) Version/5.0.2 Safari/533.18.5");
-curl_setopt($ch,CURLOPT_URL,$url);
-
-curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 0); 
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
- 
-curl_setopt($ch, CURLOPT_COOKIEFILE, $cookiefile);
-curl_setopt($ch, CURLOPT_COOKIEJAR, $cookiefile);
-
-curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 60);
-curl_setopt($ch, CURLOPT_TIMEOUT, 120);
-
-curl_setopt($ch,CURLOPT_POST, 14);
-
-if($year == "f")
-{
-	curl_setopt($ch,CURLOPT_POSTFIELDS,"ICType=Panel&ICElementNum=0&ICAction=SNS_CRSESRCH_WK_SEARCH_BTN&ICXPos=0&ICYPos=0&ICFocus=&ICSaveWarningFilter=0&ICChanged=0&ICResubmit=0&ICSID=M2TxhylnQWsd&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$4$=0100&SNS_CRSESRCH_WK_SUBJECT$55$=".$studie."&SNS_CRSESRCH_WK_LANGUAGE=&SNS_DERIVED_CRSE_ATTR=&SNS_DERIVED_CRSE_ATTR_VALUE=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$94$=0100");
-}
-else {
-	curl_setopt($ch,CURLOPT_POSTFIELDS,"ICType=Panel&ICElementNum=0&ICAction=SNS_CRSESRCH_WK_SEARCH_BTN&ICXPos=0&ICYPos=0&ICFocus=&ICSaveWarningFilter=0&ICChanged=0&ICResubmit=0&ICSID=M2TxhylnQWsd&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$4$=0100&SNS_CRSESRCH_WK_SUBJECT$55$=".$studie."&SNS_CRSESRCH_WK_CATALOG_NBR=&SNS_CRSESRCH_WK_DESCR1=&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$\$chk$0=Y&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$$0=Y&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$\$chk$1=N&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$\$chk$2=N&SNS_CRSESRCH_WK_SNS_SEL_OPERATOR=&SNS_CRSESRCH_WK_UNITS_MAXIMUM=0.00&SNS_CRSESRCH_WK_ACAD_ORG=&SNS_CRSESRCH_WK_SNS_CAR_SEL$70$\$chk$0=N&SNS_CRSESRCH_WK_SNS_CAR_SEL$70$$\chk$1=N&SNS_CRSESRCH_WK_SNS_CAR_SEL$70$\$chk$2=N&SNS_CRSESRCH_WK_LANGUAGE=&SNS_DERIVED_CRSE_ATTR=&SNS_DERIVED_CRSE_ATTR_VALUE=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$94$=0100");
-
-}
-
-
-$result = curl_exec($ch);
-// print_r(curl_getinfo($ch));
-
-unset($ch);
 
 sleep(1);
 
@@ -268,11 +197,48 @@ curl_setopt($ch,CURLOPT_POST, 28);
 
 if($year == "f")
 {
-	curl_setopt($ch,CURLOPT_POSTFIELDS,"ICType=Panel&ICElementNum=0&ICAction=RESULTS\$hviewall$0&ICXPos=0&ICYPos=0&ICFocus=&ICSaveWarningFilter=0&ICChanged=1&ICResubmit=0&ICSID=M2TxhylnQWsd&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$4$=0100&SNS_CRSESRCH_WK_SUBJECT$55$=".$studie."&SNS_CRSESRCH_WK_CATALOG_NBR=&SNS_CRSESRCH_WK_DESCR1=&SNS_CRSESRCH_WK_LANGUAGE=&SNS_DERIVED_CRSE_ATTR=&SNS_DERIVED_CRSE_ATTR_VALUE=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$94$=0100");
+curl_setopt($ch,CURLOPT_POSTFIELDS,"ICAJAX=1&ICNAVTYPEDROPDOWN=0&ICType=Panel&ICElementNum=0&ICAction=SNS_CRSESRCH_WK_SEARCH_BTN&ICXPos=0&ICYPos=0&ResponsetoDiffFrame=-1&TargetFrameName=None&ICFocus=&ICSaveWarningFilter=0&ICChanged=0&ICResubmit=0&ICSID=FNtHY0VXBaV0lLnbK75%2Bmz93HcvCjQuhxes8ReR%2FOTQ%3D&ICModalWidget=0&ICZoomGrid=0&ICZoomGridRt=0&ICModalLongClosed=&ICActionPrompt=false&ICFind=&ICAddCount=&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$5$=0100&SNS_CRSESRCH_WK_SUBJECT$55$=".$studie."&SNS_CRSESRCH_WK_CATALOG_NBR=&SNS_CRSESRCH_WK_DESCR1=&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$\$chk$0=N&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$\$chk$1=N&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$\$chk$2=N&SNS_CRSESRCH_WK_SNS_SEL_OPERATOR=&SNS_CRSESRCH_WK_UNITS_MAXIMUM=0.00&SNS_CRSESRCH_WK_ACAD_ORG=&SNS_CRSESRCH_WK_SNS_CAR_SEL\$70$\$chk$0=N&SNS_CRSESRCH_WK_SNS_CAR_SEL\$70$\$chk$1=N&SNS_CRSESRCH_WK_SNS_CAR_SEL\$70$\$chk$2=N&SNS_CRSESRCH_WK_LANGUAGE=&SNS_DERIVED_CRSE_ATTR=&SNS_DERIVED_CRSE_ATTR_VALUE=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$94$=0100");
+} 
+else 
+{
+curl_setopt($ch,CURLOPT_POSTFIELDS,"ICAJAX=1&ICNAVTYPEDROPDOWN=0&ICType=Panel&ICElementNum=0&ICAction=SNS_CRSESRCH_WK_SEARCH_BTN&ICXPos=0&ICYPos=0&ResponsetoDiffFrame=-1&TargetFrameName=None&ICFocus=&ICSaveWarningFilter=0&ICChanged=1&ICResubmit=0&ICSID=FNtHY0VXBaV0lLnbK75%2Bmz93HcvCjQuhxes8ReR%2FOTQ%3D&ICModalWidget=0&ICZoomGrid=0&ICZoomGridRt=0&ICModalLongClosed=&ICActionPrompt=false&ICFind=&ICAddCount=&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$5$=0100&SNS_CRSESRCH_WK_SUBJECT$55$=".$studie."&SNS_CRSESRCH_WK_CATALOG_NBR=&SNS_CRSESRCH_WK_DESCR1=&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$\$chk$0=Y&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$$0=Y&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$\$chk$1=N&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$\$chk$2=N&SNS_CRSESRCH_WK_SNS_SEL_OPERATOR=&SNS_CRSESRCH_WK_UNITS_MAXIMUM=0.00&SNS_CRSESRCH_WK_ACAD_ORG=&SNS_CRSESRCH_WK_SNS_CAR_SEL\$70$\$chk$0=N&SNS_CRSESRCH_WK_SNS_CAR_SEL\$70$\$chk$1=N&SNS_CRSESRCH_WK_SNS_CAR_SEL\$70$\$chk$2=N&SNS_CRSESRCH_WK_LANGUAGE=&SNS_DERIVED_CRSE_ATTR=&SNS_DERIVED_CRSE_ATTR_VALUE=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$94$=0100");
 }
-else {
-	curl_setopt($ch,CURLOPT_POSTFIELDS,"ICType=Panel&ICElementNum=0&ICAction=RESULTS\$hviewall$0&ICXPos=0&ICYPos=0&ICFocus=&ICSaveWarningFilter=0&ICChanged=1&ICResubmit=0&ICSID=M2TxhylnQWsd&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$4$=0100&SNS_CRSESRCH_WK_SUBJECT$55$=".$studie."&SNS_CRSESRCH_WK_CATALOG_NBR=&SNS_CRSESRCH_WK_DESCR1=&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$\$chk$0=Y&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$$0=Y&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$\$chk$1=N&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$\$chk$2=N&SNS_CRSESRCH_WK_SNS_SEL_OPERATOR=&SNS_CRSESRCH_WK_UNITS_MAXIMUM=0.00&SNS_CRSESRCH_WK_ACAD_ORG=&SNS_CRSESRCH_WK_SNS_CAR_SEL$70$\$chk$0=N&SNS_CRSESRCH_WK_SNS_CAR_SEL$70$\$chk$1=N&SNS_CRSESRCH_WK_SNS_CAR_SEL$70$\$chk$2=N&SNS_CRSESRCH_WK_LANGUAGE=&SNS_DERIVED_CRSE_ATTR=&SNS_DERIVED_CRSE_ATTR_VALUE=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$94$=0100");
+$result = curl_exec($ch);
+// print_r(curl_getinfo($ch));
 
+curl_close($ch);
+
+unset($ch);
+
+sleep(1);
+
+$ch = curl_init();
+
+$url = 'https://usis.leidenuniv.nl/psc/S040PRD/EMPLOYEE/HRMS/c/SNS_CUSTOMIZATIONS_NLD.SNS_SSENRL_CART.GBL';
+
+//set the url, number of POST vars, POST data
+curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_4; nl-nl) AppleWebKit/533.18.1 (KHTML, like Gecko) Version/5.0.2 Safari/533.18.5");
+curl_setopt($ch,CURLOPT_URL,$url);
+
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 0); 
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+ 
+curl_setopt($ch, CURLOPT_COOKIEFILE, $cookiefile);
+curl_setopt($ch, CURLOPT_COOKIEJAR, $cookiefile);
+
+curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 60);
+curl_setopt($ch, CURLOPT_TIMEOUT, 120);
+
+curl_setopt($ch,CURLOPT_POST, 28);
+
+
+if($year == "f")
+{
+curl_setopt($ch,CURLOPT_POSTFIELDS,"ICAJAX=1&ICNAVTYPEDROPDOWN=0&ICType=Panel&ICElementNum=0&ICAction=RESULTS%24hviewall%240&ICXPos=0&ICYPos=0&ResponsetoDiffFrame=-1&TargetFrameName=None&ICFocus=&ICSaveWarningFilter=0&ICChanged=0&ICResubmit=0&ICSID=FNtHY0VXBaV0lLnbK75%2Bmz93HcvCjQuhxes8ReR%2FOTQ%3D&ICModalWidget=0&ICZoomGrid=0&ICZoomGridRt=0&ICModalLongClosed=&ICActionPrompt=false&ICFind=&ICAddCount=&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$5$=0100&SNS_CRSESRCH_WK_SUBJECT$55$=".$studie."&SNS_CRSESRCH_WK_CATALOG_NBR=&SNS_CRSESRCH_WK_DESCR1=&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$\$chk$0=N&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$\$chk$1=N&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$\$chk$2=N&SNS_CRSESRCH_WK_SNS_SEL_OPERATOR=&SNS_CRSESRCH_WK_UNITS_MAXIMUM=0.00&SNS_CRSESRCH_WK_ACAD_ORG=&SNS_CRSESRCH_WK_SNS_CAR_SEL\$70$\$chk$0=N&SNS_CRSESRCH_WK_SNS_CAR_SEL\$70$\$chk$1=N&SNS_CRSESRCH_WK_SNS_CAR_SEL\$70$\$chk$2=N&SNS_CRSESRCH_WK_LANGUAGE=&SNS_DERIVED_CRSE_ATTR=&SNS_DERIVED_CRSE_ATTR_VALUE=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$94$=0100");
+} 
+else 
+{
+curl_setopt($ch,CURLOPT_POSTFIELDS,"ICAJAX=1&ICNAVTYPEDROPDOWN=0&ICType=Panel&ICElementNum=0&ICAction=RESULTS%24hviewall%240&ICXPos=0&ICYPos=0&ResponsetoDiffFrame=-1&TargetFrameName=None&ICFocus=&ICSaveWarningFilter=0&ICChanged=1&ICResubmit=0&ICSID=FNtHY0VXBaV0lLnbK75%2Bmz93HcvCjQuhxes8ReR%2FOTQ%3D&ICModalWidget=0&ICZoomGrid=0&ICZoomGridRt=0&ICModalLongClosed=&ICActionPrompt=false&ICFind=&ICAddCount=&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$5$=0100&SNS_CRSESRCH_WK_SUBJECT$55$=".$studie."&SNS_CRSESRCH_WK_CATALOG_NBR=&SNS_CRSESRCH_WK_DESCR1=&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$\$chk$0=Y&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$$0=Y&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$\$chk$1=N&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$\$chk$2=N&SNS_CRSESRCH_WK_SNS_SEL_OPERATOR=&SNS_CRSESRCH_WK_UNITS_MAXIMUM=0.00&SNS_CRSESRCH_WK_ACAD_ORG=&SNS_CRSESRCH_WK_SNS_CAR_SEL\$70$\$chk$0=N&SNS_CRSESRCH_WK_SNS_CAR_SEL\$70$\$chk$1=N&SNS_CRSESRCH_WK_SNS_CAR_SEL\$70$\$chk$2=N&SNS_CRSESRCH_WK_LANGUAGE=&SNS_DERIVED_CRSE_ATTR=&SNS_DERIVED_CRSE_ATTR_VALUE=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$94$=0100");
 }
 
 $result = curl_exec($ch);
@@ -282,12 +248,12 @@ $arr = explode("class='PSLEVEL1GRID' style='border-style:none' >", $result);
 
 $onderdelen = array();
 
-$studieonderdelen = explode("<tr valign='center'>",$arr[1]);
+$studieonderdelen = explode("<tr id='trRESULTS$0_row",$arr[1]);
 
 foreach($studieonderdelen as $studieonderdeel)
 {	
 	$new_studieonderdeel = array();
-	preg_match_all("/>(.*)<\/a><\/span>/", $studieonderdeel, $values);
+	preg_match_all("/<a.*>(.*)<\/a>/", $studieonderdeel, $values);
 	
 	if(count($values[1]) > 4)
 	{
@@ -319,6 +285,10 @@ foreach($studieonderdelen as $studieonderdeel)
 
 
 preg_match("/<span class='PSGRIDCOUNTER' >1-[0-9]+ van (.*)<\/span>/", $result, $out);
+
+unset($onderdelen[0]);
+
+// print_r($out);
 
 $counter = 0;
 
@@ -353,14 +323,13 @@ while($run > 0)
 	curl_setopt($ch, CURLOPT_TIMEOUT, 120);
 	
 	curl_setopt($ch,CURLOPT_POST, 28);
-	//curl_setopt($ch,CURLOPT_POSTFIELDS,"ICType=Panel&ICElementNum=0&ICAction=RESULTS\$hdown$0&ICXPos=0&ICYPos=0&ICFocus=&ICSaveWarningFilter=0&ICChanged=1&ICResubmit=0&ICSID=22T8J9xgNnGm&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$4$=0100&SNS_CRSESRCH_WK_SUBJECT$54$=".$studie."&SNS_CRSESRCH_WK_CATALOG_NBR=&SNS_CRSESRCH_WK_DESCR1=&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$\$chk$0=Y&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$$0=Y&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$\$chk$1=N&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$\$chk$2=N&SNS_CRSESRCH_WK_SNS_SEL_OPERATOR=&SNS_CRSESRCH_WK_UNITS_MAXIMUM=0.00&SNS_CRSESRCH_WK_ACAD_ORG=&SNS_CRSESRCH_WK_SNS_CAR_SEL$70$\$chk$0=N&SNS_CRSESRCH_WK_SNS_CAR_SEL$70$\$chk$1=N&SNS_CRSESRCH_WK_SNS_CAR_SEL$70$\$chk$2=N&SNS_CRSESRCH_WK_LANGUAGE=&SNS_DERIVED_CRSE_ATTR=&SNS_DERIVED_CRSE_ATTR_VALUE=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$94$=0100");
 	
 	if($year == "f")
 	{
-		curl_setopt($ch,CURLOPT_POSTFIELDS,"ICType=Panel&ICElementNum=0&ICAction=RESULTS\$hdown$0&ICXPos=0&ICYPos=0&ICFocus=&ICSaveWarningFilter=0&ICChanged=1&ICResubmit=0&ICSID=M2TxhylnQWsd&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$4$=0100&SNS_CRSESRCH_WK_SUBJECT$55$=".$studie."&SNS_CRSESRCH_WK_CATALOG_NBR=&SNS_CRSESRCH_WK_DESCR1=&SNS_CRSESRCH_WK_LANGUAGE=&SNS_DERIVED_CRSE_ATTR=&SNS_DERIVED_CRSE_ATTR_VALUE=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$94$=0100");
+		curl_setopt($ch,CURLOPT_POSTFIELDS,"ICAJAX=1&ICNAVTYPEDROPDOWN=0&ICType=Panel&ICElementNum=0&ICAction=RESULTS%24hdown%240&ICXPos=0&ICYPos=110&ResponsetoDiffFrame=-1&TargetFrameName=None&ICFocus=&ICSaveWarningFilter=0&ICChanged=1&ICResubmit=0&ICSID=FNtHY0VXBaV0lLnbK75%2Bmz93HcvCjQuhxes8ReR%2FOTQ%3D&ICModalWidget=0&ICZoomGrid=0&ICZoomGridRt=0&ICModalLongClosed=&ICActionPrompt=false&ICFind=&ICAddCount=&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$5$=0100&SNS_CRSESRCH_WK_SUBJECT$55$=ARCH&SNS_CRSESRCH_WK_CATALOG_NBR=&SNS_CRSESRCH_WK_DESCR1=&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$$chk$0=N&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$$chk$1=N&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$$chk$2=N&SNS_CRSESRCH_WK_SNS_SEL_OPERATOR=&SNS_CRSESRCH_WK_UNITS_MAXIMUM=0.00&SNS_CRSESRCH_WK_ACAD_ORG=&SNS_CRSESRCH_WK_SNS_CAR_SEL$70$$chk$0=N&SNS_CRSESRCH_WK_SNS_CAR_SEL$70$$chk$1=N&SNS_CRSESRCH_WK_SNS_CAR_SEL$70$$chk$2=N&SNS_CRSESRCH_WK_LANGUAGE=&SNS_DERIVED_CRSE_ATTR=&SNS_DERIVED_CRSE_ATTR_VALUE=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$94$=0100");
 	}
 	else {
-		curl_setopt($ch,CURLOPT_POSTFIELDS,"ICType=Panel&ICElementNum=0&ICAction=RESULTS\$hdown$0&ICXPos=0&ICYPos=0&ICFocus=&ICSaveWarningFilter=0&ICChanged=1&ICResubmit=0&ICSID=M2TxhylnQWsd&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$4$=0100&SNS_CRSESRCH_WK_SUBJECT$55$=".$studie."&SNS_CRSESRCH_WK_CATALOG_NBR=&SNS_CRSESRCH_WK_DESCR1=&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$\$chk$0=Y&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$$0=Y&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$\$chk$1=N&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$\$chk$2=N&SNS_CRSESRCH_WK_SNS_SEL_OPERATOR=&SNS_CRSESRCH_WK_UNITS_MAXIMUM=0.00&SNS_CRSESRCH_WK_ACAD_ORG=&SNS_CRSESRCH_WK_SNS_CAR_SEL$70$\$chk$0=N&SNS_CRSESRCH_WK_SNS_CAR_SEL$70$\$chk$1=N&SNS_CRSESRCH_WK_SNS_CAR_SEL$70$\$chk$2=N&SNS_CRSESRCH_WK_LANGUAGE=&SNS_DERIVED_CRSE_ATTR=&SNS_DERIVED_CRSE_ATTR_VALUE=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$94$=0100");
+		curl_setopt($ch,CURLOPT_POSTFIELDS,"ICAJAX=1&ICNAVTYPEDROPDOWN=0&ICType=Panel&ICElementNum=0&ICAction=RESULTS%24hdown%240&ICXPos=0&ICYPos=110&ResponsetoDiffFrame=-1&TargetFrameName=None&ICFocus=&ICSaveWarningFilter=0&ICChanged=1&ICResubmit=0&ICSID=FNtHY0VXBaV0lLnbK75%2Bmz93HcvCjQuhxes8ReR%2FOTQ%3D&ICModalWidget=0&ICZoomGrid=0&ICZoomGridRt=0&ICModalLongClosed=&ICActionPrompt=false&ICFind=&ICAddCount=&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$5$=0100&SNS_CRSESRCH_WK_SUBJECT$55$=ARCH&SNS_CRSESRCH_WK_CATALOG_NBR=&SNS_CRSESRCH_WK_DESCR1=&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$$chk$0=Y&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$$0=Y&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$$chk$1=N&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$$chk$2=N&SNS_CRSESRCH_WK_SNS_SEL_OPERATOR=&SNS_CRSESRCH_WK_UNITS_MAXIMUM=0.00&SNS_CRSESRCH_WK_ACAD_ORG=&SNS_CRSESRCH_WK_SNS_CAR_SEL$70$$chk$0=N&SNS_CRSESRCH_WK_SNS_CAR_SEL$70$$chk$1=N&SNS_CRSESRCH_WK_SNS_CAR_SEL$70$$chk$2=N&SNS_CRSESRCH_WK_LANGUAGE=&SNS_DERIVED_CRSE_ATTR=&SNS_DERIVED_CRSE_ATTR_VALUE=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$94$=0100");
 	
 	}
 	
@@ -372,13 +341,20 @@ while($run > 0)
 	$arr = explode("class='PSLEVEL1GRID' style='border-style:none' >", $result);
 	$viewalls = array();
 	
-	$studieonderdelen = explode("<tr valign='center'>",$arr[1]);
+	$studieonderdelen = explode("<tr id='trRESULTS$0_row",$arr[1]);
 				
+				
+	$first = true;			
+	
 	foreach($studieonderdelen as $studieonderdeel)
 	{
-	
+		if($first)
+		{
+			$first = false;
+			continue;
+		}
 		$new_studieonderdeel = array();
-		preg_match_all("/>(.*)<\/a><\/span>/", $studieonderdeel, $values);
+		preg_match_all("/<a.*>(.*)<\/a>/", $studieonderdeel, $values);
 		
 		if(count($values[1]) > 4)
 		{
@@ -409,10 +385,12 @@ while($run > 0)
 			if(count($values[1]) > 0) print_r($values[1]);
 		}
 	}
-		
+			
 	$run--;
 }
 } // if $out[1]
+
+// print_r($onderdelen);
 
 $studiefile = "/home/geneesleer/ucheck/raw/"."cache/".$year."/".$studie.".txt";
 
@@ -453,7 +431,6 @@ fwrite($logfile, (time()-$start_total)/(60*60)." uur voor alles \n");
 fwrite($logfile, (time()-$start_total)/(60)." minuten voor alles \n");
 fwrite($logfile, (time()-$start_total)." seconden voor alles \n");
 
-
 $handle = fopen($logfilename, "r");
 $contents = fread($handle, filesize($logfilename));
 fclose($handle);
@@ -463,19 +440,5 @@ fclose($handle);
 fclose($logfile);
 
 mail("hans.pinckaers@gmail.com", ($error)?"Fout in scrape!" : round((time()-$start_total)/(60))." minuten gescraped", $contents, "From: geneesleer@alwaysdata.net");
-
-?>
-
-
-
-<?
-function do_curl_helper()
-{
-
-}
-function do_curl()
-{
-
-}
 
 ?>
