@@ -20,7 +20,7 @@
 
 <h1>EZProxy Leiden</h1>
 
-<form name="input" action="https://login.ezproxy.leidenuniv.nl/login" method="get">
+<form name="input" action="https://ezproxy.leidenuniv.nl:2443/login" method="get">
 <input type="text" name="qurl" size="100" value="http://"/>
 <input id="inloggen" type="submit" value="bezoek" />
 <br/><br/>
@@ -28,12 +28,12 @@
 <p>
 Of sleep naar dit naar je bladwijzerbalk:
 </p>
-<a href="javascript:void(location.href=%22https://login.ezproxy.leidenuniv.nl/login?qurl=%22+location.href)">EZProxy</a>
+<a href="javascript:void(location.href=%22https://ezproxy.leidenuniv.nl:2443/login?url=%22+location.href)">EZProxy</a>
 <br/><br/>
 <hr/>
 <p>
 Voorbeeld links:
 <ul>
-<li><a href="https://login.ezproxy.leidenuniv.nl/login?qurl=http://pro.vandale.nl/">De VanDale</a></li>
+<li><a href="https://ezproxy.leidenuniv.nl:2443/login?url=http://pro.vandale.nl/">De VanDale</a></li>
 </ul>
 </p>
