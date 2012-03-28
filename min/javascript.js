@@ -847,6 +847,15 @@ function inschrijven_detail(z, b, c, a)
 //        
 }
 
+function force_refresh_voortgang()
+{
+	$("voortgang").set('html','<h1 class="first">Voortgang</h1><p><img class="loading" src="ajax-loader.gif"/></p>');
+
+	var myRequest = new Request({url: 'force_voortgang.php', evalScripts:true, method: 'get', onSuccess: function(responseText, responseXML) {
+		$("voortgang").set('html',responseText);	
+	}}).send();
+}
+
 //
 //
 //
@@ -1157,5 +1166,6 @@ this.Tips = new Class({
 });
 
 }).call(this);
+
 
 

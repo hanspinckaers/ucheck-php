@@ -58,7 +58,7 @@ $studiesraw = explode("<DIV id='win0divDERIVED_SAA_DPR_GROUPBOX1$", $html);
 
 $studies = array();
 
-foreach( $studiesraw as $studieonderdeel )
+foreach($studiesraw as $studieonderdeel)
 {	
 
 	$studiedeelarr = explode("<tr><td class='PAGROUPDIVIDER'  align='left'>", $studieonderdeel);
@@ -173,110 +173,128 @@ if (isset($studie['gem_werkelijk']) && $studie['gem_werkelijk'] != "" && $studie
 Gemiddelde: <strong><? echo $studie['gem_werkelijk']?></strong>
 <?
 } else {
-
-
-
 }
 ?>
 </div>
+
 <div style="position:relative; left:5%; width:95%;display:none;" id="hidden_<? echo $counter ?>">
 <? 
-####### SUBSTUDIES
-foreach($studie['onderdelen'] as $onderdeel)
-{
-?>
-<h3><? echo $onderdeel['title']?></h3>
-<!-- te lui voor in main css -->
-<? 
-if($onderdeel['eenh_gevolgd'] && $onderdeel['eenh_vereist'])
-{
-?>
-<div class="hoofdbalk">
-	<div class="<? if($onderdeel['eenh_nodig'] == "0.000"){ echo "filled_balk"; } else { echo "filled_balk_blauw"; } ?>" style="width:<? echo round(($onderdeel['eenh_gevolgd'] / $onderdeel['eenh_vereist'])*100) ?>%;">
+	####### SUBSTUDIES
+	foreach($studie['onderdelen'] as $onderdeel)
+	{
+	?>
+		<h3><? echo $onderdeel['title']?></h3>
+
+		<!-- te lui voor in main css -->
+		<? 
+		if($onderdeel['eenh_gevolgd'] && $onderdeel['eenh_vereist'])
+		{
+		?>
+			<div class="hoofdbalk">
+				<div class="<? if($onderdeel['eenh_nodig'] == "0.000"){ echo "filled_balk"; } else { echo "filled_balk_blauw"; } ?>" style="width:<? echo round(($onderdeel['eenh_gevolgd'] / $onderdeel['eenh_vereist'])*100) ?>%;">
+
+				<? 
+				//if($onderdeel['eenh_nodig'] == "0.000") echo "E9F9E0"; 
+				//else echo "e5ecf9"; 
+				?>
+				<span style="display:block; padding-left:10px;  width:200px"><strong><? echo (int)$onderdeel['eenh_gevolgd']; ?></strong> ECTS <em>(<? echo round(($onderdeel['eenh_gevolgd'] / $onderdeel['eenh_vereist'])*100) ?>%)</em></span>
+				</div>
+				
+				<? if($onderdeel['eenh_vereist'] - $onderdeel['eenh_gevolgd'] != 0){ ?>
+				<div class="nog_balk">
+				nog <strong><? echo $onderdeel['eenh_vereist'] - $onderdeel['eenh_gevolgd']; ?></strong> ECTS<em> (<? echo 100-round(($onderdeel['eenh_gevolgd'] / $onderdeel['eenh_vereist'])*100) ?>%)</em>
+				</div>
+				<? } ?>
+			</div>
+		<?
+		} // onderdeel['eenh_gevolgd']
+		?>
+
+		<div style="clear:both; position:relative; top:5px;  padding-bottom:1.5em;"> 
+		<? 
+		if (isset($onderdeel['gem_werkelijk']) && $onderdeel['gem_werkelijk'] != "" && $onderdeel['gem_werkelijk'] != "0.000")
+		{ ?>
+		Gemiddelde: <strong><? echo $onderdeel['gem_werkelijk']?></strong> 
+		<? 
+		} else {
+
+			if(!(count($onderdeel['sub']) == 1 && $onderdeel['sub'][0]['eenh_gevolgd'] == $onderdeel['eenh_gevolgd'] && $onderdeel['sub'][0]['eenh_vereist'] == $onderdeel['eenh_vereist']))
+			{ 
+
+				if (isset($onderdeel['sub'][0]['gem_werkelijk']) && $onderdeel['sub'][0]['gem_werkelijk'] != "" && $onderdeel['sub'][0]['gem_werkelijk'] != "0.000")
+				{
+				?>
+				Gemiddelde: <strong><? echo $onderdeel['sub'][0]['gem_werkelijk'] ?></strong> 
+				<?
+
+				} else {
+					echo "";
+				} // end if onderdeel sub
+
+			} else {
+				echo "";
+			} // end if onderdeel sub 
+
+		} // isset($onderdeel['gem_werkelijk'])
+		?>
+		</div>
+
+		<div style="position:relative; left:5%; width:95%;">
+		<?
+		####### SUBS
+		if(!(count($onderdeel['sub']) == 1 && $onderdeel['sub'][0]['eenh_gevolgd'] == $onderdeel['eenh_gevolgd'] && $onderdeel['sub'][0]['eenh_vereist'] == $onderdeel['eenh_vereist']))
+		{
+
+			foreach($onderdeel['sub'] as $sub)
+			{
+			?>
+			<h3><? echo $sub['title']?></h3>
+			<!-- te lui voor in main css -->
+			<div class="hoofdbalk">
+				<div class="<? if($onderdeel['eenh_nodig'] == "0.000"){ echo "filled_balk"; } else { echo "filled_balk_blauw"; } ?>" style="width:<? echo round(($sub['eenh_gevolgd'] / $sub['eenh_vereist'])*100) ?>%;">
+				<? 
+				//if($sub['eenh_nodig'] == "0.000") echo "E9F9E0"; 
+				//else echo "e5ecf9"; 
+				?>
+				<span style="display:block; padding-left:10px;  width:200px"><strong><? echo (int)$sub['eenh_gevolgd']; ?></strong> ECTS <em>(<? echo round(($sub['eenh_gevolgd'] / $sub['eenh_vereist'])*100) ?>%)</em></span>
+				</div>
+				
+				<? if($sub['eenh_vereist'] - $sub['eenh_gevolgd'] != 0){ ?>
+				<div class="nog_balk">
+				nog <strong><? echo $sub['eenh_vereist'] - $sub['eenh_gevolgd']; ?></strong> ECTS<em> (<? echo 100-round(($sub['eenh_gevolgd'] / $sub['eenh_vereist'])*100) ?>%)</em>
+				</div>
+				<? } ?>
+			</div>
+
+			<div style="clear:both; position:relative; top:5px; padding-bottom:1.5em;"> 
+			<? 
+			if (isset($sub['gem_werkelijk']) && $sub['gem_werkelijk'] != "" && $sub['gem_werkelijk'] != "0.000"){ 
+			?>Gemiddelde: <strong>
+			<? echo $sub['gem_werkelijk']?></strong> 
+			<? } else { echo ""; } ?>
+			</div>
+
+			<? 
+			} // end for-each 
+
+		} // end if onderdeel['sub']
+		?>
+		</div>
 
 	<? 
-	//if($onderdeel['eenh_nodig'] == "0.000") echo "E9F9E0"; 
-	//else echo "e5ecf9"; 
+	} // end for each
 	?>
-	<span style="display:block; padding-left:10px;  width:200px"><strong><? echo (int)$onderdeel['eenh_gevolgd']; ?></strong> ECTS <em>(<? echo round(($onderdeel['eenh_gevolgd'] / $onderdeel['eenh_vereist'])*100) ?>%)</em></span>
+
 	</div>
-	
-	<? if($onderdeel['eenh_vereist'] - $onderdeel['eenh_gevolgd'] != 0){ ?>
-	<div class="nog_balk">
-	nog <strong><? echo $onderdeel['eenh_vereist'] - $onderdeel['eenh_gevolgd']; ?></strong> ECTS<em> (<? echo 100-round(($onderdeel['eenh_gevolgd'] / $onderdeel['eenh_vereist'])*100) ?>%)</em>
-	</div>
-	<? } ?>
-	
-</div>
-<?
-}
-?>
-<div style="clear:both; position:relative; top:5px;  padding-bottom:1.5em;"> 
-<? 
-if (isset($onderdeel['gem_werkelijk']) && $onderdeel['gem_werkelijk'] != "" && $onderdeel['gem_werkelijk'] != "0.000")
-{ ?>
-Gemiddelde: <strong><? echo $onderdeel['gem_werkelijk']?></strong> 
-<? 
-} else {
-
-if(!(count($onderdeel['sub']) == 1 && $onderdeel['sub'][0]['eenh_gevolgd'] == $onderdeel['eenh_gevolgd'] && $onderdeel['sub'][0]['eenh_vereist'] == $onderdeel['eenh_vereist']))
-{ 
-if (isset($onderdeel['sub'][0]['gem_werkelijk']) && $onderdeel['sub'][0]['gem_werkelijk'] != "" && $onderdeel['sub'][0]['gem_werkelijk'] != "0.000")
-{
-?>
-Gemiddelde: <strong><? echo $onderdeel['sub'][0]['gem_werkelijk'] ?></strong> 
-<?
-}  else {
-echo "";
-}
-} else {
-echo "";
-} //endif 
-} //end if gem sucks
-?>
-</div>
-
-<div style="position:relative; left:5%; width:95%;">
-<?
-####### SUBS
-if(!(count($onderdeel['sub']) == 1 && $onderdeel['sub'][0]['eenh_gevolgd'] == $onderdeel['eenh_gevolgd'] && $onderdeel['sub'][0]['eenh_vereist'] == $onderdeel['eenh_vereist'])){
-foreach($onderdeel['sub'] as $sub)
-{
-?>
-<h3><? echo $sub['title']?></h3>
-<!-- te lui voor in main css -->
-<div class="hoofdbalk">
-	<div class="<? if($onderdeel['eenh_nodig'] == "0.000"){ echo "filled_balk"; } else { echo "filled_balk_blauw"; } ?>" style="width:<? echo round(($sub['eenh_gevolgd'] / $sub['eenh_vereist'])*100) ?>%;">
-	<? 
-	//if($sub['eenh_nodig'] == "0.000") echo "E9F9E0"; 
-	//else echo "e5ecf9"; 
-	?>
-	<span style="display:block; padding-left:10px;  width:200px"><strong><? echo (int)$sub['eenh_gevolgd']; ?></strong> ECTS <em>(<? echo round(($sub['eenh_gevolgd'] / $sub['eenh_vereist'])*100) ?>%)</em></span>
-	</div>
-	
-	<? if($sub['eenh_vereist'] - $sub['eenh_gevolgd'] != 0){ ?>
-	<div class="nog_balk">
-	nog <strong><? echo $sub['eenh_vereist'] - $sub['eenh_gevolgd']; ?></strong> ECTS<em> (<? echo 100-round(($sub['eenh_gevolgd'] / $sub['eenh_vereist'])*100) ?>%)</em>
-	</div>
-	<? } ?>
-	
-</div>
-<div style="clear:both; position:relative; top:5px; padding-bottom:1.5em;"> 
-<? 
-if (isset($sub['gem_werkelijk']) && $sub['gem_werkelijk'] != "" && $sub['gem_werkelijk'] != "0.000"){ ?>Gemiddelde: <strong><? echo $sub['gem_werkelijk']?></strong> <? } else { echo ""; }
-?>
-</div>
-
-<? } } ?>
-
-</div>
-
-<? } ?>
-
-</div>
 
 <?
-}
+} // end for-each
 ?>
+</div>
+
+
+<div id="refresh" style="position: relative; width: 1024px; top: -10px; height: 20px; margin-bottom: -20px; text-align: right;">
+<a href="#!" style="color:#A1A1A1; font-size: 11px;" onclick="force_refresh_voortgang();">vernieuw voortgang</a>
+</div>
 
 <!-- Deze gegevens zijn meestal verouderd. -->
