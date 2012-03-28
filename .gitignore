@@ -17,3 +17,4 @@ mail.php
 stats/*
 apc.php
 usis_resource.php
+.htaccess
