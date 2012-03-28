@@ -293,7 +293,7 @@ Gemiddelde: <strong><? echo $studie['gem_werkelijk']?></strong>
 </div>
 
 
-<div id="refresh" style="position: relative; width: 1024px; top: -10px; height: 20px; margin-bottom: -20px; text-align: right;">
+<div id="refresh" style="position: relative; width: 1024px; top: -5px; height: 20px; margin-bottom: -20px; text-align: right;">
 <a href="#!" style="color:#A1A1A1; font-size: 11px;" onclick="force_refresh_voortgang();">vernieuw voortgang</a>
 </div>
 
