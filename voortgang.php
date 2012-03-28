@@ -71,13 +71,13 @@ foreach( $studiesraw as $studieonderdeel )
 		
 	if(!isset($punten[1])) continue;	
 		
- 	$studies[]['title'] = str_replace("&nbsp;", "", $title[1]);
-	$studies[count($studies)-1]['eenh_vereist'] = $punten[1];
-	$studies[count($studies)-1]['eenh_gevolgd'] = $punten[2];
-	$studies[count($studies)-1]['eenh_nodig'] = $punten[3];
+ 	$studies[]['title'] = strip_tags(str_replace("&nbsp;", "", $title[1]));
+	$studies[count($studies)-1]['eenh_vereist'] = strip_tags($punten[1]);
+	$studies[count($studies)-1]['eenh_gevolgd'] = strip_tags($punten[2]);
+	$studies[count($studies)-1]['eenh_nodig'] = strip_tags($punten[3]);
 
-	$studies[count($studies)-1]['gem_vereist'] = $gem[1];
-	$studies[count($studies)-1]['gem_werkelijk'] = $gem[2];
+	$studies[count($studies)-1]['gem_vereist'] = strip_tags($gem[1]);
+	$studies[count($studies)-1]['gem_werkelijk'] = strip_tags($gem[2]);
 					
 	$counter = -1;
 			
@@ -96,13 +96,13 @@ foreach( $studiesraw as $studieonderdeel )
 		preg_match("/Eenh.: ([0-9\.]*) vereist, ([0-9\.]*) gevolgd, ([0-9\.]*) nodig/", $studiesubdelen[0], $punten);
 		preg_match("/Cijfergemiddelde: ([0-9\.]*) vereist, ([0-9\.]*) werkelijk/", $studiesubdelen[0], $gem);		
 							
-	 	$studies[count($studies)-1]['onderdelen'][$counter-1]['title'] = str_replace("&nbsp;", "", $title[1]);
-		$studies[count($studies)-1]['onderdelen'][$counter-1]['eenh_vereist'] = $punten[1];
-		$studies[count($studies)-1]['onderdelen'][$counter-1]['eenh_gevolgd'] = $punten[2];
-		$studies[count($studies)-1]['onderdelen'][$counter-1]['eenh_nodig'] = $punten[3];
+	 	$studies[count($studies)-1]['onderdelen'][$counter-1]['title'] = strip_tags(str_replace("&nbsp;", "", $title[1]));
+		$studies[count($studies)-1]['onderdelen'][$counter-1]['eenh_vereist'] = strip_tags($punten[1]);
+		$studies[count($studies)-1]['onderdelen'][$counter-1]['eenh_gevolgd'] = strip_tags($punten[2]);
+		$studies[count($studies)-1]['onderdelen'][$counter-1]['eenh_nodig'] = strip_tags($punten[3]);
 
-		$studies[count($studies)-1]['onderdelen'][$counter-1]['gem_vereist'] = $gem[1];
-		$studies[count($studies)-1]['onderdelen'][$counter-1]['gem_werkelijk'] = $gem[2];
+		$studies[count($studies)-1]['onderdelen'][$counter-1]['gem_vereist'] = strip_tags($gem[1]);
+		$studies[count($studies)-1]['onderdelen'][$counter-1]['gem_werkelijk'] = strip_tags($gem[2]);
 				
 		$subcounter = -1;
 				
@@ -122,20 +122,21 @@ foreach( $studiesraw as $studieonderdeel )
 			preg_match("/Cijfergemiddelde: ([0-9\.]*) vereist, ([0-9\.]*) werkelijk/", $studiesubdeel, $gem);		
 								
 			if(isset($title[1])  && isset($punten[1]) ){
-				$studies[count($studies)-1]['onderdelen'][$counter-1]['sub'][$subcounter]['title'] = str_replace("&nbsp;", "", $title[1]);
+				$studies[count($studies)-1]['onderdelen'][$counter-1]['sub'][$subcounter]['title'] = strip_tags(str_replace("&nbsp;", "", $title[1]));
 											
-				$studies[count($studies)-1]['onderdelen'][$counter-1]['sub'][$subcounter]['eenh_vereist'] = $punten[1];
-				$studies[count($studies)-1]['onderdelen'][$counter-1]['sub'][$subcounter]['eenh_gevolgd'] = $punten[2];
-				$studies[count($studies)-1]['onderdelen'][$counter-1]['sub'][$subcounter]['eenh_nodig'] = $punten[3];
+				$studies[count($studies)-1]['onderdelen'][$counter-1]['sub'][$subcounter]['eenh_vereist'] = strip_tags($punten[1]);
+				$studies[count($studies)-1]['onderdelen'][$counter-1]['sub'][$subcounter]['eenh_gevolgd'] = strip_tags($punten[2]);
+				$studies[count($studies)-1]['onderdelen'][$counter-1]['sub'][$subcounter]['eenh_nodig'] = strip_tags($punten[3]);
 		
-				$studies[count($studies)-1]['onderdelen'][$counter-1]['sub'][$subcounter]['gem_vereist'] = $gem[1];
-				$studies[count($studies)-1]['onderdelen'][$counter-1]['sub'][$subcounter]['gem_werkelijk'] = $gem[2];
+				$studies[count($studies)-1]['onderdelen'][$counter-1]['sub'][$subcounter]['gem_vereist'] = strip_tags($gem[1]);
+				$studies[count($studies)-1]['onderdelen'][$counter-1]['sub'][$subcounter]['gem_werkelijk'] = strip_tags($gem[2]);
 			}
 			
 			$subcounter++;
 		}
 	}
 }
+
 
 //print_r($studies);
 ?>
@@ -160,8 +161,8 @@ $counter++;
 	<? if($studie['eenh_vereist'] - $studie['eenh_gevolgd'] != 0){ ?>
 	<div class="nog_balk">
 	nog <strong><? echo $studie['eenh_vereist'] - $studie['eenh_gevolgd']; ?></strong> ECTS <em>(<? echo 100-round(($studie['eenh_gevolgd'] / $studie['eenh_vereist'])*100) ?>%)</em>
-	<? } ?>
 	</div>
+	<? } ?>
 	
 </div>
 <div style="clear:both; position:relative; top:5px;  padding-bottom:1.5em;"> 
