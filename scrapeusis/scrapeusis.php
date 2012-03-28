@@ -34,9 +34,9 @@ $cookiefile = "/home/geneesleer/ucheck/raw/"."cookies/s0924121_vakken.txt";
 
 $logfile = fopen($logfilename, 'w') or die("can't open file");
 
-if(file_exists("../geheim/ucheck.php"))
+if(file_exists("/home/geneesleer/ucheck/geheim/ucheck.php"))
 {	
-	include("../geheim/ucheck.php");
+	include("/home/geneesleer/ucheck/geheim/ucheck.php");
 	
 	$fields = array(
 	            'userid'=>'s0924121',
