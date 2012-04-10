@@ -51,7 +51,7 @@ curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
 curl_setopt($ch, CURLOPT_COOKIEFILE, $cookiefile);
 curl_setopt($ch, CURLOPT_COOKIEJAR, $cookiefile);
 
- curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 1);
+curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 1);
 curl_setopt($ch, CURLOPT_TIMEOUT, 10);
 
 $result = curl_exec($ch);
@@ -68,7 +68,7 @@ curl_setopt($ch,CURLOPT_URL,$url);
 
 //$post_str = "ICType=Panel&ICElementNum=0&ICAction=DERIVED_REGFRM1_SSR_PB_DELETE$113$&ICXPos=0&ICYPos=0&ICFocus=&ICSaveWarningFilter=0&ICChanged=-1&ICResubmit=0&ICSID=LmTfZHrLLXbk&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$22$=0100";
 
-$post_str = "ICAJAX=1&ICNAVTYPEDROPDOWN=0&ICType=Panel&ICElementNum=0&ICAction=DERIVED_REGFRM1_SSR_PB_DELETE%24113%24&ICXPos=0&ICYPos=0&ResponsetoDiffFrame=-1&TargetFrameName=None&ICFocus=&ICSaveWarningFilter=0&ICChanged=-1&ICResubmit=0&ICSID=A75Wej4DPgl3h%2F1VCn8JugG38dXSuGjK4VoRJ7xsMd4%3D&ICModalWidget=0&ICZoomGrid=0&ICZoomGridRt=0&ICModalLongClosed=&ICActionPrompt=false&ICFind=&ICAddCount=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$23$=0100";
+$post_str = "ICAJAX=1&ICNAVTYPEDROPDOWN=0&ICType=Panel&ICElementNum=0&ICAction=DERIVED_REGFRM1_SSR_PB_DELETE%24112%24&ICXPos=0&ICYPos=0&ResponsetoDiffFrame=-1&TargetFrameName=None&ICFocus=&ICSaveWarningFilter=0&ICChanged=-1&ICResubmit=0&ICSID=A75Wej4DPgl3h%2F1VCn8JugG38dXSuGjK4VoRJ7xsMd4%3D&ICModalWidget=0&ICZoomGrid=0&ICZoomGridRt=0&ICModalLongClosed=&ICActionPrompt=false&ICFind=&ICAddCount=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$23$=0100";
 $count = 0;
 
 foreach($onderdelen[0] as $onderdeel)
