@@ -63,12 +63,12 @@ foreach($studiesraw as $studieonderdeel)
 
 	$studiedeelarr = explode("<tr><td class='PAGROUPDIVIDER'  align='left'>", $studieonderdeel);
 	
-//	print_r($studiedeelarr);
-	
+	// print_r($studiedeelarr);
+	// Studiepunten (eenh.): 180.00 vereist, 146.00 behaald, 34.00 nodig
 	preg_match("/border='0' \/><\/a>(.*)<\/td><\/tr>/", $studiedeelarr[0], $title);	
-	preg_match("/Eenh.: ([0-9\.]*) vereist, ([0-9\.]*) gevolgd, ([0-9\.]*) nodig/", $studiedeelarr[0], $punten);
+	preg_match("/([0-9\.]*) vereist, ([0-9\.]*) behaald, ([0-9\.]*) nodig/", $studiedeelarr[0], $punten);
 	preg_match("/Cijfergemiddelde: ([0-9\.]*) vereist, ([0-9\.]*) werkelijk/", $studiedeelarr[0], $gem);		
-		
+
 	if(!isset($punten[1])) continue;	
 		
  	$studies[]['title'] = strip_tags(str_replace("&nbsp;", "", $title[1]));
@@ -80,7 +80,9 @@ foreach($studiesraw as $studieonderdeel)
 	$studies[count($studies)-1]['gem_werkelijk'] = strip_tags($gem[2]);
 					
 	$counter = -1;
-			
+
+
+
 	foreach($studiedeelarr as $studiedeel)
 	{
 //		echo $studiedeel;
@@ -91,11 +93,10 @@ foreach($studiesraw as $studieonderdeel)
 		$studiesubdelen = explode("<table cellpadding='2' cellspacing='0' cols='1'  class='PSLEVEL1SCROLLAREABODYNBOWBO'", $studiedeel);		
 		
 //		print_r($studiesubdelen);
-		
 		preg_match("/(.*)<\/td><\/tr>/", $studiesubdelen[0], $title);
-		preg_match("/Eenh.: ([0-9\.]*) vereist, ([0-9\.]*) gevolgd, ([0-9\.]*) nodig/", $studiesubdelen[0], $punten);
+		preg_match("/([0-9\.]*) vereist, ([0-9\.]*) behaald, ([0-9\.]*) nodig/", $studiesubdelen[0], $punten);
 		preg_match("/Cijfergemiddelde: ([0-9\.]*) vereist, ([0-9\.]*) werkelijk/", $studiesubdelen[0], $gem);		
-							
+
 	 	$studies[count($studies)-1]['onderdelen'][$counter-1]['title'] = strip_tags(str_replace("&nbsp;", "", $title[1]));
 		$studies[count($studies)-1]['onderdelen'][$counter-1]['eenh_vereist'] = strip_tags($punten[1]);
 		$studies[count($studies)-1]['onderdelen'][$counter-1]['eenh_gevolgd'] = strip_tags($punten[2]);
@@ -118,7 +119,7 @@ foreach($studiesraw as $studieonderdeel)
 			}
 		
 			preg_match("/border='0' \/><\/a>(.*)<\/td><\/tr>/", $studiesubdeel, $title);
-			preg_match("/Eenh.: ([0-9\.]*) vereist, ([0-9\.]*) gevolgd, ([0-9\.]*) nodig/", $studiesubdeel, $punten);
+			preg_match("/([0-9\.]*) vereist, ([0-9\.]*) behaald, ([0-9\.]*) nodig/", $studiesubdeel, $punten);
 			preg_match("/Cijfergemiddelde: ([0-9\.]*) vereist, ([0-9\.]*) werkelijk/", $studiesubdeel, $gem);		
 								
 			if(isset($title[1])  && isset($punten[1]) ){
