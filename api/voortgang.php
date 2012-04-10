@@ -78,7 +78,7 @@ foreach( $studiesraw as $studieonderdeel )
 	
 	preg_match("/border='0' \/><\/a>(.*)<\/td><\/tr>/", $studiedeelarr[0], $title);	
 	preg_match("/([0-9\.]*) vereist, ([0-9\.]*) behaald, ([0-9\.]*) nodig/", $studiedeelarr[0], $punten);
-	preg_match("/Cijfergemiddelde: ([0-9\.]*) vereist, ([0-9\.]*) werkelijk/", $studiedeelarr[0], $gem);		
+	preg_match("/([0-9\.]*) vereist, ([0-9\.]*) werkelijk/", $studiedeelarr[0], $gem);		
 		
 	if(!isset($punten[1])) continue;	
 		
@@ -105,8 +105,9 @@ foreach( $studiesraw as $studieonderdeel )
 		
 		preg_match("/(.*)<\/td><\/tr>/", $studiesubdelen[0], $title);
 		preg_match("/([0-9\.]*) vereist, ([0-9\.]*) behaald, ([0-9\.]*) nodig/", $studiesubdelen[0], $punten);
-		preg_match("/Cijfergemiddelde: ([0-9\.]*) vereist, ([0-9\.]*) werkelijk/", $studiesubdelen[0], $gem);		
+		preg_match("/([0-9\.]*) vereist, ([0-9\.]*) werkelijk/", $studiesubdelen[0], $gem);		
 							
+
 	 	$studies[count($studies)-1]['onderdelen'][$counter-1]['title'] = str_replace("&nbsp;", "", $title[1]);
 		$studies[count($studies)-1]['onderdelen'][$counter-1]['eenh_vereist'] = $punten[1];
 		$studies[count($studies)-1]['onderdelen'][$counter-1]['eenh_gevolgd'] = $punten[2];
@@ -130,7 +131,7 @@ foreach( $studiesraw as $studieonderdeel )
 		
 			preg_match("/border='0' \/><\/a>(.*)<\/td><\/tr>/", $studiesubdeel, $title);
 			preg_match("/([0-9\.]*) vereist, ([0-9\.]*) behaald, ([0-9\.]*) nodig/", $studiesubdeel, $punten);
-			preg_match("/Cijfergemiddelde: ([0-9\.]*) vereist, ([0-9\.]*) werkelijk/", $studiesubdeel, $gem);		
+			preg_match("/([0-9\.]*) vereist, ([0-9\.]*) werkelijk/", $studiesubdeel, $gem);		
 								
 			if(isset($title[1])  && isset($punten[1]) ){
 				$studies[count($studies)-1]['onderdelen'][$counter-1]['sub'][$subcounter]['title'] = str_replace("&nbsp;", "", $title[1]);
