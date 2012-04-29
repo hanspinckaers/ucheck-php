@@ -157,6 +157,37 @@ curl_close($ch);
 
 unset($ch);
 
+
+$ch = curl_init();
+
+$url = 'https://usis.leidenuniv.nl/psc/S040PRD/EMPLOYEE/HRMS/c/SNS_CUSTOMIZATIONS_NLD.SNS_SSENRL_CART.GBL';
+
+//set the url, number of POST vars, POST data
+curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_4; nl-nl) AppleWebKit/533.18.1 (KHTML, like Gecko) Version/5.0.2 Safari/533.18.5");
+curl_setopt($ch,CURLOPT_URL,$url);
+
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 0); 
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+curl_setopt($ch, CURLOPT_NOBODY, 1);
+
+// curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 1);
+curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+
+curl_setopt($ch, CURLOPT_COOKIEFILE, $cookiefile);
+curl_setopt($ch, CURLOPT_COOKIEJAR, $cookiefile);
+
+curl_setopt($ch,CURLOPT_POST, 13);
+curl_setopt($ch,CURLOPT_POSTFIELDS,"ICAJAX=1&ICNAVTYPEDROPDOWN=0&ICType=Panel&ICElementNum=0&ICAction=SNS_TERM_TBL_VW_DESCR%241&ICXPos=0&ICYPos=0&ResponsetoDiffFrame=-1&TargetFrameName=None&ICFocus=&ICSaveWarningFilter=0&ICChanged=0&ICResubmit=0&ICSID=PTVRqgpo%2Buc28JPRndVg9OJHKpnPosqu%2BjUfl%2FQ5ieo%3D&ICModalWidget=0&ICZoomGrid=0&ICZoomGridRt=0&ICModalLongClosed=&ICActionPrompt=false&ICFind=&ICAddCount=&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$6$=0100&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$25$=0100");
+
+curl_exec($ch);
+
+//print_r(curl_getinfo($ch));
+
+curl_close($ch);
+
+unset($ch);
+
 $ch = curl_init();
 
 $url = 'https://usis.leidenuniv.nl/psc/S040PRD/EMPLOYEE/HRMS/c/SNS_CUSTOMIZATIONS_NLD.SNS_SSENRL_CART.GBL';
@@ -289,6 +320,37 @@ curl_setopt($ch,CURLOPT_POSTFIELDS,"ICType=Panel&ICElementNum=0&ICAction=DESCR50
 $result = curl_exec($ch);
 
 unset($ch);
+
+$ch = curl_init();
+
+/// was hier
+
+$url = 'https://usis.leidenuniv.nl/psc/S040PRD/EMPLOYEE/HRMS/c/SNS_CUSTOMIZATIONS_NLD.SNS_SSENRL_CART.GBL';
+
+//set the url, number of POST vars, POST data
+curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_4; nl-nl) AppleWebKit/533.18.1 (KHTML, like Gecko) Version/5.0.2 Safari/533.18.5");
+curl_setopt($ch,CURLOPT_URL,$url);
+
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 0); 
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+curl_setopt($ch, CURLOPT_NOBODY, 1);
+
+curl_setopt($ch, CURLOPT_COOKIEFILE, $cookiefile);
+curl_setopt($ch, CURLOPT_COOKIEJAR, $cookiefile);
+
+//curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 1);
+//curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+
+curl_setopt($ch,CURLOPT_POST, 14);
+curl_setopt($ch,CURLOPT_POSTFIELDS,"ICAJAX=1&ICNAVTYPEDROPDOWN=0&ICType=Panel&ICElementNum=0&ICAction=DERIVED_SSS_SCT_SSR_PB_GO&ICXPos=0&ICYPos=0&ResponsetoDiffFrame=-1&TargetFrameName=None&ICFocus=&ICSaveWarningFilter=0&ICChanged=-1&ICResubmit=0&ICSID=PTVRqgpo%2Buc28JPRndVg9OJHKpnPosqu%2BjUfl%2FQ5ieo%3D&ICModalWidget=0&ICZoomGrid=0&ICZoomGridRt=0&ICModalLongClosed=&ICActionPrompt=false&ICFind=&ICAddCount=&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$23$=0100&SSR_DUMMY_RECV1\$sels$0=1&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$67$=0100");
+
+
+$result = curl_exec($ch);
+
+unset($ch);
+
+
 
 //$ch = curl_init();
 //
