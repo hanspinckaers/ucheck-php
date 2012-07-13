@@ -30,14 +30,17 @@ if(!isset($user))
 	function base64url_decode($data) { 
 	  return base64_decode(str_pad(strtr($data, '-_', '+/'), strlen($data) % 4, '=', STR_PAD_RIGHT)); 
 	} 
-	
+		
 	if(file_exists($DOCUMENT_ROOT."geheim/ucheck.php"))
 	{	
 		include($DOCUMENT_ROOT."geheim/ucheck.php");
 		
+		$forbidden_characters = array(" ", '"', "'", "&", "/", "\\", "?", "#", ".");
+		
 		if($_POST['cookie'] != "")
 		{
-			setcookie("user", $geheim->encrypt($_POST['user'], $key), time()+60*60*24*365*6);
+			$safe_username = str_replace($forbidden_characters, '_', $_POST['user']);
+			setcookie("user", $geheim->encrypt($safe_username, $key), time()+60*60*24*365*6);
 			setcookie("pwd", $geheim->encrypt($_POST['pwd'], $key), time()+60*60*24*365*6);
 		}
 		
@@ -48,7 +51,8 @@ if(!isset($user))
 		
 		if($_POST['user'])
 		{	
-			$_SESSION['user'] = $geheim->encrypt($_POST['user'], $key);
+			$safe_username = str_replace($forbidden_characters, '_', $_POST['user']);
+			$_SESSION['user'] = $geheim->encrypt($safe_username, $key);
 			$_SESSION['pwd'] = $geheim->encrypt($_POST['pwd'], $key);
 			
 			if($_POST['user'] == "s0924121" && $_POST['pwd'] != $pass_hans){
@@ -65,13 +69,16 @@ if(!isset($user))
 		 	
 		}
 		
-		$user = strtolower($geheim->decrypt($_SESSION['user'], $key));
+		$user = str_replace($forbidden_characters, '_', strtolower($geheim->decrypt($_SESSION['user'], $key)));
 		$pwd = $geheim->decrypt($_SESSION['pwd'], $key);
 	} 
 	else {
+		$forbidden_characters = array(" ", '"', "'", "&", "/", "\\", "?", "#", ".");
+
 		if($_POST['cookie'] != "")
 		{
-			setcookie("user", base64url_encode($_POST['user'], $key), time()+60*60*24*365*6);
+			$safe_username = str_replace($forbidden_characters, '_', $_POST['user']);
+			setcookie("user", base64url_encode($safe_username, $key), time()+60*60*24*365*6);
 			setcookie("pwd", base64url_encode($_POST['pwd'], $key), time()+60*60*24*365*6);
 		}
 		
@@ -87,7 +94,7 @@ if(!isset($user))
 				
 		if($_SESSION['user'])
 		{
-			$user = strtolower(base64url_decode($_SESSION['user'], $key));
+			$user = str_replace($forbidden_characters, '_', strtolower(base64url_decode($_SESSION['user'], $key)));
 			$pwd = base64url_decode($_SESSION['pwd'], $key);
 		}		
 	}

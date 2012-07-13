@@ -15,9 +15,14 @@ header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
 
 include "user_info.php";
 
-$vak = str_replace("&", "%26", $_GET['q']);
+$forbidden_characters = array(" ", '"', "'", "&", "/", "\\", "?", "#", ".");
 
-$filename = $DOCUMENT_ROOT."raw/cache/".$_GET['year']."/".$vak.".txt";
+$safe_vak = str_replace($forbidden_characters, '_', $_GET['q']);
+$safe_year = str_replace($forbidden_characters, '_', $_GET['year']);
+
+$vak = str_replace("&", "%26", $safe_vak);
+
+$filename = $DOCUMENT_ROOT."raw/cache/".$safe_year."/".$vak.".txt";
 
 $handle = fopen($filename, "r");
 $contents = fread($handle, filesize($filename));
