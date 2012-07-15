@@ -43,7 +43,7 @@
 
 /* Use this class on any div.span / container to see the grid. */
 .showgrid { 
-  background: url(grid.png); 
+/*  background: url(grid.png); */
 }
 
 /* Body margin for a sensile default look. */
