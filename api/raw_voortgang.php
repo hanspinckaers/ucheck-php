@@ -10,7 +10,7 @@
 ## ucheck-node: https://github.com/HansPinckaers/ucheck-node
 ##
 
-ini_set('display_errors', 0);
+ini_set('display_errors', 1);
 
 include "../raw/setup.php";
 
@@ -30,15 +30,17 @@ if(file_exists("../geheim/iphone.php"))
     include("../geheim/iphone.php");
 
     $pwd = $geheim->decrypt($_GET['pass'], $key, true);
-
 } else {
-    $pwd =  base64url_decode($_GET['pass']);
+    $pwd = base64url_decode($_GET['pass']);
 }
 
-echo exec(escapeshellcmd("$NODEJS_DIR $NODEJS_SERVERJS_DIR cijfers $user $pwd"));
+$output = array();
+exec(escapeshellcmd("$NODEJS_DIR $NODEJS_SERVERJS_DIR voortgang $user $pwd"), $output);
+$html = implode("", $output);
 
-//echo $json = file_get_contents($NODE_SERVER."cijfers/$user/$pwd/");
+echo $html;
 
+// Turn off all error reporting
 try {
 include('Galvanize.php');
 $GA = new Galvanize('UA-4063156-9');

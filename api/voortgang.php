@@ -22,48 +22,21 @@ function base64url_decode($data) {
   return base64_decode(str_pad(strtr($data, '-_', '+/'), strlen($data) % 4, '=', STR_PAD_RIGHT)); 
 } 
 
-$user = $_GET['user'];
-
+$dangerous_characters = array(" ", '"', "'", "&", "/", "\\", "?", "#", ".");
+$user = str_replace($dangerous_characters, '_', $_GET['user']);
 
 if(file_exists("../geheim/iphone.php"))
 {
-	include("../geheim/iphone.php");
-	
-	$pwd = $geheim->decrypt($_GET['pass'], $key, true);
+    include("../geheim/iphone.php");
+
+    $pwd = $geheim->decrypt($_GET['pass'], $key, true);
 } else {
-	$pwd =  base64url_decode($_GET['pass']);
+    $pwd =  base64url_decode($_GET['pass']);
 }
 
-$url = $NODE_SERVER."voortgang/$user/$pwd/";
-
-//open connection
-$ch = curl_init();
-
-$ip=$_SERVER['REMOTE_ADDR'];
-
-//set the url, number of POST vars, POST data
-$useragent="Fake Mozilla 5.0";
-
-
-curl_setopt($ch, CURLOPT_USERAGENT, $useragent);
-curl_setopt($ch,CURLOPT_URL,$url);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE); 
-curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE); 
-curl_setopt($ch, CURLOPT_HEADER, 0); 
-curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1); 
-
-//execute post
-$html = curl_exec($ch);
-
-//close connection
-curl_close($ch);  
-
-
-
-//$html = file_get_contents($NODE_SERVER."voortgang/$user/$pwd/");
-
-
+$output = array();
+exec(escapeshellcmd("$NODEJS_DIR $NODEJS_SERVERJS_DIR voortgang $user $pwd"), $output);
+$html = implode("", $output);
 
 $studiesraw = explode("<DIV id='win0divDERIVED_SAA_DPR_GROUPBOX1$", $html);
 
@@ -72,81 +45,81 @@ $studies = array();
 foreach( $studiesraw as $studieonderdeel )
 {	
 
-	$studiedeelarr = explode("<tr><td class='PAGROUPDIVIDER'  align='left'>", $studieonderdeel);
-	
+    $studiedeelarr = explode("<tr><td class='PAGROUPDIVIDER'  align='left'>", $studieonderdeel);
+
 //	print_r($studiedeelarr);
-	
-	preg_match("/border='0' \/><\/a>(.*)<\/td><\/tr>/", $studiedeelarr[0], $title);	
-	preg_match("/([0-9\.]*) vereist, ([0-9\.]*) behaald, ([0-9\.]*) nodig/", $studiedeelarr[0], $punten);
-	preg_match("/([0-9\.]*) vereist, ([0-9\.]*) werkelijk/", $studiedeelarr[0], $gem);		
-		
-	if(!isset($punten[1])) continue;	
-		
- 	$studies[]['title'] = str_replace("&nbsp;", "", $title[1]);
-	$studies[count($studies)-1]['eenh_vereist'] = $punten[1];
-	$studies[count($studies)-1]['eenh_gevolgd'] = $punten[2];
-	$studies[count($studies)-1]['eenh_nodig'] = $punten[3];
 
-	$studies[count($studies)-1]['gem_vereist'] = $gem[1];
-	$studies[count($studies)-1]['gem_werkelijk'] = $gem[2];
-					
-	$counter = -1;
-			
-	foreach($studiedeelarr as $studiedeel)
-	{
+    preg_match("/border='0' \/><\/a>([^<]*)</", $studiedeelarr[0], $title);	
+    preg_match("/([0-9\.]*) vereist, ([0-9\.]*) behaald, ([0-9\.]*) nodig/", $studiedeelarr[0], $punten);
+    preg_match("/([0-9\.]*) vereist, ([0-9\.]*) werkelijk/", $studiedeelarr[0], $gem);		
+
+    if(!isset($punten[1])) continue;	
+
+     $studies[]['title'] = str_replace("&nbsp;", "", $title[1]);
+    $studies[count($studies)-1]['eenh_vereist'] = $punten[1];
+    $studies[count($studies)-1]['eenh_gevolgd'] = $punten[2];
+    $studies[count($studies)-1]['eenh_nodig'] = $punten[3];
+
+    $studies[count($studies)-1]['gem_vereist'] = $gem[1];
+    $studies[count($studies)-1]['gem_werkelijk'] = $gem[2];
+
+    $counter = -1;
+
+    foreach($studiedeelarr as $studiedeel)
+    {
 //		echo $studiedeel;
-	
-		$counter++;
-		if($counter == 0) continue;
-				
-		$studiesubdelen = explode("<table cellpadding='2' cellspacing='0' cols='1'  class='PSLEVEL1SCROLLAREABODYNBOWBO'", $studiedeel);		
-		
+
+        $counter++;
+        if($counter == 0) continue;
+
+        $studiesubdelen = explode("<table cellpadding='2' cellspacing='0' cols='1'  class='PSLEVEL1SCROLLAREABODYNBOWBO'", $studiedeel);		
+
 //		print_r($studiesubdelen);
-		
-		preg_match("/(.*)<\/td><\/tr>/", $studiesubdelen[0], $title);
-		preg_match("/([0-9\.]*) vereist, ([0-9\.]*) behaald, ([0-9\.]*) nodig/", $studiesubdelen[0], $punten);
-		preg_match("/([0-9\.]*) vereist, ([0-9\.]*) werkelijk/", $studiesubdelen[0], $gem);		
-							
 
-	 	$studies[count($studies)-1]['onderdelen'][$counter-1]['title'] = str_replace("&nbsp;", "", $title[1]);
-		$studies[count($studies)-1]['onderdelen'][$counter-1]['eenh_vereist'] = $punten[1];
-		$studies[count($studies)-1]['onderdelen'][$counter-1]['eenh_gevolgd'] = $punten[2];
-		$studies[count($studies)-1]['onderdelen'][$counter-1]['eenh_nodig'] = $punten[3];
+        preg_match("/([^<]*)</", $studiesubdelen[0], $title);
+        preg_match("/([0-9\.]*) vereist, ([0-9\.]*) behaald, ([0-9\.]*) nodig/", $studiesubdelen[0], $punten);
+        preg_match("/([0-9\.]*) vereist, ([0-9\.]*) werkelijk/", $studiesubdelen[0], $gem);		
 
-		$studies[count($studies)-1]['onderdelen'][$counter-1]['gem_vereist'] = $gem[1];
-		$studies[count($studies)-1]['onderdelen'][$counter-1]['gem_werkelijk'] = $gem[2];
-				
-		$subcounter = -1;
-				
-		if(!isset($title[1])) continue;
-		
-		$studies[count($studies)-1]['onderdelen'][$counter-1]['sub'] = array();
-		
-		foreach($studiesubdelen as $studiesubdeel)
-		{
-			if($subcounter == -1){
-				$subcounter = 0;
-				 continue;
-			}
-		
-			preg_match("/border='0' \/><\/a>(.*)<\/td><\/tr>/", $studiesubdeel, $title);
-			preg_match("/([0-9\.]*) vereist, ([0-9\.]*) behaald, ([0-9\.]*) nodig/", $studiesubdeel, $punten);
-			preg_match("/([0-9\.]*) vereist, ([0-9\.]*) werkelijk/", $studiesubdeel, $gem);		
-								
-			if(isset($title[1])  && isset($punten[1]) ){
-				$studies[count($studies)-1]['onderdelen'][$counter-1]['sub'][$subcounter]['title'] = str_replace("&nbsp;", "", $title[1]);
-											
-				$studies[count($studies)-1]['onderdelen'][$counter-1]['sub'][$subcounter]['eenh_vereist'] = $punten[1];
-				$studies[count($studies)-1]['onderdelen'][$counter-1]['sub'][$subcounter]['eenh_gevolgd'] = $punten[2];
-				$studies[count($studies)-1]['onderdelen'][$counter-1]['sub'][$subcounter]['eenh_nodig'] = $punten[3];
-		
-				$studies[count($studies)-1]['onderdelen'][$counter-1]['sub'][$subcounter]['gem_vereist'] = $gem[1];
-				$studies[count($studies)-1]['onderdelen'][$counter-1]['sub'][$subcounter]['gem_werkelijk'] = $gem[2];
-			}
-			
-			$subcounter++;
-		}
-	}
+
+         $studies[count($studies)-1]['onderdelen'][$counter-1]['title'] = str_replace("&nbsp;", "", $title[1]);
+        $studies[count($studies)-1]['onderdelen'][$counter-1]['eenh_vereist'] = $punten[1];
+        $studies[count($studies)-1]['onderdelen'][$counter-1]['eenh_gevolgd'] = $punten[2];
+        $studies[count($studies)-1]['onderdelen'][$counter-1]['eenh_nodig'] = $punten[3];
+
+        $studies[count($studies)-1]['onderdelen'][$counter-1]['gem_vereist'] = $gem[1];
+        $studies[count($studies)-1]['onderdelen'][$counter-1]['gem_werkelijk'] = $gem[2];
+
+        $subcounter = -1;
+
+        if(!isset($title[1])) continue;
+
+        $studies[count($studies)-1]['onderdelen'][$counter-1]['sub'] = array();
+
+        foreach($studiesubdelen as $studiesubdeel)
+        {
+            if($subcounter == -1){
+                $subcounter = 0;
+                 continue;
+            }
+
+            preg_match("/border='0' \/><\/a>([^<]*)</", $studiesubdeel, $title);
+            preg_match("/([0-9\.]*) vereist, ([0-9\.]*) behaald, ([0-9\.]*) nodig/", $studiesubdeel, $punten);
+            preg_match("/([0-9\.]*) vereist, ([0-9\.]*) werkelijk/", $studiesubdeel, $gem);		
+
+            if(isset($title[1])  && isset($punten[1]) ){
+                $studies[count($studies)-1]['onderdelen'][$counter-1]['sub'][$subcounter]['title'] = str_replace("&nbsp;", "", $title[1]);
+
+                $studies[count($studies)-1]['onderdelen'][$counter-1]['sub'][$subcounter]['eenh_vereist'] = $punten[1];
+                $studies[count($studies)-1]['onderdelen'][$counter-1]['sub'][$subcounter]['eenh_gevolgd'] = $punten[2];
+                $studies[count($studies)-1]['onderdelen'][$counter-1]['sub'][$subcounter]['eenh_nodig'] = $punten[3];
+
+                $studies[count($studies)-1]['onderdelen'][$counter-1]['sub'][$subcounter]['gem_vereist'] = $gem[1];
+                $studies[count($studies)-1]['onderdelen'][$counter-1]['sub'][$subcounter]['gem_werkelijk'] = $gem[2];
+            }
+
+            $subcounter++;
+        }
+    }
 }
 
 //print_r($studies);
@@ -160,12 +133,12 @@ foreach( $studiesraw as $studieonderdeel )
 <style type="text/css"> 
 *
 {
-	margin: 0;
-	padding: 0;
-	
-	font-size: 12px;
+    margin: 0;
+    padding: 0;
+
+    font-size: 12px;
 }
- 
+
 html, body, div, span, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, code,
@@ -181,153 +154,157 @@ table, caption, tbody, tfoot, thead, tr, th, td {
   font-family: inherit;
   vertical-align: baseline;
 }
- 
+
 /* --- Typography --- */
- 
+
 .grid p {
   line-height: 18px;
   font-size: 12px;
   font-family: Helvetica, sans-serif;
 }
- 
+
 h1 { font-size: 2em; margin-bottom: 0.75em; line-height: 1.25em;   font-family: Georgia, serif; color:#000;}
 h2 { font-size: 2em; margin-bottom: 0.75em;   line-height: 1.25em;   font-family: Georgia, serif; color:#8f8f8f;}
 h3 { font-size: 1.5em; line-height: 1; line-height: 1.25em; margin-bottom: 0.5em; font-family: Georgia, serif; color:#8f8f8f;}
 h4 { font-size: 1.2em; line-height: 1.25; margin-bottom: 1.25em; }
 h5 { font-size: 1em; font-weight: bold; margin-bottom: 1.5em; }
 h6 { font-size: 1em; font-weight: bold; }
- 
+
 p  { margin: 0 0 2em; min-height: 0.15em;}
- 
+
 em
 {
-	font-style: normal;
-	font-weight: normal;
+    font-style: normal;
+    font-weight: normal;
 }
- 
-body
-{	
-	font-family: Helvetica;
-	font-size: 12px;
-	line-height: 18px;
-	
-	background-color: #f4f4f4;	
-	width:304px;
-	padding: 10px 5px 0px 7px;
-	
-}
- 
- 
-/* Voortgangs */
- 
-div#voortgang
-{	
-	color: #5a5a5a;
-}
- 
+
+ body
+ {	
+     font-family: Helvetica;
+     font-size: 12px;
+     line-height: 18px;
+
+     background-color: #f4f4f4;	
+     width:100%;
+ }
+
+ small
+ {
+     padding-left: 7px;
+     padding-bottom: 5px;
+ }
+
+ /* Voortgangs */
+
+ div#voortgang
+ {	
+     color: #5a5a5a;
+     padding: 10px 8px 0px 7px;
+ }
+
 div.hoofdbalk
 {
-	border-radius: 3px;
- 
-	width:100%; 
-	
-	line-height:24px;
-	height: 34px;
-		
-	border: 1px #cecece solid;
-		
-	background-color: #abd3e9;
-	text-align: right;
-	
-	font-size: 13px;
-		
-	background-image: -webkit-gradient(
-	    linear,
-	    left bottom,
-	    left top,
-	    color-stop(1, #fff),
-	  	color-stop(0.98, #e9e9e9),
-	    color-stop(0.04, #eeeeee),
-	    color-stop(0.03, #f4f4f4)
-	);
-	background-image: -moz-linear-gradient(
-	    center bottom,
-	    #f4f4f4 3%,
-	    #eeeeee 4%,
-	    #e9e9e9 98%,
-	    #ffffff 100%
-	);
-  
-	text-shadow: 0px 1px rgba(255,255,255,0.5);
+    border-radius: 3px;
+
+    width:100%; 
+
+    line-height:24px;
+    height: 34px;
+
+    border: 1px #cecece solid;
+
+    background-color: #abd3e9;
+    text-align: right;
+
+    font-size: 13px;
+
+    background-image: -webkit-gradient(
+        linear,
+        left bottom,
+        left top,
+        color-stop(1, #fff),
+          color-stop(0.98, #e9e9e9),
+        color-stop(0.04, #eeeeee),
+        color-stop(0.03, #f4f4f4)
+    );
+    background-image: -moz-linear-gradient(
+        center bottom,
+        #f4f4f4 3%,
+        #eeeeee 4%,
+        #e9e9e9 98%,
+        #ffffff 100%
+    );
+
+    text-shadow: 0px 1px rgba(255,255,255,0.5);
 }
- 
+
 div.filled_balk
 {
-	text-align:left; 
-	float:left; 
-	padding-top:5px; 
-	color:#000; 
-	background-color:#e5ecf9; 
-	height:29px;
-	
-	position: relative;
-	top: -1px;
-	left: -1px;
-	
-	border-radius: 3px;
-	border: 1px #97cead solid;
-	
-	background-image: -webkit-gradient(
-	    linear,
-	    left bottom,
-	    left top,
-	    color-stop(1, #fff),
-	  	color-stop(0.98, #bfeece),
-	    color-stop(0.03, #abe9c2),
-	    color-stop(0.02, #d3f4e0)
-	);
-	
-	min-width: 6px;
-	
+    text-align:left; 
+    float:left; 
+    padding-top:5px; 
+    color:#000; 
+    background-color:#e5ecf9; 
+    height:29px;
+
+    position: relative;
+    top: -1px;
+    left: -1px;
+
+    border-radius: 3px;
+    border: 1px #97cead solid;
+
+    background-image: -webkit-gradient(
+        linear,
+        left bottom,
+        left top,
+        color-stop(1, #fff),
+          color-stop(0.98, #bfeece),
+        color-stop(0.03, #abe9c2),
+        color-stop(0.02, #d3f4e0)
+    );
+
+    min-width: 6px;
+
 }
 
 div.filled_balk_blauw
 {
-	text-align:left; 
-	float:left; 
-	padding-top:5px; 
-	color:#000; 
-	background-color:#e5ecf9; 
-	height:29px;
-	
-	position: relative;
-	top: -1px;
-	left: -1px;
-	
-	border-radius: 3px;
-	border: 1px #97bace solid;
-	
-	
-	background-image: -webkit-gradient(
-	    linear,
-	    left bottom,
-	    left top,
-	    color-stop(1, #fff),
-	  	color-stop(0.98, #bfdeee),
-	    color-stop(0.03, #abd3e9),
-	    color-stop(0.02, #d3e8f4)
-	);
-	
-		min-width: 5px;
+    text-align:left; 
+    float:left; 
+    padding-top:5px; 
+    color:#000; 
+    background-color:#e5ecf9; 
+    height:29px;
+
+    position: relative;
+    top: -1px;
+    left: -1px;
+
+    border-radius: 3px;
+    border: 1px #97bace solid;
+
+
+    background-image: -webkit-gradient(
+        linear,
+        left bottom,
+        left top,
+        color-stop(1, #fff),
+          color-stop(0.98, #bfdeee),
+        color-stop(0.03, #abd3e9),
+        color-stop(0.02, #d3e8f4)
+    );
+
+        min-width: 5px;
 }
- 
+
 div.nog_balk
 {
-	padding-top: 5px;
-	padding-right: 10px;
-	overflow: hidden;
-	height:29px;
-	
+    padding-top: 5px;
+    padding-right: 10px;
+    overflow: hidden;
+    height:29px;
+
 }
 </style> 
 </header>
@@ -343,16 +320,16 @@ foreach($studies as $studie)
 <h1><? echo $studie['title']?></h1>
 <!-- te lui voor in main css -->
 <div class="hoofdbalk">
-	<div  class="<? if($onderdeel['eenh_nodig'] == "0.000"){ echo "filled_balk"; } else { echo "filled_balk_blauw"; } ?>" style="width:<? echo round(($studie['eenh_gevolgd'] / $studie['eenh_vereist'])*100) ?>%;">
-		<span style="display:block; padding-left:10px;  width:200px"><strong><? echo (int)$studie['eenh_gevolgd']; ?></strong> ECTS <em>(<? echo round(($studie['eenh_gevolgd'] / $studie['eenh_vereist'])*100) ?>%)</em></span>
-	</div>
-	
-	<? if($studie['eenh_vereist'] - $studie['eenh_gevolgd'] != 0){ ?>
-	<div class="nog_balk">
-	<strong><? echo $studie['eenh_vereist'] - $studie['eenh_gevolgd']; ?></strong> ECTS <em>(<? echo 100-round(($studie['eenh_gevolgd'] / $studie['eenh_vereist'])*100) ?>%)</em>
-	<? } ?>
-	</div>
-	
+    <div  class="<? if($onderdeel['eenh_nodig'] == "0.000"){ echo "filled_balk"; } else { echo "filled_balk_blauw"; } ?>" style="width:<? echo round(($studie['eenh_gevolgd'] / $studie['eenh_vereist'])*100) ?>%;">
+        <span style="display:block; padding-left:10px;  width:200px"><strong><? echo (int)$studie['eenh_gevolgd']; ?></strong> ECTS <em>(<? echo round(($studie['eenh_gevolgd'] / $studie['eenh_vereist'])*100) ?>%)</em></span>
+    </div>
+
+    <? if($studie['eenh_vereist'] - $studie['eenh_gevolgd'] != 0){ ?>
+    <div class="nog_balk">
+    <strong><? echo $studie['eenh_vereist'] - $studie['eenh_gevolgd']; ?></strong> ECTS <em>(<? echo 100-round(($studie['eenh_gevolgd'] / $studie['eenh_vereist'])*100) ?>%)</em>
+    <? } ?>
+    </div>
+
 </div>
 <p style="clear:both; position:relative; top:5px;"> 
 <? 
@@ -379,21 +356,21 @@ if($onderdeel['eenh_gevolgd'] && $onderdeel['eenh_vereist'])
 {
 ?>
 <div class="hoofdbalk">
-	<div class="<? if($onderdeel['eenh_nodig'] == "0.000"){ echo "filled_balk"; } else { echo "filled_balk_blauw"; } ?>" style="width:<? echo round(($onderdeel['eenh_gevolgd'] / $onderdeel['eenh_vereist'])*100) ?>%;">
+    <div class="<? if($onderdeel['eenh_nodig'] == "0.000"){ echo "filled_balk"; } else { echo "filled_balk_blauw"; } ?>" style="width:<? echo round(($onderdeel['eenh_gevolgd'] / $onderdeel['eenh_vereist'])*100) ?>%;">
 
-	<? 
-	//if($onderdeel['eenh_nodig'] == "0.000") echo "E9F9E0"; 
-	//else echo "e5ecf9"; 
-	?>
-	<span style="display:block; padding-left:10px;  width:200px"><strong><? echo (int)$onderdeel['eenh_gevolgd']; ?></strong> ECTS <em>(<? echo round(($onderdeel['eenh_gevolgd'] / $onderdeel['eenh_vereist'])*100) ?>%)</em></span>
-	</div>
-	
-	<? if($onderdeel['eenh_vereist'] - $onderdeel['eenh_gevolgd'] != 0){ ?>
-	<div class="nog_balk">
-	<strong><? echo $onderdeel['eenh_vereist'] - $onderdeel['eenh_gevolgd']; ?></strong> ECTS<em> (<? echo 100-round(($onderdeel['eenh_gevolgd'] / $onderdeel['eenh_vereist'])*100) ?>%)</em>
-	</div>
-	<? } ?>
-	
+    <? 
+    //if($onderdeel['eenh_nodig'] == "0.000") echo "E9F9E0"; 
+    //else echo "e5ecf9"; 
+    ?>
+    <span style="display:block; padding-left:10px;  width:200px"><strong><? echo (int)$onderdeel['eenh_gevolgd']; ?></strong> ECTS <em>(<? echo round(($onderdeel['eenh_gevolgd'] / $onderdeel['eenh_vereist'])*100) ?>%)</em></span>
+    </div>
+
+    <? if($onderdeel['eenh_vereist'] - $onderdeel['eenh_gevolgd'] != 0){ ?>
+    <div class="nog_balk">
+    <strong><? echo $onderdeel['eenh_vereist'] - $onderdeel['eenh_gevolgd']; ?></strong> ECTS<em> (<? echo 100-round(($onderdeel['eenh_gevolgd'] / $onderdeel['eenh_vereist'])*100) ?>%)</em>
+    </div>
+    <? } ?>
+
 </div>
 <?
 }
@@ -433,20 +410,20 @@ foreach($onderdeel['sub'] as $sub)
 <h3><? echo $sub['title']?></h3>
 <!-- te lui voor in main css -->
 <div class="hoofdbalk">
-	<div class="<? if($onderdeel['eenh_nodig'] == "0.000"){ echo "filled_balk"; } else { echo "filled_balk_blauw"; } ?>" style="width:<? echo round(($sub['eenh_gevolgd'] / $sub['eenh_vereist'])*100) ?>%;">
-	<? 
-	//if($sub['eenh_nodig'] == "0.000") echo "E9F9E0"; 
-	//else echo "e5ecf9"; 
-	?>
-	<span style="display:block; padding-left:10px;  width:200px"><strong><? echo (int)$sub['eenh_gevolgd']; ?></strong> ECTS <em>(<? echo round(($sub['eenh_gevolgd'] / $sub['eenh_vereist'])*100) ?>%)</em></span>
-	</div>
-	
-	<? if($sub['eenh_vereist'] - $sub['eenh_gevolgd'] != 0){ ?>
-	<div class="nog_balk">
-	<strong><? echo $sub['eenh_vereist'] - $sub['eenh_gevolgd']; ?></strong> ECTS<em> (<? echo 100-round(($sub['eenh_gevolgd'] / $sub['eenh_vereist'])*100) ?>%)</em>
-	</div>
-	<? } ?>
-	
+    <div class="<? if($onderdeel['eenh_nodig'] == "0.000"){ echo "filled_balk"; } else { echo "filled_balk_blauw"; } ?>" style="width:<? echo round(($sub['eenh_gevolgd'] / $sub['eenh_vereist'])*100) ?>%;">
+    <? 
+    //if($sub['eenh_nodig'] == "0.000") echo "E9F9E0"; 
+    //else echo "e5ecf9"; 
+    ?>
+    <span style="display:block; padding-left:10px;  width:200px"><strong><? echo (int)$sub['eenh_gevolgd']; ?></strong> ECTS <em>(<? echo round(($sub['eenh_gevolgd'] / $sub['eenh_vereist'])*100) ?>%)</em></span>
+    </div>
+
+    <? if($sub['eenh_vereist'] - $sub['eenh_gevolgd'] != 0){ ?>
+    <div class="nog_balk">
+    <strong><? echo $sub['eenh_vereist'] - $sub['eenh_gevolgd']; ?></strong> ECTS<em> (<? echo 100-round(($sub['eenh_gevolgd'] / $sub['eenh_vereist'])*100) ?>%)</em>
+    </div>
+    <? } ?>
+
 </div>
 <p style="clear:both; position:relative; top:5px;"> 
 <? 
@@ -462,7 +439,7 @@ if (isset($sub['gem_werkelijk']) && $sub['gem_werkelijk'] != "" && $sub['gem_wer
 
 </div>
 
-</div>
+<!--</div>-->
 
 <?
 }

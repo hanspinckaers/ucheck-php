@@ -22,19 +22,21 @@ function base64url_decode($data) {
   return base64_decode(str_pad(strtr($data, '-_', '+/'), strlen($data) % 4, '=', STR_PAD_RIGHT)); 
 } 
 
-$user = $_GET['user'];
+$dangerous_characters = array(" ", '"', "'", "&", "/", "\\", "?", "#", ".");
+$user = str_replace($dangerous_characters, '_', $_GET['user']);
 
 if(file_exists("../geheim/iphone.php"))
 {
-	include("../geheim/iphone.php");
-	
-	$pwd = $geheim->decrypt($_GET['pass'], $key, true);
+    include("../geheim/iphone.php");
+
+    $pwd = $geheim->decrypt($_GET['pass'], $key, true);
 } else {
-	$pwd =  base64url_decode($_GET['pass']);
+    $pwd =  base64url_decode($_GET['pass']);
 }
-	
-	
-echo $json = file_get_contents($NODE_SERVER."inschrijvingen/$user/$pwd/11/");
+
+echo exec(escapeshellcmd("$NODEJS_DIR $NODEJS_SERVERJS_DIR inschrijvingen $user $pwd"));
+
+//echo $json = file_get_contents($NODE_SERVER."inschrijvingen/$user/$pwd/11/");
 
 // Turn off all error reporting
 try {

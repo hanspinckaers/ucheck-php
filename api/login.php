@@ -12,7 +12,9 @@
 
 //ini_set('display_errors', 0);
 
-$user = $_GET['user'];
+$dangerous_characters = array(" ", '"', "'", "&", "/", "\\", "?", "#", ".");
+
+$user = str_replace($dangerous_characters, '_', $_GET['user']);
 $pass_get = $_GET['pass'];
 
 if($pass_get == "" || !$pass_get || $user == "" || !$user)
@@ -90,7 +92,7 @@ if(!$out[1])
 	$contents = fread($handle, filesize($filename));
 	$users = unserialize($contents);	
 	
-	$user = $_GET['user'];
+	$user = str_replace($dangerous_characters, '_', $_GET['user']);
 	
 	
 	if($users && !in_array(strtolower($user), $users) &&  
