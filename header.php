@@ -35,13 +35,15 @@
 <h2>uCheck</h2>
 </div>
 
-<div class="span-3" id="app_store" style="">
-<a href="http://itunes.apple.com/nl/app/ucheck/id449171216?l=nl&ls=1&mt=8"><img src="App_Store_Badge.png" style="float:left; z-index:99; position:relative; left:-50px"/></a>
+
+
+<!-- <a href="http://itunes.apple.com/nl/app/ucheck/id449171216?l=nl&ls=1&mt=8"><img src="App_Store_Badge.png" style="float:left; z-index:99; position:relative; left:-50px"/></a> -->
 <?
 if(isset($user))
 {
 ?>
-<div style="color:gray; position:relative; left:20px; margin-top:0px;">
+<div class="span-3" id="app_store">
+<div style="color:gray; position:relative; left:82px; margin-top:0px;">
 <?
 $maillogfilename = "/home/geneesleer/ucheck/mail/cache/".$user;
 
@@ -57,7 +59,7 @@ if(!file_exists($maillogfilename) || filesize($maillogfilename) == 0)
 if ($post && base64_decode($post["pass"]) != "") 
 {
 ?>
-<b>Mailservice</b>: uCheck mailt bij nieuwe cijfers. <a href="mail/">Hier afmelden.</a>
+<b>Mailservice</b>: uCheck mailt bij nieuwe cijfers. <a href="mail/">Wijzig.</a>
 <?
 } else {
 ?>
@@ -66,12 +68,13 @@ if ($post && base64_decode($post["pass"]) != "")
 }
 ?>
 </div>
+</div>
 <?
 }
 ?>
-</div>
 
-<div class="span-1" id="facebook_mailen">
+
+<div class="span-1 <? if(!isset($user)) { ?>push-3<? } ?>" id="facebook_mailen">
 <iframe src="javascript:''" id="facebook" scrolling="no" 
 frameborder="0" 
 style="border:none; display:block; position:relative; top:12px; left:100px; overflow:hidden; width:130px; height:21px;" allowTransparency="true">
@@ -91,9 +94,15 @@ if($user)
 ?>
 <hr />
 
-<!--<div style="color:gray;">
+<div style="color:gray; text-align: center;">
+<p style="float:left; position: absolute; margin-top: 2em;">
+<strong>Nieuw: </strong> De Android app voor uCheck!
+</p>
 <p>
-<b>Let op:</b> het kan zijn dat uCheck een paar vakken niet heeft die wel op uSis staan. Mijn excuses voor het ongemak.<br/>Mocht je dus een vak niet vinden, kijk dan voor de zekerheid even op uSis.
+<a href="http://itunes.apple.com/nl/app/ucheck/id449171216?l=nl&ls=1&mt=8" target="_blank"><img src="App_Store_Badge_EN.png" style=""/></a>
+<a href="https://play.google.com/store/apps/details?id=info.vanderkooy.ucheck&hl=nl" target="_blank">
+<img alt="Get it on Google Play" src="android_app_on_play_logo_large.png" />
+</a>
 </p>
 <hr />
-</div>-->
+</div>
