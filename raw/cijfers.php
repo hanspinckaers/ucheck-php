@@ -17,30 +17,29 @@ include "user_info.php";
 
 ini_set('display_errors', 0);
 
-if(isset($_SESSION['cijfers_token']))
-{
-	$json = file_get_contents($NODE_SERVER."token/".$_SESSION['cijfers_token']);	
-		
-	$_SESSION['cijfers_token'] = "";
+if($USES_UCHECK_API)
+{	
+	$safe_user = urlencode($user);
 
-	unset($_SESSION['cijfers_token']);	
-} else {
-	$json = file_get_contents($NODE_SERVER."cijfers/$user/$pwd/");
-}
-
-if($json == "Invalid token.")
-{
-	$json = file_get_contents($NODE_SERVER."cijfers/$user/$pwd/");
-}
-
-if(!$json)
-{
-	$json = file_get_contents($NODE_FALLBACK."cijfers/$user/$pwd/");
-	
-	if(!$json)
-	{
-//		mail("hans.pinckaers@gmail.com", "Fallback voor $user (cijfers)", "",  "From: geneesleer@alwaysdata.net");
+	if(!isset($_SESSION['key']))
+	{		
+		$safe_pass = urlencode($pwd);
+					
+		$_SESSION['key'] = file_get_contents($UCHECK_API_SERVER."login?user=$safe_user&pass=$safe_pass");	
 	}
+		
+	$key = $_SESSION['key'];
+	
+	if(strstr($key, "err:"))
+	{
+		echo "loginerror";
+		exit();
+	}
+	
+	$json = file_get_contents($UCHECK_API_SERVER."cijfers?user=$safe_user&pass=$key");	
+}
+else {
+	$json = exec(escapeshellcmd("$NODEJS_DIR $NODEJS_SERVERJS_DIR cijfers $user $pwd"));	
 }
 
 $raw_vakken = json_decode($json, true);

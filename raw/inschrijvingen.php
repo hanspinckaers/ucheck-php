@@ -11,54 +11,33 @@
 ##
 
 include "user_info.php";
-
 ini_set('display_errors', 0);
 
 $year = $_GET['year'];
 
-$token = $_SESSION['inschrijvingen_token'];
-
-if(isset($_SESSION['inschrijvingen_token']))
-{
-	$json = file_get_contents($NODE_SERVER."token/".$_SESSION['inschrijvingen_token']);			
-			
-	$_SESSION['inschrijvingen_token'] = "";
-
-	unset($_SESSION['inschrijvingen_token']);
-} else {
-	if($year)
-	{
-	$json = file_get_contents($NODE_SERVER."inschrijvingen/$user/$pwd/$year/");
-	} else {
-	$json = file_get_contents($NODE_SERVER."inschrijvingen/$user/$pwd/");
-	}
-}
-
-if($json == "Invalid token.")
-{
-//	 mail("hans.pinckaers@gmail.com", "Invalid token! ".$token, "",  "From: geneesleer@alwaysdata.net");
-
-	if($year)
-	{
-		$json = file_get_contents($NODE_SERVER."inschrijvingen/$user/$pwd/$year/");
-	} else {
-		$json = file_get_contents($NODE_SERVER."inschrijvingen/$user/$pwd/");
-	}
-}
-
-if(!$json)
+if($USES_UCHECK_API)
 {	
-	if($year)
-	{
-		$json = file_get_contents($NODE_FALLBACK."inschrijvingen/$user/$pwd/$year/");
-	} else {
-		$json = file_get_contents($NODE_FALLBACK."inschrijvingen/$user/$pwd/");
+	$safe_user = urlencode($user);
+
+	if(!isset($_SESSION['key']))
+	{		
+		$safe_pass = urlencode($pwd);
+
+		$_SESSION['key'] = file_get_contents($UCHECK_API_SERVER."login?user=$safe_user&pass=$safe_pass");	
 	}
-	
-	if(!$json)
+
+	$key = $_SESSION['key'];
+
+	if(strstr($key, "err:"))
 	{
-//		mail("hans.pinckaers@gmail.com", "Fallback voor $user (inschrijvingen)", "",  "From: geneesleer@alwaysdata.net");
+		echo "loginerror";
+		exit();
 	}
+
+	$json = file_get_contents($UCHECK_API_SERVER."inschrijvingen?user=$safe_user&pass=$key");	
+}
+else {
+	$json = exec(escapeshellcmd("$NODEJS_DIR $NODEJS_SERVERJS_DIR inschrijvingen $user $pwd"));		
 }
 
 $raw_inschrijvingen = json_decode($json, true);
