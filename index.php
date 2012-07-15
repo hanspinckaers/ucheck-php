@@ -13,7 +13,7 @@
 include "raw/user_info.php";
 include "header.php";
 
-$_SESSION['cijfers_token'] = file_get_contents($NODE_SERVER."cijfers_token/$user/$pwd/", "r");
+// $_SESSION['cijfers_token'] = file_get_contents($NODE_SERVER."cijfers_token/$user/$pwd/", "r");
 // $_SESSION['inschrijvingen_token'] = file_get_contents($NODE_SERVER."inschrijvingen_token/$user/$pwd/11/", "r");
 
 ?>
@@ -208,6 +208,7 @@ if(file_exists($filename) && ((time()-filemtime($filename))/(60*60) < 24*7))
 <option value="ARAB">Arabische talen en culturen</option>
 <option value="ARCH">Archeologie en prehistorie</option>
 <option value="ASA">Area Studies Asia</option>
+<option value="ASS">Asian Studies	</option>
 <option value="BSKE">Bestuurskunde</option>
 <option value="BFW">Bio-farmaceutische wetenschap</option>
 <option value="BIO">Biologie</option>
@@ -222,7 +223,7 @@ if(file_exists($filename) && ((time()-filemtime($filename))/(60*60) < 24*7))
 <option value="ENGELS">Engelse taal en cultuur</option>
 <option value="EUS">European Union Studies</option>
 <option value="FGWALG">FGW Algemeen</option>
-<option value="W%26N">Faculteit W&amp;N</option>
+<option value="W&amp;N">Faculteit W&amp;N</option>
 <option value="PHOTOGS">Film and Photographic studies</option>
 <option value="FRANS">Franse taal en cultuur</option>
 <option value="GNK">Geneeskunde</option>
@@ -233,6 +234,7 @@ if(file_exists($filename) && ((time()-filemtime($filename))/(60*60) < 24*7))
 <option value="HERV">Hervormde Kerk</option>
 <option value="INDECO">Industrial Ecology</option>
 <option value="INF">Informatica</option>
+<option value="INTST">International Studies</option>
 <option value="ISLM">Islamic Studies</option>
 <option value="ISLT">Islamitische theologie</option>
 <option value="ITAL">Italiaanse taal en cultuur</option>
@@ -246,10 +248,13 @@ if(file_exists($filename) && ((time()-filemtime($filename))/(60*60) < 24*7))
 <option value="FLEBYVAK">Letteren Bijvak</option>
 <option value="FLEALG">Letteren algemeen</option>
 <option value="LETTERK">Letterkunde</option>
-<option value="LA%26S">Liberal Arts &amp; Sciences</option>
+<option value="LA&amp;S">Liberal Arts &amp; Sciences</option>
 <option value="LST">Life Science and technology</option>
+<option value="LING">Linguistics</option>
+<option value="LITST">Literary Studies	</option>
 <option value="LITW">Literatuurwetenschap</option>
 <option value="MANAGEME">Management</option>
+<option value="MEDIA">Media Studies</option>
 <option value="MIDOOST">Midden Oosten Studies</option>
 <option value="MST">Molecular science &amp; Technology</option>
 <option value="MUZIEK">Muziek</option>
@@ -257,7 +262,9 @@ if(file_exists($filename) && ((time()-filemtime($filename))/(60*60) < 24*7))
 <option value="NTK">Natuurkunde</option>
 <option value="NED">Nederlandse taal en cultuur</option>
 <option value="NP">Nieuwperzische taal en cultuur</option>
+<option value="NOAMST">North American Studies</option>
 <option value="OCMW">Oude Culturen van de Mediter W</option>
+<option value="CAC">Oudheidstudies</option>
 <option value="PEDA">Pedagogische wetenschappen</option>
 <option value="POWE">Politicologie</option>
 <option value="PKST">Praktijkstudies</option>
@@ -268,11 +275,11 @@ if(file_exists($filename) && ((time()-filemtime($filename))/(60*60) < 24*7))
 <option value="SLAV">Slavische talen cult/Ruslandk.</option>
 <option value="STK">Sterrenkunde</option>
 <option value="TCIA">T&amp;C van Indiaans Amerika</option>
-<option value="TCMA">T&amp;C van Mesopota &amp; Anatolië</option>
+<option value="TCMA">T&amp;C van Mesopota &amp; Anatoli&euml;</option>
 <option value="TAALK">Taalkunde</option>
 <option value="TW">Taalwetenschap</option>
 <option value="INDTIBET">Talen en Cult. India en Tibet</option>
-<option value="INDONES">Talen en Culturen Indonesië</option>
+<option value="INDONES">Talen en Culturen Indonesi&euml;</option>
 <option value="AFRIKA">Talen en Culturen van Afrika</option>
 <option value="TCLA">Talen en culturen Latijns Am</option>
 <option value="CHINA">Talen en culturen van China</option>
@@ -286,7 +293,7 @@ if(file_exists($filename) && ((time()-filemtime($filename))/(60*60) < 24*7))
 <option value="LAVA">Vitality and ageing</option>
 <option value="WYSB">Wijsbegeerte</option>
 <option value="WSK">Wiskunde en statistiek</option>
-<option value="ZZOAZIE">Zuid en Zuid-Oost Azië</option>
+<option value="ZZOAZIE">Zuid en Zuid-Oost Azi&euml;</option>
 </select>
 </span>
 </p>
@@ -311,11 +318,11 @@ if(file_exists($filename) && ((time()-filemtime($filename))/(60*60) < 24*7))
 </div>
 <p>
 <input type="checkbox" name="troep" value="" id="troep" onchange="laadstudie()" checked>
-<label for="troep">Filter troep</label>
+<label for="troep">Filter dubbele</label>
 </p>
 <table border="0" cellspacing="0" cellpadding="0" id="onderdelen">
 </table>
-<br/><small>Vak niet gevonden? Schakel de troep-filter uit en check voor de zekerheid uSis. Vak wel op uSis niet op uCheck? Geef dan alsjeblieft feedback.</small>
+<br/><small>Vak niet gevonden? Schakel de dubbel-filter uit en check voor de zekerheid uSis. Vak wel op uSis niet op uCheck? Geef dan alsjeblieft feedback.</small>
 </div>
 
 </div>
@@ -324,7 +331,11 @@ if(file_exists($filename) && ((time()-filemtime($filename))/(60*60) < 24*7))
 <div style="clear:both">
 <hr/>
 <span style="color:gray">
-<a href="http://nl.linkedin.com/in/hanspinckaers">Hans Pinckaers</a> &#8212; uCheck is <b>open-source</b>; Help mee via GitHub: <a href="https://github.com/HansPinckaers/ucheck-php">PHP backend</a> en de <a href="https://github.com/HansPinckaers/ucheck-node">Node.js backend</a></span>
+<a href="http://nl.linkedin.com/in/hanspinckaers">Hans Pinckaers</a> &#8212; uCheck is <b>open-source</b>; help mee via GitHub: <a href="https://github.com/HansPinckaers/ucheck-php">PHP backend</a> en de <a href="https://github.com/HansPinckaers/ucheck-node">Node.js backend</a> 
+<br/><em>De Android app is gemaakt door <a href="mailto:niek@vanderkooy.info">Niek van der Kooy</a> in samenwerking met uCheck. De app is open-source: <a href="https://github.com/niekvanderkooy/ucheck-android">https://github.com/niekvanderkooy/ucheck-android</a></em>
+<br/>
+<br/><em>Tip: Artikels buiten de universiteit lezen? Gebruik de proxy van de uni op: <a href="https://ucheck.nl/ez/">https://ucheck.nl/ez/</a></em>
+</span>
 <br/>
 </div>
 
@@ -344,98 +355,57 @@ if(file_exists($filename) && ((time()-filemtime($filename))/(60*60) < 24*7))
 
 <script type="text/javascript">
 	window.addEvent('domready', function() {
-		var myRequest = new Request({url: 'cijfers_html.php', method: 'get', onSuccess: function(responseText, responseXML) {
+		new Request({url: 'cijfers_html.php', method: 'get', onSuccess: function(responseText, responseXML) {
 				$("cijfers").set('html',responseText);	
 									
 				if(responseText == "loginerror")
 				{
-					window.location = "https://ucheck.nl/logout?error=Gebruikersnaam of wachtwoord foutief.";
+					window.location = "logout?error=Gebruikersnaam of wachtwoord foutief.";
 					
 				}
 				else if(responseText == "usiserror" || responseText == "")
 				{
-					window.location = "https://ucheck.nl/logout?error=Oh oh, uSis of uCheck ligt plat.";
+					window.location = "logout?error=Oh oh, uSis of uCheck ligt plat.";
 				}
 				else {
-				
-				
-				
 					check_filter("cijfers");
-	/*
-			  	setTimeout(function(){
-			  		$("facebook").src= "https://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fucheck.nl&layout=button_count&show_faces=false&width=220&action=like&colorscheme=light&height=28";		  	
-			  	}, 500);
-	*/
-			
-					var myRequest = new Request({url: 'full_inschrijvingen.php?year=11', evalScripts:true, method: 'get', onSuccess: function(responseText, responseXML) {
-						$("inschrijvingen").set('html',responseText);	
-						
-						<?
-						
-						$filename = $DOCUMENT_ROOT."voortgang_cache/".$user.".txt";
-						
-						if(file_exists($filename) && ((time()-filemtime($filename))/(60*60) < 24*7))
-						{
-						} else {				
-						?>
-						
-						var myRequest = new Request({url: 'voortgang.php', evalScripts:true, method: 'get', onSuccess: function(responseText, responseXML) {
-							$("voortgang").set('html',responseText);	
-						}}).send();
-						
-						<?
-						} 
-						?>
-						
-						check_filter("inschrijvingen");
-						
-					}}).send();
 				}
+				
+				new Request({url: 'full_inschrijvingen.php?year=11', evalScripts:true, method: 'get', onSuccess: function(responseText, responseXML) {
+					$("inschrijvingen").set('html',responseText);	
+					
+					<?
+					
+					$filename = $DOCUMENT_ROOT."voortgang_cache/".$user.".txt";
+					
+					if(file_exists($filename) && ((time()-filemtime($filename))/(60*60) < 24*7))
+					{
+					} else {				
+					?>
+					
+					var myRequest = new Request({url: 'voortgang.php', evalScripts:true, method: 'get', onSuccess: function(responseText, responseXML) {
+						$("voortgang").set('html',responseText);	
+					}}).send();
+					
+					<?
+					} 
+					?>
+					
+					check_filter("inschrijvingen");
+					
+				}}).send();
 			
 		}}).send();
 		
+
+		
 		setTimeout(function(){
 			$("facebook").src= "https://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fucheck.nl&layout=button_count&show_faces=false&width=220&action=like&colorscheme=light&height=28";		  	
-		},20 );
+		},500);
 	});
 
 
 </script>
-
-<!--<script type="text/javascript">
-var myTips = new Tips('.tooltip', {
-	fixed: true,
-	offset: {x: 0, y: 25}
-
-});
-
-var myTips2 = new Tips('.tooltip_big', {
-	fixed: true,
-	offset: {x: 0, y: 28}
-});
-<? 
-if(!$gemaild) {
-?>
-if($("mail_button")){
-$("mail_button").addEvent("click", function(e)
-{	
-	var myRequest = new Request({url: 'mail.php', method: 'get', onSuccess: function(responseText, responseXML) {}}).send();
-	
-	e.target.rel = "Je hebt 5 medestudenten geholpen door ze te wijzen op uCheck. <br/><b>Namens hen: bedankt!</b>";
-	e.target.innerHTML = "Bedankt voor het mailen!";
-	e.target.title = "";
-	
-	e.target.store('tip:title', '');
-	e.target.store('tip:text', 'Je hebt 5 medestudenten geholpen door ze te wijzen op uCheck. <br/><b>Namens hun: bedankt!</b>');
-
-	myTips.setTitle("");
-	myTips.setText("Je hebt 5 medestudenten geholpen door ze te wijzen op uCheck. <br/><b>Namens hen: bedankt!</b>");
-	
-	$("mail_button").removeEvents("click");
-});
-}
-<? } ?>
-</script>-->
 
 <a href="https://hanspinckaers.wufoo.com/forms/z7x3k7/" onclick="window.open(this.href,  null, 'height=470, width=680, toolbar=0, location=0, status=1, scrollbars=1, resizable=1'); return false" title="uCheck Feedback" style="top:77px; height:105px; color:white; cursor:pointer; text-indent:-100000px; overflow:hidden; position:absolute; z-index:100000; right:0px; left:auto; margin-right:0px; margin-left:auto; width:32px; background-image:url(Feedback.png); background-position:-3px center; opacity:0.9">Please fill out my form.</a>
 
@@ -481,7 +451,6 @@ if(file_exists("raw/mail/bezocht.txt"))
     ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 	})();
-
 </script>
 
 </body>
