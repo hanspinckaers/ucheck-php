@@ -12,7 +12,7 @@
 
 //ini_set('display_errors', 0);
 
-include "raw/user_info.php";
+include "user_info.php";
 
 $filename = $DOCUMENT_ROOT."voortgang_cache/".$user.".txt";
 
@@ -44,7 +44,7 @@ if(file_exists($filename) && ((time()-filemtime($filename))/(60*60) < 24*7))
 	}
 	else {
 		$output = array();
-		exec(escapeshellcmd("$NODEJS_DIR $NODEJS_SERVERJS_DIR voortgang $user $pwd", $output));	
+		exec(escapeshellcmd("$NODEJS_DIR $NODEJS_SERVERJS_DIR voortgang $user $pwd"), $output);	
 		$html = implode("", $output);
 	}
 
