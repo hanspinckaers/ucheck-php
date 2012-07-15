@@ -41,8 +41,8 @@ FileETag None
 
 ExpiresActive On
 ExpiresDefault "access plus 2 weeks"
-ExpiresByType text/html "access plus 2 weeks"
-ExpiresByType text/javascript "access plus 2 weeks"
+#ExpiresByType text/html "access plus 2 weeks"
+#ExpiresByType text/javascript "access plus 2 weeks"
 
 # Force no caching for dynamic files
 <FilesMatch "\.(php|cgi|pl|htm|html)$">
@@ -52,9 +52,8 @@ AddDefaultCharset UTF-8
 
 AddType text/cache-manifest .manifest
 
-<filesMatch "\\.(ico|pdf|flv|jpg|jpeg|png|gif|swf|mp3|mp4)$">
-Header set Cache-Control "max-age=2592000, private"
-Header set Expires "Sun, 17 July 2011 20:00:00 GMT"
-</filesMatch>
+#<filesMatch "\\.(ico|pdf|flv|jpg|jpeg|png|gif|swf|mp3|mp4)$">
+#Header set Expires "Sun, 17 July 2011 20:00:00 GMT"
+#</filesMatch>
 
 
