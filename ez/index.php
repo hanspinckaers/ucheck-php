@@ -20,8 +20,9 @@
 
 <h1>EZProxy Leiden</h1>
 
+Plak/vul hier de URL in:<br/>
 <form name="input" action="https://ezproxy.leidenuniv.nl:2443/login" method="get">
-<input type="text" name="qurl" size="100" value="http://"/>
+<input type="text" name="qurl" size="100" placeholder="http://voorbeeld.nl/"/>
 <input id="inloggen" type="submit" value="bezoek" />
 <br/><br/>
 <hr/>
