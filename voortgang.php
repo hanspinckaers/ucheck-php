@@ -12,134 +12,7 @@
 
 //ini_set('display_errors', 0);
 
-include "raw/user_info.php";
-
-$filename = $DOCUMENT_ROOT."voortgang_cache/".$user.".txt";
-
-if(file_exists($filename) && ((time()-filemtime($filename))/(60*60) < 24*7))
-{	
-	$html = @file_get_contents($filename);
-} else {
-	
-	$url = @$NODE_SERVER."voortgang/$user/$pwd/";
-	
-	//open connection
-	$ch = curl_init();
-	
-	$ip=$_SERVER['REMOTE_ADDR'];
-	
-	//set the url, number of POST vars, POST data
-	$useragent="Fake Mozilla 5.0";
-	
-	curl_setopt($ch, CURLOPT_USERAGENT, $useragent);
-	curl_setopt($ch,CURLOPT_URL,$url);
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE); 
-	curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE); 
-	curl_setopt($ch, CURLOPT_HEADER, 0); 
-	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1); 
-	
-	//execute post
-	$html = curl_exec($ch);
-	
-	//close connection
-	curl_close($ch);  
-
-	$logfile = fopen($filename, 'w') or die("can't open file");	
-	
-	fwrite($logfile, $html);
-
-	fclose($logfile);
-}
-
-//echo $html;
-
-$studiesraw = explode("<DIV id='win0divDERIVED_SAA_DPR_GROUPBOX1$", $html);
-
-$studies = array();
-
-foreach($studiesraw as $studieonderdeel)
-{	
-
-	$studiedeelarr = explode("<tr><td class='PAGROUPDIVIDER'  align='left'>", $studieonderdeel);
-	
-	// print_r($studiedeelarr);
-	// Studiepunten (eenh.): 180.00 vereist, 146.00 behaald, 34.00 nodig
-	preg_match("/border='0' \/><\/a>(.*)<\/td><\/tr>/", $studiedeelarr[0], $title);	
-	preg_match("/([0-9\.]*) vereist, ([0-9\.]*) behaald, ([0-9\.]*) nodig/", $studiedeelarr[0], $punten);
-	preg_match("/([0-9\.]*) vereist, ([0-9\.]*) werkelijk/", $studiedeelarr[0], $gem);		
-
-	if(!isset($punten[1])) continue;	
-		
- 	$studies[]['title'] = strip_tags(str_replace("&nbsp;", "", $title[1]));
-	$studies[count($studies)-1]['eenh_vereist'] = strip_tags($punten[1]);
-	$studies[count($studies)-1]['eenh_gevolgd'] = strip_tags($punten[2]);
-	$studies[count($studies)-1]['eenh_nodig'] = strip_tags($punten[3]);
-
-	$studies[count($studies)-1]['gem_vereist'] = strip_tags($gem[1]);
-	$studies[count($studies)-1]['gem_werkelijk'] = strip_tags($gem[2]);
-					
-	$counter = -1;
-
-
-
-	foreach($studiedeelarr as $studiedeel)
-	{
-//		echo $studiedeel;
-	
-		$counter++;
-		if($counter == 0) continue;
-				
-		$studiesubdelen = explode("<table cellpadding='2' cellspacing='0' cols='1'  class='PSLEVEL1SCROLLAREABODYNBOWBO'", $studiedeel);		
-		
-//		print_r($studiesubdelen);
-		preg_match("/(.*)<\/td><\/tr>/", $studiesubdelen[0], $title);
-		preg_match("/([0-9\.]*) vereist, ([0-9\.]*) behaald, ([0-9\.]*) nodig/", $studiesubdelen[0], $punten);
-		preg_match("/([0-9\.]*) vereist, ([0-9\.]*) werkelijk/", $studiesubdelen[0], $gem);		
-
-	 	$studies[count($studies)-1]['onderdelen'][$counter-1]['title'] = strip_tags(str_replace("&nbsp;", "", $title[1]));
-		$studies[count($studies)-1]['onderdelen'][$counter-1]['eenh_vereist'] = strip_tags($punten[1]);
-		$studies[count($studies)-1]['onderdelen'][$counter-1]['eenh_gevolgd'] = strip_tags($punten[2]);
-		$studies[count($studies)-1]['onderdelen'][$counter-1]['eenh_nodig'] = strip_tags($punten[3]);
-
-		$studies[count($studies)-1]['onderdelen'][$counter-1]['gem_vereist'] = strip_tags($gem[1]);
-		$studies[count($studies)-1]['onderdelen'][$counter-1]['gem_werkelijk'] = strip_tags($gem[2]);
-				
-		$subcounter = -1;
-				
-		if(!isset($title[1])) continue;
-		
-		$studies[count($studies)-1]['onderdelen'][$counter-1]['sub'] = array();
-		
-		foreach($studiesubdelen as $studiesubdeel)
-		{
-			if($subcounter == -1){
-				$subcounter = 0;
-				 continue;
-			}
-		
-			preg_match("/border='0' \/><\/a>(.*)<\/td><\/tr>/", $studiesubdeel, $title);
-			preg_match("/([0-9\.]*) vereist, ([0-9\.]*) behaald, ([0-9\.]*) nodig/", $studiesubdeel, $punten);
-			preg_match("/([0-9\.]*) vereist, ([0-9\.]*) werkelijk/", $studiesubdeel, $gem);		
-								
-			if(isset($title[1])  && isset($punten[1]) ){
-				$studies[count($studies)-1]['onderdelen'][$counter-1]['sub'][$subcounter]['title'] = strip_tags(str_replace("&nbsp;", "", $title[1]));
-											
-				$studies[count($studies)-1]['onderdelen'][$counter-1]['sub'][$subcounter]['eenh_vereist'] = strip_tags($punten[1]);
-				$studies[count($studies)-1]['onderdelen'][$counter-1]['sub'][$subcounter]['eenh_gevolgd'] = strip_tags($punten[2]);
-				$studies[count($studies)-1]['onderdelen'][$counter-1]['sub'][$subcounter]['eenh_nodig'] = strip_tags($punten[3]);
-		
-				$studies[count($studies)-1]['onderdelen'][$counter-1]['sub'][$subcounter]['gem_vereist'] = strip_tags($gem[1]);
-				$studies[count($studies)-1]['onderdelen'][$counter-1]['sub'][$subcounter]['gem_werkelijk'] = strip_tags($gem[2]);
-			}
-			
-			$subcounter++;
-		}
-	}
-}
-
-
-//print_r($studies);
+include "raw/voortgang.php";
 ?>
 
 <div id="voortgang_inner">
@@ -161,7 +34,7 @@ $counter++;
 	
 	<? if($studie['eenh_vereist'] - $studie['eenh_gevolgd'] != 0){ ?>
 	<div class="nog_balk">
-	nog <strong><? echo $studie['eenh_vereist'] - $studie['eenh_gevolgd']; ?></strong> ECTS <em>(<? echo 100-round(($studie['eenh_gevolgd'] / $studie['eenh_vereist'])*100) ?>%)</em>
+	<strong><? echo $studie['eenh_vereist'] - $studie['eenh_gevolgd']; ?></strong> ECTS <em>(<? echo 100-round(($studie['eenh_gevolgd'] / $studie['eenh_vereist'])*100) ?>%)</em>
 	</div>
 	<? } ?>
 	
@@ -203,7 +76,7 @@ Gemiddelde: <strong><? echo $studie['gem_werkelijk']?></strong>
 				
 				<? if($onderdeel['eenh_vereist'] - $onderdeel['eenh_gevolgd'] != 0){ ?>
 				<div class="nog_balk">
-				nog <strong><? echo $onderdeel['eenh_vereist'] - $onderdeel['eenh_gevolgd']; ?></strong> ECTS<em> (<? echo 100-round(($onderdeel['eenh_gevolgd'] / $onderdeel['eenh_vereist'])*100) ?>%)</em>
+				<strong><? echo $onderdeel['eenh_vereist'] - $onderdeel['eenh_gevolgd']; ?></strong> ECTS<em> (<? echo 100-round(($onderdeel['eenh_gevolgd'] / $onderdeel['eenh_vereist'])*100) ?>%)</em>
 				</div>
 				<? } ?>
 			</div>
@@ -262,7 +135,7 @@ Gemiddelde: <strong><? echo $studie['gem_werkelijk']?></strong>
 				
 				<? if($sub['eenh_vereist'] - $sub['eenh_gevolgd'] != 0){ ?>
 				<div class="nog_balk">
-				nog <strong><? echo $sub['eenh_vereist'] - $sub['eenh_gevolgd']; ?></strong> ECTS<em> (<? echo 100-round(($sub['eenh_gevolgd'] / $sub['eenh_vereist'])*100) ?>%)</em>
+				<strong><? echo $sub['eenh_vereist'] - $sub['eenh_gevolgd']; ?></strong> ECTS<em> (<? echo 100-round(($sub['eenh_gevolgd'] / $sub['eenh_vereist'])*100) ?>%)</em>
 				</div>
 				<? } ?>
 			</div>
