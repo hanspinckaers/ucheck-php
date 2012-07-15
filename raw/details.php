@@ -34,43 +34,17 @@ if($fp) fclose($fp);
 foreach($fields as $key=>$value) { $fields_string .= $key.'='.$value.'&'; }
 rtrim($fields_string,'&');
 
-$ch = curl_init();
-
-$url = 'https://usis.leidenuniv.nl/psc/S040PRD/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES_2.SSR_SSENRL_CART.GBL?Page=SSR_SSENRL_CART&Action=A&ACAD_CAREER=10&EMPLID=0924121&INSTITUTION=LEI01&STRM=2110';
-
-//set the url, number of POST vars, POST data
-curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_4; nl-nl) AppleWebKit/533.18.1 (KHTML, like Gecko) Version/5.0.2 Safari/533.18.5");
-curl_setopt($ch,CURLOPT_URL,$url);
-
-curl_setopt($ch,CURLOPT_POST, count($fields));
-curl_setopt($ch,CURLOPT_POSTFIELDS,$fields_string);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-
-curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);  
-
-curl_setopt($ch, CURLOPT_COOKIEFILE, $cookiefile);
-curl_setopt($ch, CURLOPT_COOKIEJAR, $cookiefile);
-
-curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 1);
-curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-
-$result = curl_exec($ch);
+// request winkelwagen
+$url = 'https://usis.leidenuniv.nl/psc/S040PRD/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES_2.SSR_SSENRL_CART.GBL?Page=SSR_SSENRL_CART&Action=A&ACAD_CAREER=10&INSTITUTION=LEI01&STRM=2110';
+$result = req($url, $fields_string, $cookiefile);
 
 preg_match_all("/chk\\$[0-9]+'/", $result, $onderdelen);
 
-$ch = curl_init();
-
-$url = 'https://usis.leidenuniv.nl/psc/S040PRD/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES_2.SSR_SSENRL_CART.GBL?Page=SSR_SSENRL_CART&Action=A&ACAD_CAREER=10&EMPLID=0924121&INSTITUTION=LEI01&STRM=2110';
-
-//set the url, number of POST vars, POST data
-curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_4; nl-nl) AppleWebKit/533.18.1 (KHTML, like Gecko) Version/5.0.2 Safari/533.18.5");
-curl_setopt($ch,CURLOPT_URL,$url);
-
-//$post_str = "ICType=Panel&ICElementNum=0&ICAction=DERIVED_REGFRM1_SSR_PB_DELETE$113$&ICXPos=0&ICYPos=0&ICFocus=&ICSaveWarningFilter=0&ICChanged=-1&ICResubmit=0&ICSID=LmTfZHrLLXbk&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$22$=0100";
-
+// empty winkelwagen
+$url = 'https://usis.leidenuniv.nl/psc/S040PRD/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES_2.SSR_SSENRL_CART.GBL?Page=SSR_SSENRL_CART&Action=A&ACAD_CAREER=10&INSTITUTION=LEI01&STRM=2110';
 $post_str = "ICAJAX=1&ICNAVTYPEDROPDOWN=0&ICType=Panel&ICElementNum=0&ICAction=DERIVED_REGFRM1_SSR_PB_DELETE%24112%24&ICXPos=0&ICYPos=0&ResponsetoDiffFrame=-1&TargetFrameName=None&ICFocus=&ICSaveWarningFilter=0&ICChanged=-1&ICResubmit=0&ICSID=A75Wej4DPgl3h%2F1VCn8JugG38dXSuGjK4VoRJ7xsMd4%3D&ICModalWidget=0&ICZoomGrid=0&ICZoomGridRt=0&ICModalLongClosed=&ICActionPrompt=false&ICFind=&ICAddCount=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$23$=0100";
-$count = 0;
 
+$count = 0;
 foreach($onderdelen[0] as $onderdeel)
 {
 	$post_str .= "&P_SELECT\$chk$$count=Y&P_SELECT$$count=Y";
@@ -78,312 +52,46 @@ foreach($onderdelen[0] as $onderdeel)
 }
 
 $post_str .= "&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$155$=0100";
+$result = req($url, $post_str, $cookiefile);
 
-curl_setopt($ch,CURLOPT_POST, 14);
-curl_setopt($ch,CURLOPT_POSTFIELDS, $post_str);
-
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-
-curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);  
-
-curl_setopt($ch, CURLOPT_COOKIEFILE, $cookiefile);
-curl_setopt($ch, CURLOPT_COOKIEJAR, $cookiefile);
-
-curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 1);
-curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-
-$result = curl_exec($ch);
-
-// ECHTE DETTAILS ------------------
-
-unset($ch);
-
+// new cookie for details
 $cookiefile = $DOCUMENT_ROOT."raw/cookies/".$user."_vakken".time().".txt";
 
-$ch = curl_init();
-
+// request inschrijven
 $url = 'https://usis.leidenuniv.nl/psc/S040PRD/EMPLOYEE/HRMS/c/SNS_CUSTOMIZATIONS_NLD.SNS_SSENRL_CART.GBL';
+req($url, $fields_string, $cookiefile);
 
-//set the url, number of POST vars, POST data
-curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_4; nl-nl) AppleWebKit/533.18.1 (KHTML, like Gecko) Version/5.0.2 Safari/533.18.5");
-curl_setopt($ch,CURLOPT_URL,$url);
-
-curl_setopt($ch,CURLOPT_POST, count($fields));
-curl_setopt($ch,CURLOPT_POSTFIELDS,$fields_string);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-
-curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);  
-
-curl_setopt($ch, CURLOPT_COOKIEFILE, $cookiefile);
-curl_setopt($ch, CURLOPT_COOKIEJAR, $cookiefile);
-
-// curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 1);
-curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-
-curl_exec($ch);
-
-//print_r(curl_getinfo($ch));
-
-curl_close($ch);
-
-
-$ch = curl_init();
-
+// selecteer inschrijfmethode
 $url = 'https://usis.leidenuniv.nl/psc/S040PRD/EMPLOYEE/HRMS/c/SNS_CUSTOMIZATIONS_NLD.SNS_SSENRL_CART.GBL';
+$post_str = "ICType=Panel&ICElementNum=0&ICAction=SNS_DERIVED_DESCR20&ICXPos=0&ICYPos=0&ResponsetoDiffFrame=-1&TargetFrameName=None&ICFocus=&ICSaveWarningFilter=0&ICChanged=-1&ICResubmit=1&ICSID=VWJH4XuwW5DikH2UFpQZhPt5WEK5u5nlWMeLNWNWIJI%3D&ICModalWidget=0&ICZoomGrid=0&ICZoomGridRt=0&ICModalLongClosed=&ICActionPrompt=false&ICFind=&ICAddCount=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$6$=0100&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$25$=0100";
+req($url, $post_str, $cookiefile);
 
-//set the url, number of POST vars, POST data
-curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_4; nl-nl) AppleWebKit/533.18.1 (KHTML, like Gecko) Version/5.0.2 Safari/533.18.5");
-curl_setopt($ch,CURLOPT_URL,$url);
-
-curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 0); 
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-
-curl_setopt($ch, CURLOPT_NOBODY, 1);
-
-// curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 1);
-curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-
-curl_setopt($ch, CURLOPT_COOKIEFILE, $cookiefile);
-curl_setopt($ch, CURLOPT_COOKIEJAR, $cookiefile);
-
-curl_setopt($ch,CURLOPT_POST, 13);
-curl_setopt($ch,CURLOPT_POSTFIELDS,"ICType=Panel&ICElementNum=0&ICAction=SNS_DERIVED_DESCR20&ICXPos=0&ICYPos=0&ResponsetoDiffFrame=-1&TargetFrameName=None&ICFocus=&ICSaveWarningFilter=0&ICChanged=-1&ICResubmit=1&ICSID=VWJH4XuwW5DikH2UFpQZhPt5WEK5u5nlWMeLNWNWIJI%3D&ICModalWidget=0&ICZoomGrid=0&ICZoomGridRt=0&ICModalLongClosed=&ICActionPrompt=false&ICFind=&ICAddCount=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$6$=0100&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$25$=0100");
-
-curl_exec($ch);
-
-//print_r(curl_getinfo($ch));
-
-curl_close($ch);
-
-unset($ch);
-
-
-$ch = curl_init();
-
+// studiejaar
 $url = 'https://usis.leidenuniv.nl/psc/S040PRD/EMPLOYEE/HRMS/c/SNS_CUSTOMIZATIONS_NLD.SNS_SSENRL_CART.GBL';
+if($year == "11") $index = "1";
+elseif($year == "12") $index = "0";
+$post_str = "ICAJAX=1&ICNAVTYPEDROPDOWN=0&ICType=Panel&ICElementNum=0&ICAction=SNS_TERM_TBL_VW_DESCR%24$index&ICXPos=0&ICYPos=0&ResponsetoDiffFrame=-1&TargetFrameName=None&ICFocus=&ICSaveWarningFilter=0&ICChanged=0&ICResubmit=0&ICSID=PTVRqgpo%2Buc28JPRndVg9OJHKpnPosqu%2BjUfl%2FQ5ieo%3D&ICModalWidget=0&ICZoomGrid=0&ICZoomGridRt=0&ICModalLongClosed=&ICActionPrompt=false&ICFind=&ICAddCount=&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$6$=0100&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$25$=0100";
+req($url, $post_str, $cookiefile);
 
-//set the url, number of POST vars, POST data
-curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_4; nl-nl) AppleWebKit/533.18.1 (KHTML, like Gecko) Version/5.0.2 Safari/533.18.5");
-curl_setopt($ch,CURLOPT_URL,$url);
-
-curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 0); 
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-
-curl_setopt($ch, CURLOPT_NOBODY, 1);
-
-// curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 1);
-curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-
-curl_setopt($ch, CURLOPT_COOKIEFILE, $cookiefile);
-curl_setopt($ch, CURLOPT_COOKIEJAR, $cookiefile);
-
-curl_setopt($ch,CURLOPT_POST, 13);
-curl_setopt($ch,CURLOPT_POSTFIELDS,"ICAJAX=1&ICNAVTYPEDROPDOWN=0&ICType=Panel&ICElementNum=0&ICAction=SNS_TERM_TBL_VW_DESCR%241&ICXPos=0&ICYPos=0&ResponsetoDiffFrame=-1&TargetFrameName=None&ICFocus=&ICSaveWarningFilter=0&ICChanged=0&ICResubmit=0&ICSID=PTVRqgpo%2Buc28JPRndVg9OJHKpnPosqu%2BjUfl%2FQ5ieo%3D&ICModalWidget=0&ICZoomGrid=0&ICZoomGridRt=0&ICModalLongClosed=&ICActionPrompt=false&ICFind=&ICAddCount=&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$6$=0100&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$25$=0100");
-
-curl_exec($ch);
-
-//print_r(curl_getinfo($ch));
-
-curl_close($ch);
-
-unset($ch);
-
-$ch = curl_init();
-
+// zoeken
 $url = 'https://usis.leidenuniv.nl/psc/S040PRD/EMPLOYEE/HRMS/c/SNS_CUSTOMIZATIONS_NLD.SNS_SSENRL_CART.GBL';
+$post_str = "ICType=Panel&ICElementNum=0&ICAction=SNS_DERIVED_FETCH_PUSHBUTTON&ICXPos=0&ICYPos=0&ResponsetoDiffFrame=-1&TargetFrameName=None&ICFocus=&ICSaveWarningFilter=0&ICChanged=0&ICResubmit=1&ICSID=VWJH4XuwW5DikH2UFpQZhPt5WEK5u5nlWMeLNWNWIJI%3D&ICModalWidget=0&ICZoomGrid=0&ICZoomGridRt=0&ICModalLongClosed=&ICActionPrompt=false&ICFind=&ICAddCount=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$6$=0100&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$25$=0100";
+req($url, $post_str, $cookiefile);
 
-//set the url, number of POST vars, POST data
-curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_4; nl-nl) AppleWebKit/533.18.1 (KHTML, like Gecko) Version/5.0.2 Safari/533.18.5");
-curl_setopt($ch,CURLOPT_URL,$url);
-
-curl_setopt($ch, CURLOPT_NOBODY, 1);
-
-curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 0); 
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-
-// curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 1);
-curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-
-curl_setopt($ch, CURLOPT_COOKIEFILE, $cookiefile);
-curl_setopt($ch, CURLOPT_COOKIEJAR, $cookiefile);
-
-curl_setopt($ch,CURLOPT_POST, 13);
-
-
-curl_setopt($ch,CURLOPT_POSTFIELDS,"ICType=Panel&ICElementNum=0&ICAction=SNS_DERIVED_FETCH_PUSHBUTTON&ICXPos=0&ICYPos=0&ResponsetoDiffFrame=-1&TargetFrameName=None&ICFocus=&ICSaveWarningFilter=0&ICChanged=0&ICResubmit=1&ICSID=VWJH4XuwW5DikH2UFpQZhPt5WEK5u5nlWMeLNWNWIJI%3D&ICModalWidget=0&ICZoomGrid=0&ICZoomGridRt=0&ICModalLongClosed=&ICActionPrompt=false&ICFind=&ICAddCount=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$6$=0100&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$25$=0100");
-
-//if($year == "10")
-//{
-//curl_setopt($ch,CURLOPT_POSTFIELDS,"ICType=Panel&ICElementNum=0&ICAction=SNS_TERM_TBL_VW_DESCR$1&ICXPos=0&ICYPos=0&ICFocus=&ICSaveWarningFilter=0&ICChanged=0&ICResubmit=0&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$6$=0100&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$25$=0100
-//");
-//} else {
-//curl_setopt($ch,CURLOPT_POSTFIELDS,"ICType=Panel&ICElementNum=0&ICAction=SNS_TERM_TBL_VW_DESCR$0&ICXPos=0&ICYPos=0&ICFocus=&ICSaveWarningFilter=0&ICChanged=0&ICResubmit=0&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$6$=0100&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$25$=0100
-//");
-//}
-//ICType=Panel&ICElementNum=0&ICStateNum=17&ICAction=SNS_DERIVED_FETCH_PUSHBUTTON&ICXPos=0&ICYPos=0&ResponsetoDiffFrame=-1&TargetFrameName=None&ICFocus=&ICSaveWarningFilter=0&ICChanged=0&ICResubmit=1&ICSID=VWJH4XuwW5DikH2UFpQZhPt5WEK5u5nlWMeLNWNWIJI%3D&ICModalWidget=0&ICZoomGrid=0&ICZoomGridRt=0&ICModalLongClosed=&ICActionPrompt=false&ICFind=&ICAddCount=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$6$=0100&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$25$=0100
-
-
-curl_exec($ch);
-//print_r(curl_getinfo($ch));
-
-curl_close($ch);
-//
-//unset($ch);
-//
-//$ch = curl_init();
-//
-//$url = 'https://usis.leidenuniv.nl/psc/S040PRD/EMPLOYEE/HRMS/c/SNS_CUSTOMIZATIONS_NLD.SNS_SSENRL_CART.GBL';
-//
-//set the url, number of POST vars, POST data
-//curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_4; nl-nl) AppleWebKit/533.18.1 (KHTML, like Gecko) Version/5.0.2 Safari/533.18.5");
-//curl_setopt($ch,CURLOPT_URL,$url);
-//
-//curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 0); 
-//curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-// 
-//curl_setopt($ch, CURLOPT_COOKIEFILE, $cookiefile);
-//curl_setopt($ch, CURLOPT_COOKIEJAR, $cookiefile);
-//
-//curl_setopt($ch, CURLOPT_NOBODY, 1);
-//
-// curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 1);
-//curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-//
-//curl_setopt($ch,CURLOPT_POST, 13);
-//curl_setopt($ch,CURLOPT_POSTFIELDS,"ICType=Panel&ICElementNum=0&ICAction=SNS_DERIVED_FETCH_PUSHBUTTON&ICXPos=0&ICYPos=0&ICFocus=&ICSaveWarningFilter=0&ICChanged=0&ICResubmit=0&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$5$=0100&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$24$=0100");
-//
-//echo curl_exec($ch);
-
-//print_r(curl_getinfo($ch));
-
-//curl_close($ch);
-
-unset($ch);
-
-$ch = curl_init();
-
-/// was hier
-
+// zoeken invullen
 $url = 'https://usis.leidenuniv.nl/psc/S040PRD/EMPLOYEE/HRMS/c/SNS_CUSTOMIZATIONS_NLD.SNS_SSENRL_CART.GBL';
+$post_str = "ICAJAX=1&ICNAVTYPEDROPDOWN=0&ICType=Panel&ICElementNum=0&ICAction=SNS_CRSESRCH_WK_SEARCH_BTN&ICXPos=0&ICYPos=0&ResponsetoDiffFrame=-1&TargetFrameName=None&ICFocus=&ICSaveWarningFilter=0&ICChanged=0&ICResubmit=0&ICSID=VWJH4XuwW5DikH2UFpQZhPt5WEK5u5nlWMeLNWNWIJI%3D&ICModalWidget=0&ICZoomGrid=0&ICZoomGridRt=0&ICModalLongClosed=&ICActionPrompt=false&ICFind=&ICAddCount=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$5$=0100&SNS_CRSESRCH_WK_SUBJECT$55$=&SNS_CRSESRCH_WK_CATALOG_NBR=".$_GET['q']."&SNS_CRSESRCH_WK_DESCR1=&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$\$chk$0=Y&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$$0=Y&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$\$chk$1=N&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$\$chk$2=N&SNS_CRSESRCH_WK_SNS_SEL_OPERATOR=&SNS_CRSESRCH_WK_UNITS_MAXIMUM=0.00&SNS_CRSESRCH_WK_ACAD_ORG=&SNS_CRSESRCH_WK_SNS_CAR_SEL\$70$\$chk$0=N&SNS_CRSESRCH_WK_SNS_CAR_SEL\$70$\$chk$1=N&SNS_CRSESRCH_WK_SNS_CAR_SEL\$70$\$chk$2=N&SNS_CRSESRCH_WK_LANGUAGE=&SNS_DERIVED_CRSE_ATTR=&SNS_DERIVED_CRSE_ATTR_VALUE=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$94$=0100";
+req($url, $post_str, $cookiefile);
 
-//set the url, number of POST vars, POST data
-curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_4; nl-nl) AppleWebKit/533.18.1 (KHTML, like Gecko) Version/5.0.2 Safari/533.18.5");
-curl_setopt($ch,CURLOPT_URL,$url);
-
-curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 0); 
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
- 
-curl_setopt($ch, CURLOPT_COOKIEFILE, $cookiefile);
-curl_setopt($ch, CURLOPT_COOKIEJAR, $cookiefile);
-
-curl_setopt($ch, CURLOPT_NOBODY, 1);
-
-// curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 1);
-curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-
-curl_setopt($ch,CURLOPT_POST, 14);
-curl_setopt($ch,CURLOPT_POSTFIELDS,"ICAJAX=1&ICNAVTYPEDROPDOWN=0&ICType=Panel&ICElementNum=0&ICAction=SNS_CRSESRCH_WK_SEARCH_BTN&ICXPos=0&ICYPos=0&ResponsetoDiffFrame=-1&TargetFrameName=None&ICFocus=&ICSaveWarningFilter=0&ICChanged=0&ICResubmit=0&ICSID=VWJH4XuwW5DikH2UFpQZhPt5WEK5u5nlWMeLNWNWIJI%3D&ICModalWidget=0&ICZoomGrid=0&ICZoomGridRt=0&ICModalLongClosed=&ICActionPrompt=false&ICFind=&ICAddCount=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$5$=0100&SNS_CRSESRCH_WK_SUBJECT$55$=&SNS_CRSESRCH_WK_CATALOG_NBR=".$_GET['q']."&SNS_CRSESRCH_WK_DESCR1=&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$\$chk$0=Y&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$$0=Y&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$\$chk$1=N&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$\$chk$2=N&SNS_CRSESRCH_WK_SNS_SEL_OPERATOR=&SNS_CRSESRCH_WK_UNITS_MAXIMUM=0.00&SNS_CRSESRCH_WK_ACAD_ORG=&SNS_CRSESRCH_WK_SNS_CAR_SEL\$70$\$chk$0=N&SNS_CRSESRCH_WK_SNS_CAR_SEL\$70$\$chk$1=N&SNS_CRSESRCH_WK_SNS_CAR_SEL\$70$\$chk$2=N&SNS_CRSESRCH_WK_LANGUAGE=&SNS_DERIVED_CRSE_ATTR=&SNS_DERIVED_CRSE_ATTR_VALUE=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$94$=0100");
-//
-//
-
-//curl_setopt($ch,CURLOPT_POSTFIELDS,"ICType=Panel&ICElementNum=0&ICStateNum=33&ICAction=SNS_CRSESRCH_WK_SEARCH_BTN&ICXPos=0&ICYPos=0&ResponsetoDiffFrame=-1&TargetFrameName=None&ICFocus=&ICSaveWarningFilter=0&ICChanged=0&ICResubmit=0&ICSID=VWJH4XuwW5DikH2UFpQZhPt5WEK5u5nlWMeLNWNWIJI%3D&ICModalWidget=0&ICZoomGrid=0&ICZoomGridRt=0&ICModalLongClosed=&ICActionPrompt=false&ICFind=&ICAddCount=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$5$=0100&SNS_CRSESRCH_WK_SUBJECT$55$=&SNS_CRSESRCH_WK_CATALOG_NBR=".$_GET['q']."&SNS_CRSESRCH_WK_DESCR1=&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$$chk$0=Y&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$$0=Y&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$$chk$1=N&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$$chk$2=N&SNS_CRSESRCH_WK_SNS_SEL_OPERATOR=&SNS_CRSESRCH_WK_UNITS_MAXIMUM=0.00&SNS_CRSESRCH_WK_ACAD_ORG=&SNS_CRSESRCH_WK_SNS_CAR_SEL$70$$chk$0=N&SNS_CRSESRCH_WK_SNS_CAR_SEL$70$$chk$1=N&SNS_CRSESRCH_WK_SNS_CAR_SEL$70$$chk$2=N&SNS_CRSESRCH_WK_LANGUAGE=&SNS_DERIVED_CRSE_ATTR=&SNS_DERIVED_CRSE_ATTR_VALUE=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$94$=0100");
-
-$result = curl_exec($ch);
-
-unset($ch);
-
-$ch = curl_init();
-
-/// was hier
-
+// klik op resultaat
 $url = 'https://usis.leidenuniv.nl/psc/S040PRD/EMPLOYEE/HRMS/c/SNS_CUSTOMIZATIONS_NLD.SNS_SSENRL_CART.GBL';
+$post_str = "ICType=Panel&ICElementNum=0&ICAction=DESCR50$0&ICXPos=0&ICYPos=0&ResponsetoDiffFrame=-1&TargetFrameName=None&ICFocus=&ICSaveWarningFilter=0&ICChanged=0&ICResubmit=1&ICSID=VWJH4XuwW5DikH2UFpQZhPt5WEK5u5nlWMeLNWNWIJI%3D&ICModalWidget=0&ICZoomGrid=0&ICZoomGridRt=0&ICModalLongClosed=&ICActionPrompt=false&ICFind=&ICAddCount=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$5$=0100&SNS_CRSESRCH_WK_SUBJECT$55$=&SNS_CRSESRCH_WK_CATALOG_NBR=3883881V2Y&SNS_CRSESRCH_WK_DESCR1=&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$\$chk$0=N&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$\$chk$1=N&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$\$chk$2=N&SNS_CRSESRCH_WK_SNS_SEL_OPERATOR=&SNS_CRSESRCH_WK_UNITS_MAXIMUM=0.00&SNS_CRSESRCH_WK_ACAD_ORG=&SNS_CRSESRCH_WK_SNS_CAR_SEL\$70$\$chk$0=N&SNS_CRSESRCH_WK_SNS_CAR_SEL\$70$\$chk$1=N&SNS_CRSESRCH_WK_SNS_CAR_SEL\$70$\$chk$2=N&SNS_CRSESRCH_WK_LANGUAGE=&SNS_DERIVED_CRSE_ATTR=&SNS_DERIVED_CRSE_ATTR_VALUE=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$94$=0100";
+req($url, $post_str, $cookiefile);
 
-//set the url, number of POST vars, POST data
-curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_4; nl-nl) AppleWebKit/533.18.1 (KHTML, like Gecko) Version/5.0.2 Safari/533.18.5");
-curl_setopt($ch,CURLOPT_URL,$url);
-
-curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 0); 
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-
-curl_setopt($ch, CURLOPT_NOBODY, 1);
- 
-curl_setopt($ch, CURLOPT_COOKIEFILE, $cookiefile);
-curl_setopt($ch, CURLOPT_COOKIEJAR, $cookiefile);
-
-//curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 1);
-//curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-
-curl_setopt($ch,CURLOPT_POST, 14);
-curl_setopt($ch,CURLOPT_POSTFIELDS,"ICType=Panel&ICElementNum=0&ICAction=DESCR50$0&ICXPos=0&ICYPos=0&ResponsetoDiffFrame=-1&TargetFrameName=None&ICFocus=&ICSaveWarningFilter=0&ICChanged=0&ICResubmit=1&ICSID=VWJH4XuwW5DikH2UFpQZhPt5WEK5u5nlWMeLNWNWIJI%3D&ICModalWidget=0&ICZoomGrid=0&ICZoomGridRt=0&ICModalLongClosed=&ICActionPrompt=false&ICFind=&ICAddCount=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$5$=0100&SNS_CRSESRCH_WK_SUBJECT$55$=&SNS_CRSESRCH_WK_CATALOG_NBR=3883881V2Y&SNS_CRSESRCH_WK_DESCR1=&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$\$chk$0=N&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$\$chk$1=N&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$\$chk$2=N&SNS_CRSESRCH_WK_SNS_SEL_OPERATOR=&SNS_CRSESRCH_WK_UNITS_MAXIMUM=0.00&SNS_CRSESRCH_WK_ACAD_ORG=&SNS_CRSESRCH_WK_SNS_CAR_SEL\$70$\$chk$0=N&SNS_CRSESRCH_WK_SNS_CAR_SEL\$70$\$chk$1=N&SNS_CRSESRCH_WK_SNS_CAR_SEL\$70$\$chk$2=N&SNS_CRSESRCH_WK_LANGUAGE=&SNS_DERIVED_CRSE_ATTR=&SNS_DERIVED_CRSE_ATTR_VALUE=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$94$=0100");
-
-
-$result = curl_exec($ch);
-
-unset($ch);
-
-$ch = curl_init();
-
-/// was hier
-
+// klik doorgaan bij jaarkeuze
 $url = 'https://usis.leidenuniv.nl/psc/S040PRD/EMPLOYEE/HRMS/c/SNS_CUSTOMIZATIONS_NLD.SNS_SSENRL_CART.GBL';
-
-//set the url, number of POST vars, POST data
-curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_4; nl-nl) AppleWebKit/533.18.1 (KHTML, like Gecko) Version/5.0.2 Safari/533.18.5");
-curl_setopt($ch,CURLOPT_URL,$url);
-
-curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 0); 
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-
-curl_setopt($ch, CURLOPT_NOBODY, 1);
-
-curl_setopt($ch, CURLOPT_COOKIEFILE, $cookiefile);
-curl_setopt($ch, CURLOPT_COOKIEJAR, $cookiefile);
-
-//curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 1);
-//curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-
-curl_setopt($ch,CURLOPT_POST, 14);
-curl_setopt($ch,CURLOPT_POSTFIELDS,"ICAJAX=1&ICNAVTYPEDROPDOWN=0&ICType=Panel&ICElementNum=0&ICAction=DERIVED_SSS_SCT_SSR_PB_GO&ICXPos=0&ICYPos=0&ResponsetoDiffFrame=-1&TargetFrameName=None&ICFocus=&ICSaveWarningFilter=0&ICChanged=-1&ICResubmit=0&ICSID=PTVRqgpo%2Buc28JPRndVg9OJHKpnPosqu%2BjUfl%2FQ5ieo%3D&ICModalWidget=0&ICZoomGrid=0&ICZoomGridRt=0&ICModalLongClosed=&ICActionPrompt=false&ICFind=&ICAddCount=&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$23$=0100&SSR_DUMMY_RECV1\$sels$0=1&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$67$=0100");
-
-
-$result = curl_exec($ch);
-
-unset($ch);
-
-
-
-//$ch = curl_init();
-//
-/// was hier
-//
-//$url = 'https://usis.leidenuniv.nl/psc/S040PRD/EMPLOYEE/HRMS/c/SNS_CUSTOMIZATIONS_NLD.SNS_SSENRL_CART.GBL';
-//
-//set the url, number of POST vars, POST data
-//curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_4; nl-nl) AppleWebKit/533.18.1 (KHTML, like Gecko) Version/5.0.2 Safari/533.18.5");
-//curl_setopt($ch,CURLOPT_URL,$url);
-//
-//curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 0); 
-//curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-// 
-//curl_setopt($ch, CURLOPT_COOKIEFILE, $cookiefile);
-//curl_setopt($ch, CURLOPT_COOKIEJAR, $cookiefile);
-//
-// curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 1);
-// curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-//
-//curl_setopt($ch,CURLOPT_POST, 14);
-//if($year=="10")
-//{
-//curl_setopt($ch,CURLOPT_POSTFIELDS,"ICType=Panel&ICElementNum=0&ICAction=SNS_DERIVED_CLASS_SELECT_PB&ICXPos=0&ICYPos=0&ResponsetoDiffFrame=-1&TargetFrameName=None&ICFocus=&ICSaveWarningFilter=0&ICChanged=-1&ICResubmit=0&ICSID=VWJH4XuwW5DikH2UFpQZhPt5WEK5u5nlWMeLNWNWIJI%3D&ICModalWidget=0&ICZoomGrid=0&ICZoomGridRt=0&ICModalLongClosed=&ICActionPrompt=false&ICFind=&ICAddCount=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$24$=0100&SNS_SS_DERIVED_SELECTED$chk$1=Y&SNS_SS_DERIVED_SELECTED$1=Y&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$173$=0100");
-//} else {
-//curl_setopt($ch,CURLOPT_POSTFIELDS,"ICType=Panel&ICElementNum=0&ICAction=DERIVED_SSS_SCT_SSR_PB_GO&ICXPos=0&ICYPos=0&ICFocus=&ICSaveWarningFilter=0&ICChanged=-1&ICResubmit=0&ICSID=jWTycNhQZ2gJ&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$22$=0100&SSR_DUMMY_RECV1\$sels$0=0&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$66$=0100");
-//}
-// print_r(curl_getinfo($ch));
-//
-//
-//$result = curl_exec($ch);
-//echo $result;
-//exit();
+$post_str = "ICAJAX=1&ICNAVTYPEDROPDOWN=0&ICType=Panel&ICElementNum=0&ICAction=DERIVED_SSS_SCT_SSR_PB_GO&ICXPos=0&ICYPos=0&ResponsetoDiffFrame=-1&TargetFrameName=None&ICFocus=&ICSaveWarningFilter=0&ICChanged=-1&ICResubmit=0&ICSID=PTVRqgpo%2Buc28JPRndVg9OJHKpnPosqu%2BjUfl%2FQ5ieo%3D&ICModalWidget=0&ICZoomGrid=0&ICZoomGridRt=0&ICModalLongClosed=&ICActionPrompt=false&ICFind=&ICAddCount=&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$23$=0100&SSR_DUMMY_RECV1\$sels$0=1&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$67$=0100";
+$result = req($url, $post_str, $cookiefile);
 
 $arr = explode("Samenstelling", $result);
 $t_onderdelen = explode("<tr id='trSNS_CLASS_TR_VW$0_row", $arr[1]);
