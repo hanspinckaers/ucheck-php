@@ -90,13 +90,10 @@ if(!isset($user))
 		if($_POST['user']){
 			$_SESSION['user'] = base64url_encode($_POST['user'], $key);
 			$_SESSION['pwd'] = base64url_encode($_POST['pwd'], $key);
-		}
-				
-		if($_SESSION['user'])
-		{
-			$user = str_replace($forbidden_characters, '_', strtolower(base64url_decode($_SESSION['user'], $key)));
-			$pwd = base64url_decode($_SESSION['pwd'], $key);
-		}		
+		}	
+		
+		$user = str_replace($forbidden_characters, '_', strtolower($geheim->decrypt($_SESSION['user'], $key)));
+		$pwd = base64url_decode($_SESSION['pwd'], $key);
 	}
 		
 	if((!isset($user) || $user == "") && !$logout){
@@ -105,7 +102,7 @@ if(!isset($user))
 	
 		session_destroy();
 	
-		 header('Location: /login') ;
+		header('Location: /login') ;
 	} else {
 	//	header('Location: login.php?error=true') ;
 	}
