@@ -213,12 +213,10 @@ $run = ceil($out[1]/100)-1;
 
 while($run > 0)
 {	
-	unset($ch);
-
 	sleep(2);
 
-	$ch = curl_init();
-
+	$result = "";
+	
 	$url = 'https://usis.leidenuniv.nl/psc/S040PRD/EMPLOYEE/HRMS/c/SNS_CUSTOMIZATIONS_NLD.SNS_SSENRL_CART.GBL';
 
 	if($year == "f")
@@ -229,7 +227,7 @@ while($run > 0)
 		$post_str = "ICAJAX=1&ICNAVTYPEDROPDOWN=0&ICType=Panel&ICElementNum=0&ICAction=RESULTS%24hdown%240&ICXPos=0&ICYPos=110&ResponsetoDiffFrame=-1&TargetFrameName=None&ICFocus=&ICSaveWarningFilter=0&ICChanged=1&ICResubmit=0&ICSID=FNtHY0VXBaV0lLnbK75%2Bmz93HcvCjQuhxes8ReR%2FOTQ%3D&ICModalWidget=0&ICZoomGrid=0&ICZoomGridRt=0&ICModalLongClosed=&ICActionPrompt=false&ICFind=&ICAddCount=&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$5$=0100&SNS_CRSESRCH_WK_SUBJECT$55$=ARCH&SNS_CRSESRCH_WK_CATALOG_NBR=&SNS_CRSESRCH_WK_DESCR1=&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$$chk$0=Y&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$$0=Y&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$$chk$1=N&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$$chk$2=N&SNS_CRSESRCH_WK_SNS_SEL_OPERATOR=&SNS_CRSESRCH_WK_UNITS_MAXIMUM=0.00&SNS_CRSESRCH_WK_ACAD_ORG=&SNS_CRSESRCH_WK_SNS_CAR_SEL$70$$chk$0=N&SNS_CRSESRCH_WK_SNS_CAR_SEL$70$$chk$1=N&SNS_CRSESRCH_WK_SNS_CAR_SEL$70$$chk$2=N&SNS_CRSESRCH_WK_LANGUAGE=&SNS_DERIVED_CRSE_ATTR=&SNS_DERIVED_CRSE_ATTR_VALUE=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$94$=0100";
 	}
 
-	$results = req($url, $post_str, $cookiefile);
+	$result = req($url, $post_str, $cookiefile);
 
 	$arr = explode("class='PSLEVEL1GRID' style='border-style:none' >", $result);
 	$viewalls = array();
