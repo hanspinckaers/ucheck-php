@@ -39,48 +39,54 @@ $logfile = fopen($logfilename, 'w') or die("can't open file");
 // here you can tweak the CURL used to scrape
 function req($url, $post_str, $cookiefile)
 {
-    $ch = curl_init();
+	$ch = curl_init();
 
-    curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_4; nl-nl) AppleWebKit/533.18.1 (KHTML, like Gecko) Version/5.0.2 Safari/533.18.5");
-    curl_setopt($ch, CURLOPT_URL, $url);
+	curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_4; nl-nl) AppleWebKit/533.18.1 (KHTML, like Gecko) Version/5.0.2 Safari/533.18.5");
+	curl_setopt($ch, CURLOPT_URL, $url);
 
-    curl_setopt($ch, CURLOPT_POST, substr_count($post_str, "&") + 1);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $post_str);
+	curl_setopt($ch, CURLOPT_POST, substr_count($post_str, "&") + 1);
+	curl_setopt($ch, CURLOPT_POSTFIELDS, $post_str);
 
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);  
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);  
 
-    curl_setopt($ch, CURLOPT_COOKIEFILE, $cookiefile);
-    curl_setopt($ch, CURLOPT_COOKIEJAR, $cookiefile);
+	curl_setopt($ch, CURLOPT_COOKIEFILE, $cookiefile);
+	curl_setopt($ch, CURLOPT_COOKIEJAR, $cookiefile);
 
-    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 1);
-    curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+	curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 1);
+	curl_setopt($ch, CURLOPT_TIMEOUT, 10);
 
-    $html = curl_exec($ch);
+	// curl_setopt($ch, CURLOPT_HEADER, true); // Display headers
+	// curl_setopt($ch, CURLOPT_VERBOSE, true);
 
-    unset($ch);
-	
-//	echo $html;
-	
-    return $html;
+	$html = curl_exec($ch);
+
+	// print_r(curl_getinfo($ch));
+
+	unset($ch);
+
+
+	// echo $html;
+
+	return $html;
 }
 
 if(file_exists("/home/geneesleer/ucheck/geheim/ucheck.php"))
 {	
 	include("/home/geneesleer/ucheck/geheim/ucheck.php");
-	
+
 	$fields = array(
-	            'userid'=>'s0924121',
-	            'pwd'=>$pass_hans,
-	            'timezoneOffset'=>'-60',
-	        );	
+				'userid'=>'s0924121',
+				'pwd'=>$pass_hans,
+				'timezoneOffset'=>'-60',
+			);	
 }
 else {
 	$fields = array(
-	            'userid'=>'<s0924121>',
-	            'pwd'=>'<wachtwoord>',
-	            'timezoneOffset'=>'-60',
-	        );
+				'userid'=>'<s0924121>',
+				'pwd'=>'<pass>',
+				'timezoneOffset'=>'-60',
+			);
 }
 
 
@@ -163,14 +169,14 @@ foreach($studieonderdelen as $studieonderdeel)
 {	
 	$new_studieonderdeel = array();
 	preg_match_all("/<a.*>(.*)<\/a>/", $studieonderdeel, $values);
-	
+
 	if(count($values[1]) > 4)
 	{
 		$new_studieonderdeel['studie'] = $values[1][0];
 		$new_studieonderdeel['gidsnummer'] = $values[1][1];
 		$new_studieonderdeel['titel'] = $values[1][2];
 		$new_studieonderdeel['eenheden'] = $values[1][3];
-		
+
 		if(count($values[1]) == 5)
 		{
 			$new_studieonderdeel['loopbaan'] = $values[1][4];		
@@ -178,15 +184,15 @@ foreach($studieonderdelen as $studieonderdeel)
 			$new_studieonderdeel['type'] = $values[1][4];
 			$new_studieonderdeel['loopbaan'] = $values[1][5];
 		}
-	
-	
+
+
 		$vak_pos = strpos($new_studieonderdeel['titel'], "Individueel vak");
-			
+
 		if($vak_pos === false)	
 		{
 			$onderdelen[] = $new_studieonderdeel;			
 		}
-	
+
 	} else {
 		if(count($values[1]) > 0) print_r($values[1]);
 	}
@@ -208,47 +214,30 @@ $run = ceil($out[1]/100)-1;
 while($run > 0)
 {	
 	unset($ch);
-	
+
 	sleep(2);
-			
+
 	$ch = curl_init();
-	
+
 	$url = 'https://usis.leidenuniv.nl/psc/S040PRD/EMPLOYEE/HRMS/c/SNS_CUSTOMIZATIONS_NLD.SNS_SSENRL_CART.GBL';
-	
-	//set the url, number of POST vars, POST data
-	curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_4; nl-nl) AppleWebKit/533.18.1 (KHTML, like Gecko) Version/5.0.2 Safari/533.18.5");
-	curl_setopt($ch,CURLOPT_URL,$url);
-	
-	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 0); 
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-	 
-	curl_setopt($ch, CURLOPT_COOKIEFILE, $cookiefile);
-	curl_setopt($ch, CURLOPT_COOKIEJAR, $cookiefile);
-	
-	curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 60);
-	curl_setopt($ch, CURLOPT_TIMEOUT, 120);
-	
-	curl_setopt($ch,CURLOPT_POST, 28);
-	
+
 	if($year == "f")
 	{
-		curl_setopt($ch,CURLOPT_POSTFIELDS,"ICAJAX=1&ICNAVTYPEDROPDOWN=0&ICType=Panel&ICElementNum=0&ICAction=RESULTS%24hdown%240&ICXPos=0&ICYPos=110&ResponsetoDiffFrame=-1&TargetFrameName=None&ICFocus=&ICSaveWarningFilter=0&ICChanged=1&ICResubmit=0&ICSID=FNtHY0VXBaV0lLnbK75%2Bmz93HcvCjQuhxes8ReR%2FOTQ%3D&ICModalWidget=0&ICZoomGrid=0&ICZoomGridRt=0&ICModalLongClosed=&ICActionPrompt=false&ICFind=&ICAddCount=&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$5$=0100&SNS_CRSESRCH_WK_SUBJECT$55$=ARCH&SNS_CRSESRCH_WK_CATALOG_NBR=&SNS_CRSESRCH_WK_DESCR1=&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$$chk$0=N&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$$chk$1=N&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$$chk$2=N&SNS_CRSESRCH_WK_SNS_SEL_OPERATOR=&SNS_CRSESRCH_WK_UNITS_MAXIMUM=0.00&SNS_CRSESRCH_WK_ACAD_ORG=&SNS_CRSESRCH_WK_SNS_CAR_SEL$70$$chk$0=N&SNS_CRSESRCH_WK_SNS_CAR_SEL$70$$chk$1=N&SNS_CRSESRCH_WK_SNS_CAR_SEL$70$$chk$2=N&SNS_CRSESRCH_WK_LANGUAGE=&SNS_DERIVED_CRSE_ATTR=&SNS_DERIVED_CRSE_ATTR_VALUE=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$94$=0100");
+		$post_str = "ICAJAX=1&ICNAVTYPEDROPDOWN=0&ICType=Panel&ICElementNum=0&ICAction=RESULTS%24hdown%240&ICXPos=0&ICYPos=110&ResponsetoDiffFrame=-1&TargetFrameName=None&ICFocus=&ICSaveWarningFilter=0&ICChanged=1&ICResubmit=0&ICSID=FNtHY0VXBaV0lLnbK75%2Bmz93HcvCjQuhxes8ReR%2FOTQ%3D&ICModalWidget=0&ICZoomGrid=0&ICZoomGridRt=0&ICModalLongClosed=&ICActionPrompt=false&ICFind=&ICAddCount=&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$5$=0100&SNS_CRSESRCH_WK_SUBJECT$55$=ARCH&SNS_CRSESRCH_WK_CATALOG_NBR=&SNS_CRSESRCH_WK_DESCR1=&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$$chk$0=N&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$$chk$1=N&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$$chk$2=N&SNS_CRSESRCH_WK_SNS_SEL_OPERATOR=&SNS_CRSESRCH_WK_UNITS_MAXIMUM=0.00&SNS_CRSESRCH_WK_ACAD_ORG=&SNS_CRSESRCH_WK_SNS_CAR_SEL$70$$chk$0=N&SNS_CRSESRCH_WK_SNS_CAR_SEL$70$$chk$1=N&SNS_CRSESRCH_WK_SNS_CAR_SEL$70$$chk$2=N&SNS_CRSESRCH_WK_LANGUAGE=&SNS_DERIVED_CRSE_ATTR=&SNS_DERIVED_CRSE_ATTR_VALUE=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$94$=0100";
 	}
 	else {
-		curl_setopt($ch,CURLOPT_POSTFIELDS,"ICAJAX=1&ICNAVTYPEDROPDOWN=0&ICType=Panel&ICElementNum=0&ICAction=RESULTS%24hdown%240&ICXPos=0&ICYPos=110&ResponsetoDiffFrame=-1&TargetFrameName=None&ICFocus=&ICSaveWarningFilter=0&ICChanged=1&ICResubmit=0&ICSID=FNtHY0VXBaV0lLnbK75%2Bmz93HcvCjQuhxes8ReR%2FOTQ%3D&ICModalWidget=0&ICZoomGrid=0&ICZoomGridRt=0&ICModalLongClosed=&ICActionPrompt=false&ICFind=&ICAddCount=&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$5$=0100&SNS_CRSESRCH_WK_SUBJECT$55$=ARCH&SNS_CRSESRCH_WK_CATALOG_NBR=&SNS_CRSESRCH_WK_DESCR1=&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$$chk$0=Y&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$$0=Y&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$$chk$1=N&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$$chk$2=N&SNS_CRSESRCH_WK_SNS_SEL_OPERATOR=&SNS_CRSESRCH_WK_UNITS_MAXIMUM=0.00&SNS_CRSESRCH_WK_ACAD_ORG=&SNS_CRSESRCH_WK_SNS_CAR_SEL$70$$chk$0=N&SNS_CRSESRCH_WK_SNS_CAR_SEL$70$$chk$1=N&SNS_CRSESRCH_WK_SNS_CAR_SEL$70$$chk$2=N&SNS_CRSESRCH_WK_LANGUAGE=&SNS_DERIVED_CRSE_ATTR=&SNS_DERIVED_CRSE_ATTR_VALUE=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$94$=0100");
-	
+		$post_str = "ICAJAX=1&ICNAVTYPEDROPDOWN=0&ICType=Panel&ICElementNum=0&ICAction=RESULTS%24hdown%240&ICXPos=0&ICYPos=110&ResponsetoDiffFrame=-1&TargetFrameName=None&ICFocus=&ICSaveWarningFilter=0&ICChanged=1&ICResubmit=0&ICSID=FNtHY0VXBaV0lLnbK75%2Bmz93HcvCjQuhxes8ReR%2FOTQ%3D&ICModalWidget=0&ICZoomGrid=0&ICZoomGridRt=0&ICModalLongClosed=&ICActionPrompt=false&ICFind=&ICAddCount=&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$5$=0100&SNS_CRSESRCH_WK_SUBJECT$55$=ARCH&SNS_CRSESRCH_WK_CATALOG_NBR=&SNS_CRSESRCH_WK_DESCR1=&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$$chk$0=Y&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$$0=Y&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$$chk$1=N&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$$chk$2=N&SNS_CRSESRCH_WK_SNS_SEL_OPERATOR=&SNS_CRSESRCH_WK_UNITS_MAXIMUM=0.00&SNS_CRSESRCH_WK_ACAD_ORG=&SNS_CRSESRCH_WK_SNS_CAR_SEL$70$$chk$0=N&SNS_CRSESRCH_WK_SNS_CAR_SEL$70$$chk$1=N&SNS_CRSESRCH_WK_SNS_CAR_SEL$70$$chk$2=N&SNS_CRSESRCH_WK_LANGUAGE=&SNS_DERIVED_CRSE_ATTR=&SNS_DERIVED_CRSE_ATTR_VALUE=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$94$=0100";
 	}
-	
-	
-	$result = curl_exec($ch);
-		
+
+	$results = req($url, $post_str, $cookiefile);
+
 	$arr = explode("class='PSLEVEL1GRID' style='border-style:none' >", $result);
 	$viewalls = array();
-	
+
 	$studieonderdelen = explode("<tr id='trRESULTS$0_row",$arr[1]);
-							
+
 	$first = true;			
-	
+
 	foreach($studieonderdelen as $studieonderdeel)
 	{
 		if($first)
@@ -258,14 +247,14 @@ while($run > 0)
 		}
 		$new_studieonderdeel = array();
 		preg_match_all("/<a.*>(.*)<\/a>/", $studieonderdeel, $values);
-				
+
 		if(count($values[1]) > 4)
 		{
 			$new_studieonderdeel['studie'] = $studie;
 			$new_studieonderdeel['gidsnummer'] = $values[1][1];
 			$new_studieonderdeel['titel'] = $values[1][2];
 			$new_studieonderdeel['eenheden'] = $values[1][3];
-			
+
 			if(count($values[1]) == 5)
 			{
 				$new_studieonderdeel['loopbaan'] = $values[1][4];		
@@ -273,9 +262,9 @@ while($run > 0)
 				$new_studieonderdeel['type'] = $values[1][4];
 				$new_studieonderdeel['loopbaan'] = $values[1][5];
 			}
-				
+
 			$vak_pos = strpos($new_studieonderdeel['titel'], "Individueel vak");
-				
+
 			if($vak_pos === false)	
 			{
 				$onderdelen[] = $new_studieonderdeel;			
@@ -283,12 +272,14 @@ while($run > 0)
 			else {
 				$counter++;
 			}
-			
+
 		} else {
 			if(count($values[1]) > 0) print_r($values[1]);
 		}
 	}
-			
+
+	// print_r($onderdelen);
+
 	$run--;
 }
 } // if $out[1]
@@ -318,9 +309,9 @@ fwrite($logfile, count($onderdelen)." vakken voor ".$studie."\n");
 
 echo (time()-$start)." seconden voor ".$studie."\n";
 echo count($onderdelen)." vakken voor ".$studie."\n";
-	
+
 // echo "BUG! ".$studie." aantal: ".count($onderdelen)." moet zijn: ".$out[1]. " filtert: ".$counter." mist: ".(($out[1]-$counter)-count($onderdelen))."\n";
-	
+
 if(count($onderdelen) != ($out[1]-$counter))
 {
 	echo "BUG! ".$studie." aantal: ".count($onderdelen)." moet zijn: ".$out[1]. " filtert: ".$counter." mist: ".(($out[1]-$counter)-count($onderdelen))."\n";
