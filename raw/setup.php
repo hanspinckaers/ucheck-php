@@ -13,7 +13,7 @@
 if(!isset($DOCUMENT_ROOT))
 {
     $DOCUMENT_ROOT = realpath($_SERVER['DOCUMENT_ROOT'])."/";
-    $USES_UCHECK_API = false;
+    $USES_UCHECK_API = true;
     $UCHECK_API_SERVER = "http://ucheck.nl/api/";
     $NODEJS_DIR = "/home/geneesleer/opt/bin/node"; // path to node.js bin;
     $NODEJS_SERVERJS_DIR = "/home/geneesleer/ucheck-node/server.js"; // path to uCheck server.js;
