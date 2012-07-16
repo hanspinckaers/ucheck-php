@@ -307,9 +307,9 @@ function laadstudie(value, yr)
 		hide_details();
 	}
 	else {
-		return;
+//		return;
 	}
-	
+		
 	if(value){
 		$("studies").value = value;
 	}
@@ -318,14 +318,13 @@ function laadstudie(value, yr)
 	{
 		yr = year;
 	}
-		
+			
     if ($("studies").value && $("studies").value != "")
     {
         //$("loading").setStyle("display", "block");        
         $("studies").setAttribute("disabled", true);
         $("onderdelen").setStyle("opacity", 0.5);
-        
-        
+                
         if(!$("troep").checked)
         {
          	yr = "f";   
@@ -608,8 +607,7 @@ function load_year_and_studie(yr)
 	year = yr;
 
 	load_year(year);
-	
-	laadstudie($("studies").value,year);
+	laadstudie($("studies").value, year);
 }
 
 
@@ -762,7 +760,6 @@ function uitschrijven()
         method: "get",
         onSuccess: function (responseText)
         {
-	        console.log(responseText);
             var myObject = eval("("+responseText+")");
             var arr = $A(myObject.respons);
             $$("#popup tr").each(function (ele, index)

@@ -13,10 +13,10 @@
 if(!isset($DOCUMENT_ROOT))
 {
     $DOCUMENT_ROOT = realpath($_SERVER['DOCUMENT_ROOT'])."/";
-    $USES_UCHECK_API = true;
+    $USES_UCHECK_API = false;
     $UCHECK_API_SERVER = "http://ucheck.nl/api/";
-    $NODEJS_DIR = "" // path to node.js bin;
-    $NODEJS_SERVERJS_DIR = "" // path to uCheck server.js;
+    $NODEJS_DIR = "/home/geneesleer/opt/bin/node"; // path to node.js bin;
+    $NODEJS_SERVERJS_DIR = "/home/geneesleer/ucheck-node/server.js"; // path to uCheck server.js;
     
     // here you can tweak the CURL used to scrape
     function req($url, $post_str, $cookiefile)

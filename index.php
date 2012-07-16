@@ -40,16 +40,15 @@ if(file_exists($filename) && ((time()-filemtime($filename))/(60*60) < 24*7))
 
 <div id="cijfers_inschrijvingen" class="span-6">
 
-<div id="toon_alles" style="display:none;">
+<p><hr style="position:relative; top:-4px;"/></p>
+
+<div id="toon_alles">
 <p>
 <div class="word_line">
 </div>
-<span id="filter_year_keuze" class="word_line"><a href="#!" rel="10" onclick="load_year(10);" class="selectable"  style="display:none;">2010 - 2011</a> | <a href="#" onclick="load_year(11);" rel="11" class="selectable selected">2011 - 2012</a></span>
+<span id="filter_year_keuze" class="word_line"><a href="#!" rel="11" onclick="load_year(11);" class="selectable selected">2011 - 2012</a> | <a href="#" onclick="load_year(12);" rel="12" class="selectable">2012 - 2013</a></span>
 </p>
 </div>
-
-<p><hr style="position:relative; top:-4px;"/></p>
-
 
 <div id="filter_studies" style="display:none;">
 
@@ -181,11 +180,11 @@ if(file_exists($filename) && ((time()-filemtime($filename))/(60*60) < 24*7))
 
 <h1>Inschrijven</h1>
 
-<div id="toon_year_inschrijven" style="display:none;">
+<div id="toon_year_inschrijven">
 <p>
 <div class="word_line">
 </div>
-<span id="filter_year_keuze_inschrijven" class="word_line"><a href="#!" rel="10" onclick="load_year_and_studie(10);" class="selectable">2010 - 2011</a> | <a href="#" onclick="load_year_and_studie(11);" rel="11" class="selected selectable">2011 - 2012</a></span>
+<span id="filter_year_keuze_inschrijven" class="word_line"><a href="#!" rel="11" onclick="load_year_and_studie(11);" class="selected selectable">2011 - 2012</a> | <a href="#" onclick="load_year_and_studie(12);" rel="12" class="selectable">2012 - 2013</a></span>
 </p>
 </div>
 
@@ -193,7 +192,7 @@ if(file_exists($filename) && ((time()-filemtime($filename))/(60*60) < 24*7))
 <p>
 <div class="word_line">
 </div>
-<span id="eigen_studies_keuze" class="word_line"><a href="#!" rel="10" onclick="load_year(10);" class="selectable">GNK</a></span>
+<span id="eigen_studies_keuze" class="word_line"><a href="#!" rel="10" onclick="load_year(11);" class="selectable">GNK</a></span>
 </p>
 </div>
 
@@ -317,12 +316,12 @@ if(file_exists($filename) && ((time()-filemtime($filename))/(60*60) < 24*7))
 </p>
 </div>
 <p>
-<input type="checkbox" name="troep" value="" id="troep" onchange="laadstudie()" checked>
-<label for="troep">Filter dubbele</label>
+<input type="checkbox" name="troep" value="" id="troep" onchange="laadstudie()" style="display: none;" checked>
+<label for="troep"  style="display: none;">Filter dubbele</label>
 </p>
 <table border="0" cellspacing="0" cellpadding="0" id="onderdelen">
 </table>
-<br/><small>Vak niet gevonden? Schakel de dubbel-filter uit en check voor de zekerheid uSis. Vak wel op uSis niet op uCheck? Geef dan alsjeblieft feedback.</small>
+<br/><small>Vak niet gevonden? Vak wel op uSis niet op uCheck? Geef dan alsjeblieft feedback.</small>
 </div>
 
 </div>

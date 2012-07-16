@@ -37,7 +37,7 @@ if($USES_UCHECK_API)
 	$json = file_get_contents($UCHECK_API_SERVER."inschrijvingen?user=$safe_user&pass=$key");	
 }
 else {
-	$json = exec(escapeshellcmd("$NODEJS_DIR $NODEJS_SERVERJS_DIR inschrijvingen $user $pwd"));		
+	$json = exec(escapeshellcmd("$NODEJS_DIR $NODEJS_SERVERJS_DIR inschrijvingen $user $pwd $year"));		
 }
 
 $raw_inschrijvingen = json_decode($json, true);
