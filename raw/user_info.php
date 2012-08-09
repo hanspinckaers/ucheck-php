@@ -73,6 +73,7 @@ if(!isset($user))
 		$pwd = $geheim->decrypt($_SESSION['pwd'], $key);
 	} 
 	else {
+
 		$forbidden_characters = array(" ", '"', "'", "&", "/", "\\", "?", "#", ".");
 
 		if($_POST['cookie'] != "")
@@ -91,11 +92,11 @@ if(!isset($user))
 			$_SESSION['user'] = base64url_encode($_POST['user'], $key);
 			$_SESSION['pwd'] = base64url_encode($_POST['pwd'], $key);
 		}	
-		
-		$user = str_replace($forbidden_characters, '_', strtolower($geheim->decrypt($_SESSION['user'], $key)));
+
+		$user = str_replace($forbidden_characters, '_', strtolower(base64url_decode($_SESSION['user'], $key)));
 		$pwd = base64url_decode($_SESSION['pwd'], $key);
 	}
-		
+
 	if((!isset($user) || $user == "") && !$logout){
 		setcookie ("user", "", time() - 3600 - 3600- 3600);
 		setcookie ("pwd", "", time() - 3600- 3600- 3600);
