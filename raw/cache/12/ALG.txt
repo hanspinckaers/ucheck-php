@@ -1,0 +1,1 @@
+a:1:{i:1;a:6:{s:6:"studie";s:3:"ALG";s:10:"gidsnummer";s:9:"5204VASLY";s:5:"titel";s:20:"Situated Literatures";s:8:"eenheden";s:1:"5";s:4:"type";s:16:"Onderwijseenheid";s:8:"loopbaan";s:6:"Master";}}
