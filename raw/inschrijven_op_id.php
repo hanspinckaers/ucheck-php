@@ -51,8 +51,16 @@ if(isset($fout[0]))
 	die();
 }
 
-$url = 'https://usis.leidenuniv.nl/psc/S040PRD/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES.SSR_SSENRL_CART.GBL?Page=SSR_SSENRL_CART&Action=A&ACAD_CAREER=10&EMPLID=0924121&ENRL_REQUEST_ID=&INSTITUTION=LEI01&STRM=2100';
+$url = 'https://usis.leidenuniv.nl/psc/S040PRD/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES_2.SSR_SSENRL_CART.GBL?Page=SSR_SSENRL_CART&Action=A&ACAD_CAREER=CAR&EMPLID=0924121&ENRL_REQUEST_ID=&INSTITUTION=INST&STRM=TERM';
 $post_str = "";
+$html = req($url, $post_str, $cookiefile);
+
+$url = 'https://usis.leidenuniv.nl/psc/S040PRD/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES_2.SSR_SSENRL_CART.GBL?Page=SSR_SSENRL_CART&Action=A&ACAD_CAREER=CAR&EMPLID=0924121&ENRL_REQUEST_ID=&INSTITUTION=INST&STRM=TERM';
+$post_str = "ICType=Panel&ICElementNum=0&ICAction=DERIVED_SSS_SCT_SSS_TERM_LINK&ICXPos=0&ICYPos=0&ResponsetoDiffFrame=-1&TargetFrameName=None&ICFocus=&ICSaveWarningFilter=0&ICChanged=-1&ICResubmit=1&ICSID=0QsQOKMTB5SvMCz9%2B5nJU4mlD6xHj%2FRBSbwamcLk7iA%3D&ICModalWidget=0&ICZoomGrid=0&ICZoomGridRt=0&ICModalLongClosed=&ICActionPrompt=false&ICFind=&ICAddCount=&%23ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO%2423%24=0100&P_SELECT%24chk%240=N&DERIVED_SSTSNAV_SSTS_MAIN_GOTO%24154%24=0100";
+$html = req($url, $post_str, $cookiefile);
+
+$url = 'https://usis.leidenuniv.nl/psc/S040PRD/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES.SSR_SSENRL_CART.GBL';
+$post_str = "ICNAVTYPEDROPDOWN=0&ICType=Panel&ICElementNum=0&ICAction=DERIVED_SSS_SCT_SSR_PB_GO&ICXPos=0&ICYPos=0&ResponsetoDiffFrame=-1&TargetFrameName=None&ICFocus=&ICSaveWarningFilter=0&ICChanged=-1&ICResubmit=0&ICSID=0QsQOKMTB5SvMCz9%2B5nJU4mlD6xHj%2FRBSbwamcLk7iA%3D&ICModalWidget=0&ICZoomGrid=0&ICZoomGridRt=0&ICModalLongClosed=&ICActionPrompt=false&ICFind=&ICAddCount=&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$23$=0100&SSR_DUMMY_RECV1$sels$0=".$year_index."&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$67$=0100";
 $html = req($url, $post_str, $cookiefile);
 
 preg_match("/class='SSSMSGWARNINGTEXT' >(.*)<\/span>/", $html, $fout);
@@ -79,6 +87,7 @@ if(isset($fout[0]))
 
 $url = 'https://usis.leidenuniv.nl/psc/S040PRD/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES.SSR_SSENRL_CART.GBL';
 $post_str = "ICType=Panel&ICElementNum=0&ICAction=DERIVED_REGFRM1_SSR_PB_SUBMIT&ICXPos=0&ICYPos=0&ResponsetoDiffFrame=-1&TargetFrameName=None&ICFocus=&ICSaveWarningFilter=0&ICChanged=-1&ICResubmit=1&ICSID=okPpeuAW5HBVlLNOw8ao1i2ZvpAFw0Sxu%2F4hoevly90%3D&ICModalWidget=0&ICZoomGrid=0&ICZoomGridRt=0&ICModalLongClosed=&ICActionPrompt=false&ICFind=&ICAddCount=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$5$=0100&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$61$=0100";
+
 $result = req($url, $post_str, $cookiefile);
 
 preg_match("/<B>(.*)./", $result, $matches);
