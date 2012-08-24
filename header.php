@@ -94,11 +94,17 @@ if($user)
 ?>
 <hr />
 
+<!-- <div style="color:red; text-align: left;">
+<p><strong>Let op:</strong> Dit weekend krijgt uSis een update, daardoor werkt uCheck misschien niet meer. <br/>Wegens mijn afwezigheid duurt het een week voordat uCheck weer naar behoren werkt.</p>
+<hr />
+</div>
+ -->
 <div style="color:gray; text-align: center;">
-<p style="float:left; position: absolute; margin-top: 2em;">
+<!-- <p style="float:left; position: absolute; margin-top: 2em;">
 <strong>Nieuw: </strong> De Android app voor uCheck!
 </p>
-<p>
+ -->
+ <p>
 <a href="http://itunes.apple.com/nl/app/ucheck/id449171216?l=nl&ls=1&mt=8" target="_blank"><img src="App_Store_Badge_EN.png" style=""/></a>
 <a href="https://play.google.com/store/apps/details?id=info.vanderkooy.ucheck&hl=nl" target="_blank">
 <img alt="Get it on Google Play" src="android_app_on_play_logo_large.png" />

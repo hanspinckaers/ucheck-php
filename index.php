@@ -42,7 +42,7 @@ if(file_exists($filename) && ((time()-filemtime($filename))/(60*60) < 24*7))
 
 <p><hr style="position:relative; top:-4px;"/></p>
 
-<div id="toon_alles">
+<div id="toon_alles" style="display:none">
 <p>
 <div class="word_line">
 </div>
@@ -180,7 +180,7 @@ if(file_exists($filename) && ((time()-filemtime($filename))/(60*60) < 24*7))
 
 <h1>Inschrijven</h1>
 
-<div id="toon_year_inschrijven">
+<div id="toon_year_inschrijven" style="display:none">
 <p>
 <div class="word_line">
 </div>
@@ -370,7 +370,7 @@ if(file_exists($filename) && ((time()-filemtime($filename))/(60*60) < 24*7))
 					check_filter("cijfers");
 				}
 				
-				new Request({url: 'full_inschrijvingen.php?year=11', evalScripts:true, method: 'get', onSuccess: function(responseText, responseXML) {
+				new Request({url: 'full_inschrijvingen.php?year=12', evalScripts:true, method: 'get', onSuccess: function(responseText, responseXML) {
 					$("inschrijvingen").set('html',responseText);	
 					
 					<?
