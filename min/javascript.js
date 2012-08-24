@@ -38,7 +38,7 @@ var inschrijvingenIndexesPerStudie = {};
 var inschrijvingenTrs = [];
 
 var studies = [];
-var year = "11";
+var year = "12";
 
 var inschrijvenLoopbanen = [];
 var inschrijvenPerLoopbaan = {};
