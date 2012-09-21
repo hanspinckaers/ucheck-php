@@ -34,6 +34,10 @@ if($fp) fclose($fp);
 foreach($fields as $key=>$value) { $fields_string .= $key.'='.$value.'&'; }
 rtrim($fields_string,'&');
 
+/////////////////////////////////////////////
+
+// BACHELOR
+
 // request winkelwagen
 $url = 'https://usis.leidenuniv.nl/psc/S040PRD/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES_2.SSR_SSENRL_CART.GBL?Page=SSR_SSENRL_CART&Action=A&ACAD_CAREER=10&INSTITUTION=LEI01&STRM=2110';
 $result = req($url, $fields_string, $cookiefile);
@@ -42,7 +46,7 @@ preg_match_all("/chk\\$[0-9]+'/", $result, $onderdelen);
 
 // empty winkelwagen
 $url = 'https://usis.leidenuniv.nl/psc/S040PRD/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES_2.SSR_SSENRL_CART.GBL?Page=SSR_SSENRL_CART&Action=A&ACAD_CAREER=10&INSTITUTION=LEI01&STRM=2110';
-$post_str = "ICAJAX=1&ICNAVTYPEDROPDOWN=0&ICType=Panel&ICElementNum=0&ICAction=DERIVED_REGFRM1_SSR_PB_DELETE%24112%24&ICXPos=0&ICYPos=0&ResponsetoDiffFrame=-1&TargetFrameName=None&ICFocus=&ICSaveWarningFilter=0&ICChanged=-1&ICResubmit=0&ICSID=A75Wej4DPgl3h%2F1VCn8JugG38dXSuGjK4VoRJ7xsMd4%3D&ICModalWidget=0&ICZoomGrid=0&ICZoomGridRt=0&ICModalLongClosed=&ICActionPrompt=false&ICFind=&ICAddCount=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$23$=0100";
+$post_str = "ICAJAX=1&ICNAVTYPEDROPDOWN=0&ICType=Panel&ICElementNum=0&ICAction=DERIVED_REGFRM1_SSR_PB_DELETE%24121%24&ICXPos=0&ICYPos=0&ResponsetoDiffFrame=-1&TargetFrameName=None&ICFocus=&ICSaveWarningFilter=0&ICChanged=-1&ICResubmit=0&ICSID=JOBdk%2FU0EaVFbhG6Nm%2FKEOMwts2pQycs3gyT%2BRIZXB8%3D&ICModalWidget=0&ICZoomGrid=0&ICZoomGridRt=0&ICModalLongClosed=&ICActionPrompt=false&ICFind=&ICAddCount=&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$23$=0100";
 
 $count = 0;
 foreach($onderdelen[0] as $onderdeel)
@@ -51,8 +55,32 @@ foreach($onderdelen[0] as $onderdeel)
 	$count++;
 }
 
-$post_str .= "&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$155$=0100";
+$post_str .= "&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$163$=0100";
 $result = req($url, $post_str, $cookiefile);
+
+// MASTER
+
+// request winkelwagen
+$url = 'https://usis.leidenuniv.nl/psc/S040PRD/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES_2.SSR_SSENRL_CART.GBL?Page=SSR_SSENRL_CART&Action=A&ACAD_CAREER=15&INSTITUTION=LEI01&STRM=2110';
+$result = req($url, $fields_string, $cookiefile);
+
+preg_match_all("/chk\\$[0-9]+'/", $result, $onderdelen);
+
+// empty winkelwagen
+$url = 'https://usis.leidenuniv.nl/psc/S040PRD/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES_2.SSR_SSENRL_CART.GBL?Page=SSR_SSENRL_CART&Action=A&ACAD_CAREER=15&INSTITUTION=LEI01&STRM=2110';
+$post_str = "ICAJAX=1&ICNAVTYPEDROPDOWN=0&ICType=Panel&ICElementNum=0&ICAction=DERIVED_REGFRM1_SSR_PB_DELETE%24121%24&ICXPos=0&ICYPos=0&ResponsetoDiffFrame=-1&TargetFrameName=None&ICFocus=&ICSaveWarningFilter=0&ICChanged=-1&ICResubmit=0&ICSID=JOBdk%2FU0EaVFbhG6Nm%2FKEOMwts2pQycs3gyT%2BRIZXB8%3D&ICModalWidget=0&ICZoomGrid=0&ICZoomGridRt=0&ICModalLongClosed=&ICActionPrompt=false&ICFind=&ICAddCount=&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$23$=0100&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$163$=0100";
+
+$count = 0;
+foreach($onderdelen[0] as $onderdeel)
+{
+	$post_str .= "&P_SELECT\$chk$$count=Y&P_SELECT$$count=Y";
+	$count++;
+}
+
+$post_str .= "&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$163$=0100";
+$result = req($url, $post_str, $cookiefile);
+
+/////////////////////////////////////////////
 
 // new cookie for details
 $cookiefile = $DOCUMENT_ROOT."raw/cookies/".$user."_vakken".time().".txt";

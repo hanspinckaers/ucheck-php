@@ -40,7 +40,7 @@ if(!isset($DOCUMENT_ROOT))
     
         $html = curl_exec($ch);
     
-        echo $html;
+        // echo $html;
 
         unset($ch);
     
