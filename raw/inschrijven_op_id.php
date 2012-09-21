@@ -10,7 +10,7 @@
 ## ucheck-node: https://github.com/HansPinckaers/ucheck-node
 ##
 
-# https://ucheck.nl/raw/inschrijven_op_id.php?nummer=1&aantal_check=2&id=3883881V4Y
+# http://localhost:3000/raw/inschrijven_op_id.php?nummer=1&aantal_check=2&id=3883881V4Y
 
 include("setup.php");
 include("user_info.php");

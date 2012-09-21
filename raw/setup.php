@@ -35,11 +35,13 @@ if(!isset($DOCUMENT_ROOT))
         curl_setopt($ch, CURLOPT_COOKIEFILE, $cookiefile);
         curl_setopt($ch, CURLOPT_COOKIEJAR, $cookiefile);
     
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 1);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+        // curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 1);
+        // curl_setopt($ch, CURLOPT_TIMEOUT, 10);
     
         $html = curl_exec($ch);
     
+        echo $html;
+
         unset($ch);
     
         return $html;
