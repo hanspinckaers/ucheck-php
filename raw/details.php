@@ -42,6 +42,12 @@ rtrim($fields_string,'&');
 $url = 'https://usis.leidenuniv.nl/psc/S040PRD/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES_2.SSR_SSENRL_CART.GBL?Page=SSR_SSENRL_CART&Action=A&ACAD_CAREER=10&INSTITUTION=LEI01&STRM=2110';
 $result = req($url, $fields_string, $cookiefile);
 
+$post_str = "ICType=Panel&ICElementNum=0&ICAction=DERIVED_SSS_SCT_SSR_PB_GO&ICXPos=0&ICYPos=0&ResponsetoDiffFrame=-1&TargetFrameName=None&ICFocus=&ICSaveWarningFilter=0&ICChanged=-1&ICResubmit=0&ICSID=oHoQafxgEFBoBGjlxtw%2FmDx3fckJRkC6aGDMPnEGsEw%3D&ICModalWidget=0&ICZoomGrid=0&ICZoomGridRt=0&ICModalLongClosed=&ICActionPrompt=false&ICFind=&ICAddCount=&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$23$=0100&SSR_DUMMY_RECV1\$sels$0=0&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$67$=0100";
+$result = req($url, $post_str, $cookiefile);
+
+// $url = 'https://usis.leidenuniv.nl/psc/S040PRD/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES_2.SSR_SSENRL_CART.GBL?Page=SSR_SSENRL_CART&Action=A&ACAD_CAREER=10&INSTITUTION=LEI01&STRM=2110';
+// $result = req($url, "", $cookiefile);
+
 preg_match_all("/chk\\$[0-9]+'/", $result, $onderdelen);
 
 // empty winkelwagen
@@ -59,6 +65,15 @@ $post_str .= "&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$163$=0100";
 $result = req($url, $post_str, $cookiefile);
 
 // MASTER
+
+// TODO: Verander periode
+
+$url = 'https://usis.leidenuniv.nl/psc/S040PRD/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES_2.SSR_SSENRL_CART.GBL?Page=SSR_SSENRL_CART&Action=A&ACAD_CAREER=15&INSTITUTION=LEI01&STRM=2110';
+$post_str = "ICAJAX=1&ICNAVTYPEDROPDOWN=0&ICType=Panel&ICElementNum=0&ICAction=DERIVED_SSS_SCT_SSS_TERM_LINK&ICXPos=0&ICYPos=0&ResponsetoDiffFrame=-1&TargetFrameName=None&ICFocus=&ICSaveWarningFilter=0&ICChanged=-1&ICResubmit=0&ICSID=%2FkBRlWFOUVA8N3Jjd7KWngmufiPPhNzc1FBam4tVDYY%3D&ICModalWidget=0&ICZoomGrid=0&ICZoomGridRt=0&ICModalLongClosed=&ICActionPrompt=false&ICFind=&ICAddCount=&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$23$=0100&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$163$=0100";
+$result = req($url, $post_str, $cookiefile);
+
+$post_str = "ICType=Panel&ICElementNum=0&ICAction=DERIVED_SSS_SCT_SSR_PB_GO&ICXPos=0&ICYPos=0&ResponsetoDiffFrame=-1&TargetFrameName=None&ICFocus=&ICSaveWarningFilter=0&ICChanged=-1&ICResubmit=0&ICSID=oHoQafxgEFBoBGjlxtw%2FmDx3fckJRkC6aGDMPnEGsEw%3D&ICModalWidget=0&ICZoomGrid=0&ICZoomGridRt=0&ICModalLongClosed=&ICActionPrompt=false&ICFind=&ICAddCount=&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$23$=0100&SSR_DUMMY_RECV1\$sels$0=1&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$67$=0100";
+$result = req($url, $post_str, $cookiefile);
 
 // request winkelwagen
 $url = 'https://usis.leidenuniv.nl/psc/S040PRD/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES_2.SSR_SSENRL_CART.GBL?Page=SSR_SSENRL_CART&Action=A&ACAD_CAREER=15&INSTITUTION=LEI01&STRM=2110';
@@ -123,7 +138,8 @@ $url = 'https://usis.leidenuniv.nl/psc/S040PRD/EMPLOYEE/HRMS/c/SNS_CUSTOMIZATION
 
 preg_match_all("/value='(\d)' checked='checked'/", $result, $sel);
 
-$year_index = $sel[1][0];
+$year_index = count($sel[1]) - 1;
+if($year_index < 0) $year_index = 0;
 
 $post_str = "ICType=Panel&ICElementNum=0&ICAction=DERIVED_SSS_SCT_SSR_PB_GO&ICXPos=0&ICYPos=0&ResponsetoDiffFrame=-1&TargetFrameName=None&ICFocus=&ICSaveWarningFilter=0&ICChanged=-1&ICResubmit=1&ICSID=ZiDqU3%2FOo5ELjPoDyqsk8hxAP2y%2BFwMcLGBALkdVyUA%3D&ICModalWidget=0&ICZoomGrid=0&ICZoomGridRt=0&ICModalLongClosed=&ICActionPrompt=false&ICFind=&ICAddCount=&%23ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$23$=0100&SSR_DUMMY_RECV1\$sels$0=".$year_index."&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$67$=0100";
 $result = req($url, $post_str, $cookiefile);
