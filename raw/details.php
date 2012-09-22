@@ -95,7 +95,7 @@ $url = 'https://usis.leidenuniv.nl/psc/S040PRD/EMPLOYEE/HRMS/c/SNS_CUSTOMIZATION
 
 preg_match_all("/value='(\d)' checked='checked'/", $result, $sel);
 
-$year_index = $sel[1][0];
+$year_index = count($sel[1]) - 1;
 
 $post_str = "ICType=Panel&ICElementNum=0&ICAction=DERIVED_SSS_SCT_SSR_PB_GO&ICXPos=0&ICYPos=0&ResponsetoDiffFrame=-1&TargetFrameName=None&ICFocus=&ICSaveWarningFilter=0&ICChanged=-1&ICResubmit=1&ICSID=ZiDqU3%2FOo5ELjPoDyqsk8hxAP2y%2BFwMcLGBALkdVyUA%3D&ICModalWidget=0&ICZoomGrid=0&ICZoomGridRt=0&ICModalLongClosed=&ICActionPrompt=false&ICFind=&ICAddCount=&%23ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$23$=0100&SSR_DUMMY_RECV1\$sels$0=".$year_index."&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$67$=0100";
 $result = req($url, $post_str, $cookiefile);
