@@ -43,6 +43,10 @@ else {
 $raw_inschrijvingen = json_decode($json, true);
 
 $inschrijvingen = $raw_inschrijvingen['inschrijvingen'];
+
+$inschrijvingen_bachelor = $raw_inschrijvingen['bachelor'];
+$inschrijvingen_master = $raw_inschrijvingen['master'];
+
 $studies = $raw_inschrijvingen['studies'];
 
 if(!isset($raw_inschrijvingen['inschrijvingen']))
@@ -50,11 +54,13 @@ if(!isset($raw_inschrijvingen['inschrijvingen']))
 	//include("inschrijvingen_oud.php");
 }
 
-$newinschrijvingen = array();
+$newinschrijvingen_bachelor = array();
+$newinschrijvingen_master = array();
+
 $inschrijvingen_gehaald = array();
 
 $ingeschreven = array();
-foreach($inschrijvingen as $inschrijving)
+foreach($inschrijvingen_bachelor as $inschrijving)
 {		
 		$exploded = explode(" ", $inschrijving['origineel_id']);
 		
@@ -69,11 +75,32 @@ foreach($inschrijvingen as $inschrijving)
 		{		
 			$inschrijvingen_gehaald[] = $inschrijving;
 		} else {
-			$newinschrijvingen[] = $inschrijving;
+			$newinschrijvingen_bachelor[] = $inschrijving;
+		}		
+}
+
+foreach($inschrijvingen_master as $inschrijving)
+{		
+		$exploded = explode(" ", $inschrijving['origineel_id']);
+		
+		$origineel_id =  $exploded[count($exploded)-1];
+		
+		$ingeschreven[] = $origineel_id;
+
+		$smaller_id = substr($origineel_id, 0 , -1);
+
+		if(in_array($smaller_id, $_SESSION['gehaald']) || 
+			in_array($origineel_id, $_SESSION['cijfers_ids']))
+		{		
+			$inschrijvingen_gehaald[] = $inschrijving;
+		} else {
+			$newinschrijvingen_master[] = $inschrijving;
 		}		
 }
 
 $inschrijvingen = $newinschrijvingen;
+$inschrijvingen_bachelor = $newinschrijvingen_bachelor;
+$inschrijvingen_master = $newinschrijvingen_master;
 
 $_SESSION['ingeschreven'] = $ingeschreven;
 ?>

@@ -34,7 +34,7 @@ if(file_exists("../geheim/iphone.php"))
     $pwd =  base64url_decode($_GET['pass']);
 }
 
-echo exec(escapeshellcmd("$NODEJS_DIR $NODEJS_SERVERJS_DIR inschrijvingen $user $pwd"));
+echo exec(escapeshellcmd("$NODEJS_DIR $NODEJS_SERVERJS_DIR inschrijvingen $user $pwd 12"));
 
 //echo $json = file_get_contents($NODE_SERVER."inschrijvingen/$user/$pwd/11/");
 

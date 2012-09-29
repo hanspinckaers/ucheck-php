@@ -12,18 +12,25 @@
 
 include "raw/inschrijvingen.php";
  
-if(isset($inschrijvingen)){
+if(count($inschrijvingen_master) > 0)
+{
 ?>
+<tr class="space">
+	<td style="background-color:white;" colspan="5">
+		 <div class="word_line"/></div>
+		 <span class="word_line">master</span>
+	</td>
+</tr>
+<?
 
-<? 
 $counter = 0;
-foreach($inschrijvingen as $inschrijving){ 
+foreach($inschrijvingen_master as $inschrijving){ 
 $counter++;
 ?>
 
 <tr rel="<? echo $inschrijving['studie']; ?>" class="shown">
 <td class="check">
-<input type="checkbox" name="<? echo $inschrijving['stopid']; ?>" value="uitschrijven">
+<input type="checkbox" name="<? echo $inschrijving['stopid']; ?> 15" value="uitschrijven">
 </td>
 <td>
 <? 
@@ -36,12 +43,63 @@ else echo $explodedTitle[0];
 <?
 preg_match("/\(([0-9]+)/", $inschrijving['code'], $usis_code);
 ?>
-<a style="display:block;" href="roosterinfo.php?id=<? echo $usis_code[1]; ?>&title=<? echo $explodedTitle[0]; ?> - <? echo $inschrijving['id']; ?>" target="_blank" onclick="window.open(this.href,'window','top=100,width=730,height=480,resizable,scrollbars,toolbar,menubar') ;return false;"><? echo $inschrijving['id']; ?></a>
+<a style="display:block;" href="roosterinfo.php?id=<? echo $usis_code[1]; ?>&title=<? echo $explodedTitle[0]; ?> - <? echo $inschrijving['id']; ?>" target="_blank" onclick="window.open(this.href,'window','top=100,width=730,height=480,resizable,scrollbars,toolbar,menubar') ;return false;">
+	<? echo $inschrijving['id']; ?>
+</a>
 </td>
 </tr>
 
 
-<? } 
+<? 
+} // end foreach 
+} // end isset
+?>
+
+<? 
+if(count($inschrijvingen_bachelor) > 0)
+{
+?>
+<tr class="space">
+	<td style="background-color:white;" colspan="5">
+		 <div class="word_line"/></div>
+		 <span class="word_line">bachelor</span>
+	</td>
+</tr>
+<?
+
+$counter = 0;
+foreach($inschrijvingen_bachelor as $inschrijving){ 
+$counter++;
+?>
+
+<tr rel="<? echo $inschrijving['studie']; ?>" class="shown">
+<td class="check">
+<input type="checkbox" name="<? echo $inschrijving['stopid']; ?> 10" value="uitschrijven">
+</td>
+<td>
+<? 
+$explodedTitle = explode("(",$inschrijving['vak'], 2);    
+if(count($explodedTitle) == 2) echo $explodedTitle[0]." (".$explodedTitle[1];
+else echo $explodedTitle[0];
+?>
+</td>
+<td>
+<?
+preg_match("/\(([0-9]+)/", $inschrijving['code'], $usis_code);
+?>
+<a style="display:block;" href="roosterinfo.php?id=<? echo $usis_code[1]; ?>&title=<? echo $explodedTitle[0]; ?> - <? echo $inschrijving['id']; ?>" target="_blank" onclick="window.open(this.href,'window','top=100,width=730,height=480,resizable,scrollbars,toolbar,menubar') ;return false;">
+	<? echo $inschrijving['id']; ?>
+</a>
+</td>
+</tr>
+
+
+<? 
+} // end foreach 
+} // end isset
+?>
+
+<?
 if(count($inschrijvingen_gehaald) > 0)
 {
 ?>
@@ -85,6 +143,3 @@ echo $inschrijving['id']; ?>
 		<a href="#!" onclick="displayUitschrijven()">Geselecteerde inschrijvingen uitschrijven</a>
 	</td>
 </tr>
-
-
-<? } ?>

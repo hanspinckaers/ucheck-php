@@ -26,7 +26,7 @@ rtrim($fields_string,'&');
 
 $ch = curl_init();
 
-$url = "https://usis.leidenuniv.nl/psc/S040PRD/EMPLOYEE/HRMS/c/SNS_CUSTOMIZATIONS_NLD.SNS_CLS_DTL_OPT.NLD?Page=SNS_CLSRCH_RSLT&Action=U&CLASS_NBR=$id&INSTITUTION=LEI01&STRM=2110";
+$url = "https://usis.leidenuniv.nl/psc/S040PRD/EMPLOYEE/HRMS/c/SNS_CUSTOMIZATIONS_NLD.SNS_CLS_DTL_OPT.NLD?Page=SNS_CLSRCH_RSLT&Action=U&CLASS_NBR=$id&INSTITUTION=LEI01&STRM=2121";
 
 //set the url, number of POST vars, POST data
 curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_4; nl-nl) AppleWebKit/533.18.1 (KHTML, like Gecko) Version/5.0.2 Safari/533.18.5");
