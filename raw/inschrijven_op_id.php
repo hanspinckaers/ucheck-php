@@ -23,12 +23,12 @@ $keep_cookie = true;
 
 // $cookiefile = $DOCUMENT_ROOT."raw/cookies/".$user."_vakken".time().".txt";
 
-include "details.php";
+include $DOCUMENT_ROOT."raw/details.php";
 
-if(count($onderdelen) != $aantal)
+if(isset($aantal) && count($onderdelen) != $aantal)
 {
 	echo "<span style='color:orange;'>Er is iets misgegaan. Probeer het later opnieuw.</span> ";
-	echo "BUG: Aantal klopt niet. aantal = ".count($onderdelen)." check: ".$aantal;
+	// echo "BUG: Aantal klopt niet. aantal = ".count($onderdelen)." check: ".$aantal;
 	exit();
 }
 
@@ -92,6 +92,8 @@ $post_str = "ICType=Panel&ICElementNum=0&ICAction=DERIVED_REGFRM1_SSR_PB_SUBMIT&
 $result = req($url, $post_str, $cookiefile);
 
 preg_match("/<B>(.*)./", $result, $matches);
+
+// echo ($result);
 
 if(isset($matches[0]))
 {
