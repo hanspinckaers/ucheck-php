@@ -42,7 +42,7 @@ include "../raw/uitschrijven.php";
 
 if(isset($all_matches[0]))
 {
-	echo $all_matches[0][0];
+	echo strip_tags($all_matches[0][0]);
 } else {
 	echo 'Het is niet bekend of het goed gegaan is, vernieuw de pagina en controleer onder inschrijvingen of deze eronder staat.';
 }
