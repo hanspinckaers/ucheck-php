@@ -41,4 +41,12 @@ else {
 
 include "../raw/inschrijven_op_id.php";
 
+if(isset($matches[0]))
+{
+	$melding = $matches[0];
+	echo strip_tags($melding);
+} else {
+	echo "Het is niet bekend of het goed gegaan is, controleer onder inschrijvingen of deze eronder staat.";
+}
+
 ?>

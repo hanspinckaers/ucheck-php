@@ -818,7 +818,7 @@ function inschrijven_detail(z, b, c, a)
 		
     var aRequest = new Request(
     {
-        url: "raw/inschrijven_op_id.php",
+        url: "inschrijven_op_id.php",
         method: "get",
         onSuccess: function (d, e)
         {

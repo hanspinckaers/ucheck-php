@@ -95,14 +95,6 @@ preg_match("/<B>(.*)./", $result, $matches);
 
 // echo ($result);
 
-if(isset($matches[0]))
-{
-	$melding = $matches[0];
-	echo "<span style='color:black;'>".$melding."</span>";
-} else {
-	echo "<span style='color:orange;'>Het is niet bekend of het goed gegaan is, controleer onder inschrijvingen of deze eronder staat. </span>";
-}
-
 unlink($cookiefile);
 
 try {
