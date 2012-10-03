@@ -39,7 +39,7 @@ else {
 
 include "../raw/uitschrijven.php";
 
-echo json_encode($matches[0][0]);
+echo strip_tags(json_encode($matches[0][0]));
 
 // https://ucheck.nl/uitschrijven.php?q=$1%2010,&year=12
 ?>
