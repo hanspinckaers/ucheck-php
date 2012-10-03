@@ -71,7 +71,7 @@ foreach($onderdelen as $onderdeel)
 	{
 		$new_onderdeel = array();
 		$new_onderdeel["titel"] = $current_hoofdvak["Omschr."];
-		$new_onderdeel["onderdeel"] = $nummer_onderdeel;
+		$new_onderdeel["nummer"] = $nummer_onderdeel;
 		$new_onderdeel["eenheden"] = $current_hoofdvak["Eenheden"];
 		$new_onderdeel["info"] = $onderdeel["Nr studieactiv."];
 		$new_onderdeel["enabled"] = $onderdeel["enabled"];
