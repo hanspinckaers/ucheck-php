@@ -42,6 +42,44 @@ else {
 
 include "../raw/details.php";
 
-echo json_encode($onderdelen);
+$new_onderdelen = array();
+$nummer_onderdeel = -1;
+$firstFilter = true;
+$current_key = "";
 
+foreach($onderdelen as $onderdeel)
+{
+	if( (!$onderdeel['Nr studieactiv.'] || $onderdeel['Nr studieactiv.'] == "") &&
+		(!$onderdeel['enabled']) && count($onderdelen) != 1 && !$onderdeel['enabled'] && $firstFilter)
+	{
+		$firstFilter = false;
+		continue;	
+	}
+	
+	$nummer_onderdeel++;
+	
+	$hoofdvak = ($onderdeel['Verplicht'] != "" && $onderdeel['Omschr.'] != "");
+
+	if($hoofdvak)
+	{
+		$current_key = $onderdeel['Omschr.'];
+		$current_hoofdvak = $onderdeel;
+		$new_onderdelen[$current_key] = array();
+	}
+	
+	if($current_key)
+	{
+		$new_onderdeel = array();
+		$new_onderdeel["titel"] = $current_hoofdvak["Omschr."];
+		$new_onderdeel["onderdeel"] = $nummer_onderdeel;
+		$new_onderdeel["eenheden"] = $current_hoofdvak["Eenheden"];
+		$new_onderdeel["info"] = $onderdeel["Nr studieactiv."];
+		$new_onderdeel["enabled"] = $onderdeel["enabled"];
+		$new_onderdeel["verplicht"] = $current_hoofdvak["Verplicht"];
+		$new_onderdelen[$current_key][] = $new_onderdeel;
+	}
+
+}
+
+echo json_encode($new_onderdelen);
 ?>
