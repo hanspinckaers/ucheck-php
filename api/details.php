@@ -49,14 +49,14 @@ $current_key = "";
 
 foreach($onderdelen as $onderdeel)
 {
+	$nummer_onderdeel++;
+
 	if( (!$onderdeel['Nr studieactiv.'] || $onderdeel['Nr studieactiv.'] == "") &&
 		(!$onderdeel['enabled']) && count($onderdelen) != 1 && !$onderdeel['enabled'] && $firstFilter)
 	{
 		$firstFilter = false;
 		continue;	
-	}
-	
-	$nummer_onderdeel++;
+	}	
 	
 	$hoofdvak = ($onderdeel['Verplicht'] != "" && $onderdeel['Omschr.'] != "");
 
