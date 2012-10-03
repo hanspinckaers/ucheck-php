@@ -39,7 +39,12 @@ else {
 
 include "../raw/uitschrijven.php";
 
-echo json_encode($matches[0][0]);
+if(isset($all_matches[0]))
+{
+	echo "{'respons':".json_encode($all_matches[0][0])."}";
+} else {
+	echo "{'respons': 'Het is niet bekend of het goed gegaan is, vernieuw de pagina en controleer onder inschrijvingen of deze eronder staat.'}";
+}
 
 // https://ucheck.nl/uitschrijven.php?q=$1%2010,&year=12
 ?>
