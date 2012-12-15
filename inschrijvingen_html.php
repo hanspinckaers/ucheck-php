@@ -30,7 +30,7 @@ $counter++;
 
 <tr rel="<? echo $inschrijving['studie']; ?>" class="shown">
 <td class="check">
-<input type="checkbox" name="<? echo $inschrijving['stopid']; ?> 15" value="uitschrijven">
+<input type="checkbox" name="<? echo $inschrijving['stopid']; ?>" value="uitschrijven">
 </td>
 <td>
 <? 
@@ -74,7 +74,7 @@ $counter++;
 
 <tr rel="<? echo $inschrijving['studie']; ?>" class="shown">
 <td class="check">
-<input type="checkbox" name="<? echo $inschrijving['stopid']; ?> 10" value="uitschrijven">
+<input type="checkbox" name="<? echo $inschrijving['stopid']; ?>" value="uitschrijven">
 </td>
 <td>
 <? 
