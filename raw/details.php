@@ -42,7 +42,7 @@ rtrim($fields_string,'&');
 $url = 'https://usis.leidenuniv.nl/psc/S040PRD/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES_2.SSR_SSENRL_CART.GBL?Page=SSR_SSENRL_CART&Action=A&ACAD_CAREER=10&INSTITUTION=LEI01&STRM=2110';
 $result = req($url, $fields_string, $cookiefile);
 
-$post_str = "ICType=Panel&ICElementNum=0&ICAction=DERIVED_SSS_SCT_SSR_PB_GO&ICXPos=0&ICYPos=0&ResponsetoDiffFrame=-1&TargetFrameName=None&ICFocus=&ICSaveWarningFilter=0&ICChanged=-1&ICResubmit=0&ICSID=oHoQafxgEFBoBGjlxtw%2FmDx3fckJRkC6aGDMPnEGsEw%3D&ICModalWidget=0&ICZoomGrid=0&ICZoomGridRt=0&ICModalLongClosed=&ICActionPrompt=false&ICFind=&ICAddCount=&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$23$=0100&SSR_DUMMY_RECV1\$sels$0=0&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$67$=0100";
+$post_str = "DERIVED_SSTSNAV_SSTS_MAIN_GOTO$23$=0100&SSR_DUMMY_RECV1\$sels$0=0&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$67$=0100";
 $result = req($url, $post_str, $cookiefile);
 
 // $url = 'https://usis.leidenuniv.nl/psc/S040PRD/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES_2.SSR_SSENRL_CART.GBL?Page=SSR_SSENRL_CART&Action=A&ACAD_CAREER=10&INSTITUTION=LEI01&STRM=2110';
@@ -52,48 +52,47 @@ preg_match_all("/chk\\$[0-9]+'/", $result, $onderdelen);
 
 // empty winkelwagen
 $url = 'https://usis.leidenuniv.nl/psc/S040PRD/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES_2.SSR_SSENRL_CART.GBL?Page=SSR_SSENRL_CART&Action=A&ACAD_CAREER=10&INSTITUTION=LEI01&STRM=2110';
-$post_str = "ICAJAX=1&ICNAVTYPEDROPDOWN=0&ICType=Panel&ICElementNum=0&ICAction=DERIVED_REGFRM1_SSR_PB_DELETE%24121%24&ICXPos=0&ICYPos=0&ResponsetoDiffFrame=-1&TargetFrameName=None&ICFocus=&ICSaveWarningFilter=0&ICChanged=-1&ICResubmit=0&ICSID=JOBdk%2FU0EaVFbhG6Nm%2FKEOMwts2pQycs3gyT%2BRIZXB8%3D&ICModalWidget=0&ICZoomGrid=0&ICZoomGridRt=0&ICModalLongClosed=&ICActionPrompt=false&ICFind=&ICAddCount=&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$23$=0100";
-
+$post_str = "ICAJAX=1&ICNAVTYPEDROPDOWN=0&ICType=Panel&ICElementNum=0&ICAction=DERIVED_REGFRM1_SSR_PB_DELETE%24123%24&ICXPos=0&ICYPos=0&ResponsetoDiffFrame=-1&TargetFrameName=None&ICFocus=&ICSaveWarningFilter=0&ICChanged=-1&ICResubmit=0&ICSID=C4Dv5nH55Q7cctCCvCuF0eADRvXX2QiwGR2hpzep140%3D&ICModalWidget=0&ICZoomGrid=0&ICZoomGridRt=0&ICModalLongClosed=&ICActionPrompt=false&ICFind=&ICAddCount=&#ICDataLang=ENG&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$22$=0100";
 $count = 0;
 foreach($onderdelen[0] as $onderdeel)
 {
+
 	$post_str .= "&P_SELECT\$chk$$count=Y&P_SELECT$$count=Y";
 	$count++;
 }
 
-$post_str .= "&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$163$=0100";
+$post_str .= "&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$167$=0100";
 $result = req($url, $post_str, $cookiefile);
 
 // MASTER
-
 // TODO: Verander periode
 
-$url = 'https://usis.leidenuniv.nl/psc/S040PRD/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES_2.SSR_SSENRL_CART.GBL?Page=SSR_SSENRL_CART&Action=A&ACAD_CAREER=15&INSTITUTION=LEI01&STRM=2110';
-$post_str = "ICAJAX=1&ICNAVTYPEDROPDOWN=0&ICType=Panel&ICElementNum=0&ICAction=DERIVED_SSS_SCT_SSS_TERM_LINK&ICXPos=0&ICYPos=0&ResponsetoDiffFrame=-1&TargetFrameName=None&ICFocus=&ICSaveWarningFilter=0&ICChanged=-1&ICResubmit=0&ICSID=%2FkBRlWFOUVA8N3Jjd7KWngmufiPPhNzc1FBam4tVDYY%3D&ICModalWidget=0&ICZoomGrid=0&ICZoomGridRt=0&ICModalLongClosed=&ICActionPrompt=false&ICFind=&ICAddCount=&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$23$=0100&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$163$=0100";
-$result = req($url, $post_str, $cookiefile);
+// $url = 'https://usis.leidenuniv.nl/psc/S040PRD/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES_2.SSR_SSENRL_CART.GBL?Page=SSR_SSENRL_CART&Action=A&ACAD_CAREER=15&INSTITUTION=LEI01&STRM=2110';
+// $post_str = "DERIVED_SSTSNAV_SSTS_MAIN_GOTO$23$=0100&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$163$=0100";
+// $result = req($url, $post_str, $cookiefile);
+// 
+// $post_str = "DERIVED_SSTSNAV_SSTS_MAIN_GOTO$23$=0100&SSR_DUMMY_RECV1\$sels$0=1&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$67$=0100";
+// $result = req($url, $post_str, $cookiefile);
 
-$post_str = "ICType=Panel&ICElementNum=0&ICAction=DERIVED_SSS_SCT_SSR_PB_GO&ICXPos=0&ICYPos=0&ResponsetoDiffFrame=-1&TargetFrameName=None&ICFocus=&ICSaveWarningFilter=0&ICChanged=-1&ICResubmit=0&ICSID=oHoQafxgEFBoBGjlxtw%2FmDx3fckJRkC6aGDMPnEGsEw%3D&ICModalWidget=0&ICZoomGrid=0&ICZoomGridRt=0&ICModalLongClosed=&ICActionPrompt=false&ICFind=&ICAddCount=&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$23$=0100&SSR_DUMMY_RECV1\$sels$0=1&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$67$=0100";
-$result = req($url, $post_str, $cookiefile);
-
-// request winkelwagen
-$url = 'https://usis.leidenuniv.nl/psc/S040PRD/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES_2.SSR_SSENRL_CART.GBL?Page=SSR_SSENRL_CART&Action=A&ACAD_CAREER=15&INSTITUTION=LEI01&STRM=2110';
-$result = req($url, $fields_string, $cookiefile);
-
-preg_match_all("/chk\\$[0-9]+'/", $result, $onderdelen);
-
-// empty winkelwagen
-$url = 'https://usis.leidenuniv.nl/psc/S040PRD/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES_2.SSR_SSENRL_CART.GBL?Page=SSR_SSENRL_CART&Action=A&ACAD_CAREER=15&INSTITUTION=LEI01&STRM=2110';
-$post_str = "ICAJAX=1&ICNAVTYPEDROPDOWN=0&ICType=Panel&ICElementNum=0&ICAction=DERIVED_REGFRM1_SSR_PB_DELETE%24121%24&ICXPos=0&ICYPos=0&ResponsetoDiffFrame=-1&TargetFrameName=None&ICFocus=&ICSaveWarningFilter=0&ICChanged=-1&ICResubmit=0&ICSID=JOBdk%2FU0EaVFbhG6Nm%2FKEOMwts2pQycs3gyT%2BRIZXB8%3D&ICModalWidget=0&ICZoomGrid=0&ICZoomGridRt=0&ICModalLongClosed=&ICActionPrompt=false&ICFind=&ICAddCount=&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$23$=0100&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$163$=0100";
-
-$count = 0;
-foreach($onderdelen[0] as $onderdeel)
-{
-	$post_str .= "&P_SELECT\$chk$$count=Y&P_SELECT$$count=Y";
-	$count++;
-}
-
-$post_str .= "&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$163$=0100";
-$result = req($url, $post_str, $cookiefile);
+// // request winkelwagen
+// $url = 'https://usis.leidenuniv.nl/psc/S040PRD/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES_2.SSR_SSENRL_CART.GBL?Page=SSR_SSENRL_CART&Action=A&ACAD_CAREER=15&INSTITUTION=LEI01&STRM=2110';
+// $result = req($url, $fields_string, $cookiefile);
+// 
+// preg_match_all("/chk\\$[0-9]+'/", $result, $onderdelen);
+// 
+// // empty winkelwagen
+// $url = 'https://usis.leidenuniv.nl/psc/S040PRD/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES_2.SSR_SSENRL_CART.GBL?Page=SSR_SSENRL_CART&Action=A&ACAD_CAREER=15&INSTITUTION=LEI01&STRM=2110';
+// $post_str = "ICAJAX=1&ICNAVTYPEDROPDOWN=0&ICType=Panel&ICElementNum=0&ICAction=DERIVED_REGFRM1_SSR_PB_DELETE%24121%24&ICXPos=0&ICYPos=0&ResponsetoDiffFrame=-1&TargetFrameName=None&ICFocus=&ICSaveWarningFilter=0&ICChanged=-1&ICResubmit=0&ICSID=JOBdk%2FU0EaVFbhG6Nm%2FKEOMwts2pQycs3gyT%2BRIZXB8%3D&ICModalWidget=0&ICZoomGrid=0&ICZoomGridRt=0&ICModalLongClosed=&ICActionPrompt=false&ICFind=&ICAddCount=&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$23$=0100&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$163$=0100";
+// 
+// $count = 0;
+// foreach($onderdelen[0] as $onderdeel)
+// {
+// 	$post_str .= "&P_SELECT\$chk$$count=Y&P_SELECT$$count=Y";
+// 	$count++;
+// }
+// 
+// $post_str .= "&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$163$=0100";
+// $result = req($url, $post_str, $cookiefile);
 
 /////////////////////////////////////////////
 
@@ -106,24 +105,25 @@ req($url, $fields_string, $cookiefile);
 
 // selecteer inschrijfmethode
 $url = 'https://usis.leidenuniv.nl/psc/S040PRD/EMPLOYEE/HRMS/c/SNS_CUSTOMIZATIONS_NLD.SNS_SSENRL_CART.GBL';
-$post_str = "ICType=Panel&ICElementNum=0&ICAction=SNS_DERIVED_DESCR20&ICXPos=0&ICYPos=0&ResponsetoDiffFrame=-1&TargetFrameName=None&ICFocus=&ICSaveWarningFilter=0&ICChanged=-1&ICResubmit=1&ICSID=VWJH4XuwW5DikH2UFpQZhPt5WEK5u5nlWMeLNWNWIJI%3D&ICModalWidget=0&ICZoomGrid=0&ICZoomGridRt=0&ICModalLongClosed=&ICActionPrompt=false&ICFind=&ICAddCount=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$6$=0100&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$25$=0100";
+$post_str = "ICAction=SNS_DERIVED_DESCR20&ICAddCount=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$6$=0100&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$25$=0100";
 req($url, $post_str, $cookiefile);
 
 // studiejaar
 $url = 'https://usis.leidenuniv.nl/psc/S040PRD/EMPLOYEE/HRMS/c/SNS_CUSTOMIZATIONS_NLD.SNS_SSENRL_CART.GBL';
 if($year == "11") $index = "1";
 elseif($year == "12") $index = "0";
-$post_str = "ICAJAX=1&ICNAVTYPEDROPDOWN=0&ICType=Panel&ICElementNum=0&ICAction=SNS_TERM_TBL_VW_DESCR%24$index&ICXPos=0&ICYPos=0&ResponsetoDiffFrame=-1&TargetFrameName=None&ICFocus=&ICSaveWarningFilter=0&ICChanged=0&ICResubmit=0&ICSID=PTVRqgpo%2Buc28JPRndVg9OJHKpnPosqu%2BjUfl%2FQ5ieo%3D&ICModalWidget=0&ICZoomGrid=0&ICZoomGridRt=0&ICModalLongClosed=&ICActionPrompt=false&ICFind=&ICAddCount=&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$6$=0100&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$25$=0100";
+$post_str = "ICAJAX=1&ICAction=SNS_TERM_TBL_VW_DESCR%24$index&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$6$=0100&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$25$=0100";
 req($url, $post_str, $cookiefile);
 
 // zoeken
 $url = 'https://usis.leidenuniv.nl/psc/S040PRD/EMPLOYEE/HRMS/c/SNS_CUSTOMIZATIONS_NLD.SNS_SSENRL_CART.GBL';
-$post_str = "ICType=Panel&ICElementNum=0&ICAction=SNS_DERIVED_FETCH_PUSHBUTTON&ICXPos=0&ICYPos=0&ResponsetoDiffFrame=-1&TargetFrameName=None&ICFocus=&ICSaveWarningFilter=0&ICChanged=0&ICResubmit=1&ICSID=VWJH4XuwW5DikH2UFpQZhPt5WEK5u5nlWMeLNWNWIJI%3D&ICModalWidget=0&ICZoomGrid=0&ICZoomGridRt=0&ICModalLongClosed=&ICActionPrompt=false&ICFind=&ICAddCount=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$6$=0100&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$25$=0100";
+$post_str = "ICType=Panel&ICElementNum=0&ICAction=SNS_DERIVED_FETCH_PUSHBUTTON&ICAddCount=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$6$=0100&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$25$=0100";
 req($url, $post_str, $cookiefile);
 
 // zoeken invullen
 $url = 'https://usis.leidenuniv.nl/psc/S040PRD/EMPLOYEE/HRMS/c/SNS_CUSTOMIZATIONS_NLD.SNS_SSENRL_CART.GBL';
-$post_str = "ICAJAX=1&ICNAVTYPEDROPDOWN=0&ICType=Panel&ICElementNum=0&ICAction=SNS_CRSESRCH_WK_SEARCH_BTN&ICXPos=0&ICYPos=0&ResponsetoDiffFrame=-1&TargetFrameName=None&ICFocus=&ICSaveWarningFilter=0&ICChanged=0&ICResubmit=0&ICSID=hhq125A6NVo2MnE%2FWKjD01%2B7%2B9Upy%2F2VtOGXVAoYYlk%3D&ICModalWidget=0&ICZoomGrid=0&ICZoomGridRt=0&ICModalLongClosed=&ICActionPrompt=false&ICFind=&ICAddCount=&#ICDataLang=DUT&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$5$=0100&SNS_CRSESRCH_WK_SUBJECT$55$=&SNS_CRSESRCH_WK_CATALOG_NBR=".$_GET['q']."&SNS_CRSESRCH_WK_DESCR1=&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$\$chk$0=Y&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$\$0=Y&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$\$chk$1=N&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$\$chk$2=N&SNS_CRSESRCH_WK_SNS_SEL_OPERATOR=&SNS_CRSESRCH_WK_UNITS_MAXIMUM=0.00&SNS_CRSESRCH_WK_ACAD_ORG=&SNS_CRSESRCH_WK_SNS_CAR_SEL$70$\$chk$0=N&SNS_CRSESRCH_WK_SNS_CAR_SEL$70$\$chk$1=N&SNS_CRSESRCH_WK_SNS_CAR_SEL$70$\$chk$2=N&SNS_DERIVED_SNS_LANGUAGE=&SNS_DERIVED_CRSE_ATTR=&SNS_DERIVED_CRSE_ATTR_VALUE=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$95$=0100";
+$post_str = "ICAJAX=1&ICNAVTYPEDROPDOWN=0&ICType=Panel&ICElementNum=0&ICAction=SNS_CRSESRCH_WK_SEARCH_BTN&ICXPos=0&ICYPos=0&ResponsetoDiffFrame=-1&TargetFrameName=None&ICFocus=&ICSaveWarningFilter=0&ICChanged=0&ICResubmit=0&ICSID=Hm7F0C5%2Fs2hGbx6vbUEpFNVs%2F4wit5ApE9j8LBtXTPE%3D&ICModalWidget=0&ICZoomGrid=0&ICZoomGridRt=0&ICModalLongClosed=&ICActionPrompt=false&ICFind=&ICAddCount=&#ICDataLang=ENG&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$4$=0100&SNS_CRSESRCH_WK_SUBJECT$57$=&SNS_CRSESRCH_WK_CATALOG_NBR=".$_GET['q']."&SNS_CRSESRCH_WK_DESCR1=&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$62$\$chk$0=Y&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$62$\$0=Y&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$62$\$chk$1=N&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$62$\$chk$2=N&SNS_CRSESRCH_WK_SNS_SEL_OPERATOR=&SNS_CRSESRCH_WK_UNITS_MAXIMUM=0.00&SNS_CRSESRCH_WK_ACAD_ORG=&SNS_CRSESRCH_WK_SNS_CAR_SEL$72$\$chk$0=N&SNS_CRSESRCH_WK_SNS_CAR_SEL$72$\$chk$1=N&SNS_CRSESRCH_WK_SNS_CAR_SEL$72$\$chk$2=N&SNS_DERIVED_SNS_LANGUAGE=&SNS_DERIVED_CRSE_ATTR=&SNS_DERIVED_CRSE_ATTR_VALUE=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$100$=0100";
+
 // $post_str = "ICAJAX=1&ICNAVTYPEDROPDOWN=0&ICType=Panel&ICElementNum=0&ICAction=SNS_CRSESRCH_WK_SEARCH_BTN&ICXPos=0&ICYPos=0&ResponsetoDiffFrame=-1&TargetFrameName=None&ICFocus=&ICSaveWarningFilter=0&ICChanged=0&ICResubmit=0&ICSID=VWJH4XuwW5DikH2UFpQZhPt5WEK5u5nlWMeLNWNWIJI%3D&ICModalWidget=0&ICZoomGrid=0&ICZoomGridRt=0&ICModalLongClosed=&ICActionPrompt=false&ICFind=&ICAddCount=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$5$=0100&SNS_CRSESRCH_WK_SUBJECT$55$=&SNS_CRSESRCH_WK_CATALOG_NBR=".$_GET['q']."&SNS_CRSESRCH_WK_DESCR1=&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$\$chk$0=Y&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$$0=Y&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$\$chk$1=N&SNS_CRSESRCH_WK_SNS_CRSETYPE_SEL$60$\$chk$2=N&SNS_CRSESRCH_WK_SNS_SEL_OPERATOR=&SNS_CRSESRCH_WK_UNITS_MAXIMUM=0.00&SNS_CRSESRCH_WK_ACAD_ORG=&SNS_CRSESRCH_WK_SNS_CAR_SEL\$70$\$chk$0=N&SNS_CRSESRCH_WK_SNS_CAR_SEL\$70$\$chk$1=N&SNS_CRSESRCH_WK_SNS_CAR_SEL\$70$\$chk$2=N&SNS_CRSESRCH_WK_LANGUAGE=&SNS_DERIVED_CRSE_ATTR=&SNS_DERIVED_CRSE_ATTR_VALUE=&DERIVED_SSTSNAV_SSTS_MAIN_GOTO$94$=0100";
 req($url, $post_str, $cookiefile);
 
