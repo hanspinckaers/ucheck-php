@@ -47,14 +47,14 @@ $android= stripos($_SERVER['HTTP_USER_AGENT'],"android");
 
 if( $iPod || $iPhone ){
 ?>
-<b>Op een iPhone/iPod touch? <a href="http://itunes.apple.com/nl/app/ucheck/id449171216?l=nl&ls=1&mt=8">Download de gratis uCheck app in de App Store!</a></b>
+<b><a href="http://itunes.apple.com/nl/app/ucheck/id449171216?l=nl&ls=1&mt=8">Download de gratis uCheck app!</a></b>
 <br/><br/>
 <hr/>
 <?
 } else if($android)
 {
 ?>
-<b>Op een Android? <a href="https://play.google.com/store/apps/details?id=info.vanderkooy.ucheck">Download de gratis uCheck app op Google Play!</a></b>
+<b><a href="https://play.google.com/store/apps/details?id=info.vanderkooy.ucheck">Download de gratis uCheck app op Google Play!</a></b>
 <br/><br/>
 <hr/>
 <?
@@ -75,9 +75,6 @@ if( $iPod || $iPhone ){
 </div>
 <input id="inloggen" type="submit" value="inloggen" />
 <p></p>
-<hr/>
-<b>Tip:</b> krijg een mail bij nieuwe cijfers. <a href="https://ucheck.nl/mail/">Aanmelden mailservice.</a><br/>Of klik na inloggen bovenaan op <i>"aanmelden mailservice"</i>.<br/><br/>
-<hr/>
 <small>
 Geen student of eerst even kijken? <br/>Probeer het <a href="demo/">demo-account</a>.
 <br/><br/>
