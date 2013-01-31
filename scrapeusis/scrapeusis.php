@@ -14,25 +14,25 @@ setlocale(LC_ALL, 'nl_NL');
 
 date_default_timezone_set("Europe/Berlin");
 
-if(date("i") < 10)
-{
-	$logfilename = "/home/geneesleer/ucheck/scrapeusis/logs/".strftime('%d-%h-%Y', time())."_1.txt";
- 	
+//if(date("i") < 10)
+//{
+//	$logfilename = "/home/geneesleer/ucheck/scrapeusis/logs/".strftime('%d-%h-%Y', time())."_1.txt";
+// 	
  	// 2011 - 2012
- 	$years = array("11");
-} 
-else {	
+// 	$years = array("11");
+//} 
+//else {	
 	$logfilename = "/home/geneesleer/ucheck/scrapeusis/logs/".strftime('%d-%h-%Y', time())."_2.txt";
 	
 	// year f = 2011 - 2012, maar niet geselecteerd op onderwijseenheid, maar alle resultaten van een studie
 	$years = array("12");
-}
+//}
 
 // oude studies
 // $studies = array("ARCH", "W%26N","LA%26S","ALG","ARAB","ARCH","ASA","BSKE","BFW","BIO","BIOM","BOEK","CHE","CLANEC","CANS","DUITS","DUTCHST","EGYPTE","ENGELS","EUS","FGWALG","PHOTOGS","FRANS","GNK","GS","GODG","GRIEKLAT","HJS","HERV","INDECO","INF","ISLM","ISLT","ITAL","JOURNIME","FGWKERN","FDK","KG","LAAS","LEIALG","LO","FLEBYVAK","FLEALG","LETTERK","LST","LITW","MANAGEME","MIDOOST","MST","MUZIEK","NSC","NTK","NED","NP","OCMW","PEDA","POWE","PKST","PREUNIV","PSYC","LAW","SEMI","SLAV","STK","TCIA","TCMA","TAALK","TW","INDTIBET","INDONES","AFRIKA","TCLA","CHINA","JAPAN","KOREA","TCC","THEA","TURK","VIET","VTW","LAVA","WYSB","WSK","ZZOAZIE");
 
 $studies = array("ALG","ARAB","ARCH","ASA","ASS","BSKE","BFW","BIO","BIOM","BOEK","CHE","CLANEC","CANS","DUITS","DUTCHST","EGYPTE","ENGELS","EUS","FGWALG","W&amp;N","PHOTOGS","FRANS","GNK","GS","GODG","GRIEKLAT","HJS","HERV","INDECO","INF","INTST","ISLM","ISLT","ITAL","JOURNIME","FGWKERN","FDK","KG","LAAS","LEIALG","LO","FLEBYVAK","FLEALG","LETTERK","LA&amp;S","LST","LING","LITST","LITW","MANAGEME","MEDIA","MIDOOST","MST","MUZIEK","NSC","NTK","NED","NP","NOAMST","OCMW","CAC","PEDA","POWE","PKST","PREUNIV","PSYC","LAW","SEMI","SLAV","STK","TCIA","TCMA","TAALK","TW","INDTIBET","INDONES","AFRIKA","TCLA","CHINA","JAPAN","KOREA","TCC","THEA","TURK","VIET","VTW","LAVA","WYSB","WSK","ZZOAZIE");
-// $studies = array("GNK");
+// $studies = array("INF");
 
 // $DOCUMENT_ROOT = realpath($_SERVER['DOCUMENT_ROOT'])."/";
 $cookiefile = "/home/geneesleer/ucheck/raw/"."cookies/s0924121_vakken.txt";
@@ -244,21 +244,21 @@ while($run > 0)
 			continue;
 		}
 		$new_studieonderdeel = array();
-		preg_match_all("/<a.*>(.*)<\/a>/", $studieonderdeel, $values);
+		preg_match_all("/<a[^>]*>(.*)<\/a>/", $studieonderdeel, $values);
 
 		if(count($values[1]) > 4)
 		{
-			$new_studieonderdeel['studie'] = $studie;
-			$new_studieonderdeel['gidsnummer'] = $values[1][1];
-			$new_studieonderdeel['titel'] = $values[1][2];
-			$new_studieonderdeel['eenheden'] = $values[1][3];
+			$new_studieonderdeel['studie'] = strip_tags($studie);
+			$new_studieonderdeel['gidsnummer'] = strip_tags($values[1][1]);
+			$new_studieonderdeel['titel'] = strip_tags($values[1][2]);
+			$new_studieonderdeel['eenheden'] = strip_tags($values[1][3]);
 
 			if(count($values[1]) == 5)
 			{
-				$new_studieonderdeel['loopbaan'] = $values[1][4];		
+				$new_studieonderdeel['loopbaan'] = strip_tags($values[1][4]);		
 			} else {
-				$new_studieonderdeel['type'] = $values[1][4];
-				$new_studieonderdeel['loopbaan'] = $values[1][5];
+				$new_studieonderdeel['type'] = strip_tags($values[1][4]);
+				$new_studieonderdeel['loopbaan'] = strip_tags($values[1][5]);
 			}
 
 			$vak_pos = strpos($new_studieonderdeel['titel'], "Individueel vak");
