@@ -168,7 +168,7 @@ $studieonderdelen = explode("<tr id='trRESULTS$0_row",$arr[1]);
 foreach($studieonderdelen as $studieonderdeel)
 {	
 	$new_studieonderdeel = array();
-	preg_match_all("/<a.*>(.*)<\/a>/", $studieonderdeel, $values);
+	preg_match_all("/<a[^>]*>(.*)<\/a>/", $studieonderdeel, $values);
 
 	if(count($values[1]) > 4)
 	{
